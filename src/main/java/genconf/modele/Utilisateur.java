@@ -13,13 +13,17 @@ public class Utilisateur implements Serializable {
     private String nom;
     private String prenom;
     private final Map<String, Conference> conferencesAdministrees;  // association qualifiée par le nom
+    private Session session;
+    private Map<String, Conference> inscriptions;
+    private Map<String,Communication> communications;
+    private Map<String,Communication> communicationsCorrespondant;
 
     public Utilisateur(String email, String nom, String prenom) {
         assert EmailValidator.getInstance(false, false).isValid(email);
         this.email = email;
         this.nom = nom;
         this.prenom = prenom;
-        this.conferencesAdministrees = new HashMap<>();
+        //this.conferencesAdministrees = new HashMap<>();
     }
 
     public String getEmail() {
@@ -43,8 +47,23 @@ public class Utilisateur implements Serializable {
     }
     
 
-    public void ajouteConferenceAdministree(Conference conf) {
+    public void addConferenceAdministree(Conference conference) {
         assert !this.conferencesAdministrees.containsKey(conf.getNom());
-        this.conferencesAdministrees.put(conf.getNom(), conf);
+        this.conferencesAdministrees.put(conference.getNom(), conference);
     }
+    public void addInscriptionConference(String nomConf, Conference conference ){
 }
+
+    public void addSessionEnTantQueAnimateur(Session session ){
+
+    }
+    public addCommunicationEnTantQueOrateur(Communication communication){
+        
+    }
+    public removeCommunicationEnTantQueOrateur(Communication communication){
+
+    }
+    public removeSessionEnTantQueAnimateur(Session session){
+
+    }
+    }
