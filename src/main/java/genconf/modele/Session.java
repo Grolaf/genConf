@@ -5,15 +5,16 @@ import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.validator.routines.EmailValidator;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Session {
 
     private String intituleSession;
     private String type;
     private LocalDate date;
-    private String heureDebut;
-    private String heureFin;
-    private String videoAssociee;
+    private LocalTime heureDebut;
+    private LocalTime heureFin;
+    private String lienVersVideo;
     private String salle;
     private Map<String, Utilisateur> animateurs;
     private Map<Integer, Communication> communications;
@@ -50,11 +51,11 @@ public class Session {
         return this.date;
     }
 
-    public String getHoraireDebut() {
+    public LocalTime getHoraireDebut() {
         return this.heureDebut;
     }
 
-    public String getHoraireFin() {
+    public LocalTime getHoraireFin() {
         return this.heureFin;
     }
 
@@ -70,6 +71,110 @@ public class Session {
     /***********************************************************/
     /**     Setters     **/
 
+    public int setHoraires(LocalTime nouvelleHeureDebut, LocalTime nouvelleHeureFin)
+    {
+        LocalTime heureDebutCommunication, heureFinCommunication;
+        boolean valide = true;
+        
+        if(!isHoraireValide(nouvelleHeureDebut,nouvelleHeureFin))
+        {
+            return 1;
+        }
+        
+        for(Communication comm : this.communciations && valide)
+        {
+            heureDebutCommunication = comm.getHorairesDebut();
+            heureFinCommunication = comm.getHorairesFin();
+            
+            valide = nouvelleHeureDebut.isBefore(heureDebutCommunication) && nouvelleHeureFin.isAfter(heureFinCommunication);
+        }
+        
+        if(valide)
+        {
+            this.heureDebut = nouvelleHeureDebut;
+            this.heureFin = nouvelleHeureFin;
+            return 0;
+        }
+        else if(nouvelleHeureDebut.isAfter(heureDebutCommunication))
+        {
+            return 2;
+        }
+        else
+        {
+            return 3;
+        }
+    }
+    
+    public int setDate(LocalDate nouvelleDate)
+    {
+        LocalDate dateDebutConf = this.conference.getDateDebut();
+        LocalDate dateFinConf = this.conference.getDateFin();
+        
+        if(this.communication.size() != 0 && nouvelleDate != this.date)
+        {
+            return 1;
+        }
+        else if(this.date.isBefore(dateDebutConf))
+        {
+            return 2;
+        }
+        else if (this.date.isAfter(dateFinConf))
+        {
+            return 3;
+        }
+        else
+        {
+            this.date = nouvelleDate;
+            return 0;
+        }
+    }
+    
+    public boolean setIntitule(String nouvelIntitule)
+    {
+       Session existe =  this.conference.getSession(nouvelIntitule);
+       
+       if(existe == null)
+       {
+           return false;
+       }
+       else
+       {
+           this.intituleSession = nouvelIntitule;
+           
+           return true;
+       }
+    }
+    
+    public boolean setVideo(String nouveauLienVideo)
+    {
+        this.lienVersVideo = nouveauLienVideo;
+        
+        return true;
+    }
+    
+    public boolean setSalle(String nouvelleSalle)
+    {
+        if(this.conference.isSalleDisponible(nouvelleSalle))
+        {
+            this.salle = nouvelleSalle;
+            
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        
+    }
+    
+    public boolean setType(String nouveauType)
+    {
+        this.type = nouveauType;
+        
+        return true;
+    }
+    
+    
     public void addAnimateur(Utilisateur animateur) {
         this.animateurs.put(animateur.getEmail(), animateur);
         animateur.addSessionEnTantQueAnimateur(this);
@@ -80,21 +185,42 @@ public class Session {
         this.animateurs.remove(animateur);
     }
 
-    public addCommunication(Communication communication) {
-        this.communications = new HashMap<>(communication);
+    public boolean addCommunication(Communication communication) {
+        this.communications.put(communication.getNumero(), communication);
+        
+        return true;
     }
     
-    
 
-    public removeCommunication(Communication communication) {
-
+    public boolean removeCommunication(Communication communication) {
+       this.communications.remove(communication);
+       
+       return true;
     }
 
     /***********************************************************/
     /**     Usual functions     **/
     
-    public bool isHoraireValide(String heureDebut, String heureFin) {
-
+    public boolean isHoraireValide(LocalTime heureDebut, LocalTime heureFin) {
+        return heureDebut.isBefore(heureFin);
+    }
+    
+    public String toString()
+    {
+        String str =  "Session " + this.intituleSession +" : \n";
+        str += "\t Type : " + this.type + "\n";
+        str += "\t Date : " + this.date+ "\n";
+        str += "\t HeureDebut : " + this.heureDebut+ "\n";
+        str += "\t HeureFin : " + this.heureFin+ "\n";
+        str += "\t Video : " + this.lienVersVideo + "\n";
+        str += "\t Salle : " + this.salle + "\n";
+        
+        str += "\t Tracks : \n";
+        
+        for(Track trk : this.tracks)
+        {
+            str += "\t\t " + trk.toString() + "\n";
+        }
     }
 }
 

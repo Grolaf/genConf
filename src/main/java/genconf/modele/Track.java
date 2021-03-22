@@ -35,7 +35,7 @@ public class Track {
     {
         return this.sessions;
     }
-    
+   
     /***********************************************************/
     /**     Setters     **/
     
@@ -45,4 +45,14 @@ public class Track {
         
         return true;
     }
+    
+    /***********************************************************/
+    /**     Usual functions     **/
+    
+    public String toString()
+    {
+        return "Track " + this.libelle + " ( " + this.couleur + " )"; 
+    }
+    
+   
 }
