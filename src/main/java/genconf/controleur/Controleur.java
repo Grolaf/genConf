@@ -1,14 +1,16 @@
 package genconf.controleur;
 
-import genconf.modele.GenConf;
 import genconf.*;
-import genconf.vue.IHM;
-import java.util.Iterator;
+import genconf.controleur.*;
+import genconf.modele.*;
+import genconf.util.*;
+import genconf.vue.*;
+
 
 public class Controleur {
 
-    private final GenConf genconf;
-    private final IHM ihm;
+    private GenConf genconf;
+    private IHM ihm;
 
     public Controleur(GenConf genconf) {
         this.genconf = genconf;
@@ -18,10 +20,19 @@ public class Controleur {
         this.ihm = new IHM(this);
     }
 
-    public void addCommunicationASession(int numeroCommunication, String intituleSession, Conference conference) {
-        Session session = conference.getSession(intituleSession);
-        Communication communication = conference.getCommunication(numeroCommunication);
-        communication.setSession(session);
+    public void addCommunicationASession(Communication communication, Session session, Conference conference) {
+        Session sessionRattachee = communication.getSession();
+        boolean choix = false;
+        if (sessionRattachee) {
+        	choix = ihm.demanderARemplacerSessionDeCommunication();
+        }
+        boolean r = false;
+        if (choix == true) {
+        	r = communication.setSession(session);
+        }
+        if (r) {
+        	ihm.notifier("La communication a correctement été ajoutée à la session");
+        }
     }
     
     public void consulterMetadonneesConference(Conference conference) {
