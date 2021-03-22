@@ -4,6 +4,7 @@ import genconf.controleur.Commande;
 import genconf.controleur.Controleur;
 import genconf.modele.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.Collections;
@@ -456,8 +457,8 @@ public class IHM {
         }
     }
 
-    public void afficherCommuncations(Map<String, Communication> communications){
-        for(Map.Entry<String, Communication>Com : this.communications.entrySet()){
+    public void afficherCommuncations(Map<String, Communication> communications) {
+        for (Map.Entry<String, Communication> Com : this.communications.entrySet()) {
             System.out.println(Com.getValue().toString());
         }
     }
@@ -470,13 +471,11 @@ public class IHM {
         System.out.println("Informations Communication : " + comm.toString());
     }
 
-    public void afficherInfosSessions(Map<String,Sessions>s){
-        for(Map.Entry<String, Sessions>Str : this.s.entrySet()){
+    public void afficherInfosSessions(Map<String, Sessions> s) {
+        for (Map.Entry<String, Sessions> Str : this.s.entrySet()) {
             System.out.println(Str.getValue().toString());
         }
     }
-
-    
 
     InfosSession(Session session){
         System.out.println("Informations Session : "+session.toString());
@@ -488,7 +487,7 @@ public class IHM {
         }
     }
 
-    public int afficherMenuCommunications(){
+    public int afficherMenuCommunications() {
         System.out.println("Menu Gerer Communications");
         System.out.println("1. Créer une Communication");
         System.out.println("2. Modifier une Communication");
@@ -496,7 +495,7 @@ public class IHM {
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
-        while(choix != 1 || choix!= 2 || choix != 3 ){
+        while (choix != 1 || choix != 2 || choix != 3) {
             System.out.println("Choix inconnu veuillez choisir parmi ces 3 options :");
             System.out.println("1. Créer une Communication");
             System.out.println("2. Modifier une Communication");
@@ -506,7 +505,8 @@ public class IHM {
         }
         return choix;
     }
-    public int afficherMenuComptes(){
+
+    public int afficherMenuComptes() {
         System.out.println("Menu Gérer Comptes");
         System.out.println("1. Donner Droits Admin");
         System.out.println("2. Créer Compte GenConf");
@@ -514,7 +514,7 @@ public class IHM {
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
-        while(choix != 1 || choix!= 2 || choix != 3 ){
+        while (choix != 1 || choix != 2 || choix != 3) {
             System.out.println("Choix inconnu veuillez choisir parmi ces 3 options :");
             System.out.println("Menu Gérer Comptes");
             System.out.println("1. Donner Droits Admin");
@@ -525,7 +525,8 @@ public class IHM {
         }
         return choix;
     }
-    public int afficherMenuGeneral(){
+
+    public int afficherMenuGeneral() {
         System.out.println("Menu Général");
         System.out.println("1. Gérer Session");
         System.out.println("2. Gérer Communications");
@@ -537,7 +538,7 @@ public class IHM {
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
-        while(choix != 1 || choix!= 2 || choix != 3 || choix !=4 || choix !=5 || choix !=6 || choix!=7){
+        while (choix != 1 || choix != 2 || choix != 3 || choix != 4 || choix != 5 || choix != 6 || choix != 7) {
             System.out.println("Choix inconnu veuillez choisir parmi ces 7 options :");
             System.out.println("Menu Général");
             System.out.println("1. Gérer Session");
@@ -552,14 +553,15 @@ public class IHM {
         }
         return choix;
     }
-    public int afficherMenuInfosConferences(){
+
+    public int afficherMenuInfosConferences() {
         System.out.println("Menu Informations Conférence");
         System.out.println("1. Gérer Session");
         System.out.println("2. Gérer Communications");
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
-        while(choix != 1 || choix!= 2){
+        while (choix != 1 || choix != 2) {
             System.out.println("Choix inconnu veuillez choisir parmi ces 2 options :");
             System.out.println("Menu Informations Conférence");
             System.out.println("1. Gérer Session");
@@ -568,7 +570,8 @@ public class IHM {
         }
         return choix;
     }
-    public int afficherMenuSessions(){
+
+    public int afficherMenuSessions() {
         System.out.println("Menu Gérer Sessions");
         System.out.println("1. Créer Session");
         System.out.println("2. Modifier Session");
@@ -576,7 +579,7 @@ public class IHM {
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
-        while(choix != 1 || choix!= 2 || choix != 3 ){
+        while (choix != 1 || choix != 2 || choix != 3) {
             System.out.println("Choix inconnu veuillez choisir parmi ces 3 options :");
             System.out.println("Menu Gérer Sessions");
             System.out.println("1. Créer Session");
@@ -587,14 +590,15 @@ public class IHM {
         }
         return choix;
     }
-    public int afficherMenuTracks(){
+
+    public int afficherMenuTracks() {
         System.out.println("Menu Gérer Tracks");
         System.out.println("1. Créer Tracks");
         System.out.println("2. Supprimer Tracks");
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
-        while(choix != 1 || choix!= 2  ){
+        while (choix != 1 || choix != 2) {
             System.out.println("Choix inconnu veuillez choisir parmi ces 2 options :");
             System.out.println("Menu Gérer Tracks");
             System.out.println("1. Créer Tracks");
@@ -604,7 +608,8 @@ public class IHM {
         }
         return choix;
     }
-    public int afficherMenuTypesCommunication(){
+
+    public int afficherMenuTypesCommunication() {
         System.out.println("Menu Gérer Type Communications");
         System.out.println("1. Créer TypeCommunication");
         System.out.println("2. Modifier un Type Communication");
@@ -612,7 +617,7 @@ public class IHM {
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
-        while(choix != 1 || choix!= 2 || choix != 3 ){
+        while (choix != 1 || choix != 2 || choix != 3) {
             System.out.println("Choix inconnu veuillez choisir parmi ces 3 options :");
             System.out.println("Menu Gérer Type Communications");
             System.out.println("1. Créer TypeCommunication");
@@ -623,47 +628,49 @@ public class IHM {
         }
         return choix;
     }
-    
+
     public void afficherNomConference(Conference conference) {
-        System.out.println("Nom Conférence : "+ conference.getNom());
+        System.out.println("Nom Conférence : " + conference.getNom());
     }
 
     public void afficherNomConferences(Map<String, Conference> conferences) {
-        for(Map.Entry<String, Conference>Str : this.conferences.entrySet()){
+        for (Map.Entry<String, Conference> Str : this.conferences.entrySet()) {
             System.out.println(Str.getValue().toString());
         }
     }
 
     public void afficherTitreCommunication(Communication communication) {
-       System.out.println("titre : "+communication.getTitre);
-       System.out.println("numero : "+communication.getNumero); 
+        System.out.println("titre : " + communication.getTitre);
+        System.out.println("numero : " + communication.getNumero);
     }
-    public void afficherUtilisateurs(Map<String,Utilisateur>utilisateurs){
-        for(Map.Entry<String, Utilisateur>Str : this.utilisateurs.entrySet()){
+
+    public void afficherUtilisateurs(Map<String, Utilisateur> utilisateurs) {
+        for (Map.Entry<String, Utilisateur> Str : this.utilisateurs.entrySet()) {
             System.out.println(Str.getValue().toString());
         }
     }
-    public boolean demanderARemplacerSessionDeCommunication(){
+
+    public boolean demanderARemplacerSessionDeCommunication() {
         System.out.println("Cette communication est déja prévue pour une session, voulez-vous la remplacer?");
         System.out.println("1. Oui");
         System.out.println("2. Non");
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
-        while(choix != 1 || choix!= 2){
-            System.out.println("Choix inconnu veuillez choisir parmi ces 2 options :"); 
+        while (choix != 1 || choix != 2) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces 2 options :");
             System.out.println("Cette communication est déja prévue pour une session, voulez-vous la remplacer?");
             System.out.println("1. Oui");
             System.out.println("2. Non");
-            System.out.println("Votre choix : "); 
+            System.out.println("Votre choix : ");
             choix = scanner.nextInt();
         }
-        if (choix==1){
+        if (choix == 1) {
             return true;
-        }        
+        }
     }
 
-    public String demanderNomSession(){
+    public String demanderNomSession() {
         System.out.println("Nom session à supprimer");
         Scanner scanner = new Scanner(System.in);
         String str = scanner.nextLine();
@@ -677,152 +684,288 @@ public class IHM {
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
-        while(choix != 1 || choix!= 2){
-            System.out.println("Choix inconnu veuillez choisir parmi ces 2 options :"); 
+        while (choix != 1 || choix != 2) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces 2 options :");
             System.out.println("Voulez vous modifier la communication ?");
             System.out.println("1. Oui");
             System.out.println("2. Non");
-            System.out.println("Votre choix : "); 
+            System.out.println("Votre choix : ");
             choix = scanner.nextInt();
         }
-        if (choix==1){
+        if (choix == 1) {
             return true;
-        }        
+        }
 
     }
 
-    public void demanderSiModifierSession() {
-
-    }
-
-    public void demanderSiPrevisualisationCommunication() {
-
-    }
-
-    public void demanderSiPrevisualisationSession() {
-
-    }
-
-    public Set<String> saisirAuteursCommunication() {
-
-    }
-
-    public Set<String> saisirInfosCommunication() {
-
-    }
-
-    public String saisirTitreCommunication() {
-
+    public boolean demanderSiPrevisualisationSession() {
+        System.out.println("Voulez vous prévisualiser une session ou quitter ?");
+        System.out.println("1. Oui");
+        System.out.println("2. Non");
+        System.out.println("Votre choix : ");
+        Scanner scanner = new Scanner(System.in);
+        int choix = scanner.nextInt();
+        while (choix != 1 || choix != 2) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces 2 options :");
+            System.out.println("Voulez vous modifier la communication ?");
+            System.out.println("1. Oui");
+            System.out.println("2. Non");
+            System.out.println("Votre choix : ");
+            choix = scanner.nextInt();
+        }
+        if (choix == 1) {
+            return true;
+        }
     }
 
     public void notifier(String notification) {
-
+        System.out.println(notification);
     }
 
     public int optionsModifierCommunication() {
+        System.out.println("Options Modifiables : ");
+        System.out.println("1. Titre");
+        System.out.println("2. Auteurs");
+        System.out.println("3. lien vers PDF");
+        System.out.println("4. Lien Video");
+        System.out.println("5. Date");
+        System.out.println("6. Horaires");
+        System.out.println("7. Type Communication");
+        System.out.println("8. Orateurs");
+        System.out.println("9. Correspondant");
+        System.out.println("Votre choix : ");
+        Scanner scanner = new Scanner(System.in);
+        int choix = scanner.nextInt();
+        while (choix > 0 && choix < 10) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces 9 options :");
+            System.out.println("Options Modifiables : ");
+            System.out.println("1. Titre");
+            System.out.println("2. Auteurs");
+            System.out.println("3. lien vers PDF");
+            System.out.println("4. Lien Video");
+            System.out.println("5. Date");
+            System.out.println("6. Horaires");
+            System.out.println("7. Type Communication");
+            System.out.println("8. Orateurs");
+            System.out.println("9. Correspondant");
+            System.out.println("Votre choix : ");
+            choix = scanner.nextInt();
+        }
+        return choix;
+    }
 
+    public int optionsModifierConférence() {
+        System.out.println("Options Modifiables : ");
+        System.out.println("1. Nom de la Conférence");
+        System.out.println("2. Thème");
+        System.out.println("3. Lieu");
+        System.out.println("4. Date de Début");
+        System.out.println("5. Date de Fin");
+        System.out.println("6. Date T1");
+        System.out.println("7. Date T2");
+        System.out.println("8. Date T3");
+        System.out.println("9. Date T4");
+        System.out.println("10. Modifier Toutes les Dates");
+        System.out.println("11. Texte d'Accueil");
+        System.out.println("12. Logo");
+        System.out.println("Votre choix : ");
+        Scanner scanner = new Scanner(System.in);
+        int choix = scanner.nextInt();
+        while (choix > 0 && choix < 13) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces 12 options :");
+            System.out.println("Options Modifiables : ");
+            System.out.println("1. Nom de la Conférence");
+            System.out.println("2. Thème");
+            System.out.println("3. Lieu");
+            System.out.println("4. Date de Début");
+            System.out.println("5. Date de Fin");
+            System.out.println("6. Date T1");
+            System.out.println("7. Date T2");
+            System.out.println("8. Date T3");
+            System.out.println("9. Date T4");
+            System.out.println("10. Modifier Toutes les Dates");
+            System.out.println("11. Texte d'Accueil");
+            System.out.println("12. Logo");
+            System.out.println("Votre choix : ");
+            choix = scanner.nextInt();
+        }
+        return choix;
     }
 
     public int optionsModifierSession() {
+        System.out.println("Options Modifiables : ");
+        System.out.println("1. Animateurs");
+        System.out.println("2. Intitule");
+        System.out.println("3. Type");
+        System.out.println("4. Date");
+        System.out.println("5. Horaires");
+        System.out.println("6. Video Associée");
+        System.out.println("7. Salle");
+        System.out.println("8. Ajouter une Communication");
+        System.out.println("9. Supprimer une Communication");
+        System.out.println("Votre choix : ");
+        Scanner scanner = new Scanner(System.in);
+        int choix = scanner.nextInt();
+        while (choix > 0 && choix < 10) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces 9 options :");
+            System.out.println("Options Modifiables : ");
+            System.out.println("1. Animateurs");
+            System.out.println("2. Intitule");
+            System.out.println("3. Type");
+            System.out.println("4. Date");
+            System.out.println("5. Horaires");
+            System.out.println("6. Video Associée");
+            System.out.println("7. Salle");
+            System.out.println("8. Ajouter une Communication");
+            System.out.println("9. Supprimer une Communication");
+            System.out.println("Votre choix : ");
+            choix = scanner.nextInt();
+        }
+        return choix;
+    }
 
+    public Set<Set<String>> saisirAuteursCommunication() {
+        Set<String[]> auteurs;
+        while (continuer) {
+            System.out.println("Entrez le nom, prenom, mail");
+            auteurs.add(saisirUtilisateur());
+        }
+
+    }
+
+    public Couleur saisirCouleurtrack() {
+        System.out.println("Entrez la couleur du track : ");
+        Scanner scanner = new Scanner(System.in);
+        String couleur = scanner.nextLine();
+        return couleur.getCouleur();
+    }
+
+    public boolean saisirCreationConference(Map<String, Conference> conferences) {
+        System.out.println("Voulez-vous créer une conférence?");
+        System.out.println("1. Oui");
+        System.out.println("2. Non");
+        Scanner scanner = new Scanner(System.in);
+        int choix = scanner.nextInt();
+        while (choix > 0 && choix < 3) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces 2 options :");
+            System.out.println("Voulez-vous créer une conférence?");
+            System.out.println("1. Oui");
+            System.out.println("2. Non");
+            choix = scanner.nextInt();
+        }
+        if (choix == 1) {
+            return true;
+        }
     }
 
     public LocalDate saisirDate() {
-
+        System.out.println("Veuillez saisir la date : (dd/MM/YYYY) ");
+        Scanner scanner = new Scanner(System.in);
+        String date = scanner.nextLine();
+        LocalDate localDate = LocalDate.parse(date);
+        return localDate;
     }
 
-    public string saisirHeure() {
-
+    public LocalTime saisirHeure() {
+        System.out.println("Saissiez l'heure : (hh/mm/ss) ");
+        Scanner scanner = new Scanner(System.in);
+        LocalTime localTime = LocalTime.parse(scanner);
+        return localTime;
     }
 
-    public void saisirInfosGenerales() {
+    public String[7] saisirInfosCommunication(TypeCommunication typeCommunication){
+        String[7] str;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Saisir le titre : ");
+        str[0]=scanner.nextLine();   
+        System.out.println("Saisir les auteurs : ");
+        str[1]=scanner.nextLine();
+        System.out.println("Saisir la Date : ");
+        str[2]=scanner.nextLine();
+        System.out.println("Saisir l'heure de début : ");
+        str[3]=scanner.nextLine();
+        System.out.println("Saisir l'heure de fin : ");
+        str[4]=scanner.nextLine();
+        if(typeCommunication.videoObligatoire){
+            System.out.println("Saisir le lien de la vidéo : ");
+            str[5]=scanner.nextLine();
+        }
+        if(typeCommunication.pDFObligatoire){
+            System.out.println("Saisir le lien PDF : ");
+            str[6]=scanner.nextLine();
+        }
+        return str;
+    }
 
+    public int saisirInfosTypeCommunication() {
+        System.out.println("Choisir si des documents sont obligatoires");
+        System.out.println(("1. Vidéo obligatoire"));
+        System.out.println(("2. PDF obligatoire"));
+        System.out.println(("3. Vidéo et PDF obligatoire"));
+        System.out.println(("4. pas de vidéo ni de PDF obligatoire obligatoire"));
+        Scanner scanner = new Scanner(System.in);
+        int choix = scanner.nextInt();
+        while (choix > 0 && choix < 5) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces 4 options :");
+            System.out.println("Choisir si des documents sont obligatoires");
+            System.out.println(("1. Vidéo obligatoire"));
+            System.out.println(("2. PDF obligatoire"));
+            System.out.println(("3. Vidéo et PDF obligatoire"));
+            System.out.println(("4. pas de vidéo ni de PDF obligatoire obligatoire"));
+            choix = scanner.nextInt();
+        }
+        return choix;
     }
 
     public String saisirLibelleTypeCommunication() {
-
+        System.out.println("Saisir le libéllé de Type de Communication : ");
+        Scanner scanner = new Scanner(System.in);
+        String libelle = scanner.nextLine();
+        return libelle;
     }
 
     public String saisirLienPDF() {
-
+        System.out.println("Veuillez saisir le lien PDF");
+        Scanner scanner = new Scanner(System.in);
+        String lien = scanner.nextLine();
+        return lien;
     }
 
     public String saisirLienVideo() {
-
+        System.out.println("Veuillez saisir le lien Vidéo");
+        Scanner scanner = new Scanner(System.in);
+        String lien = scanner.nextLine();
+        return lien;
     }
 
-    public void saisirMailUtilisateur() {
-
+    public String saisirLieuConference() {
+        System.out.println("Veuillez saisir le lieu");
+        Scanner scanner = new Scanner(System.in);
+        String lieu = scanner.nextLine();
+        return lieu;
     }
 
-    public void saisirNomConference() {
+    public String saisirLogo() {
+        System.out.println("Veuillez saisir le lien du logo");
+        Scanner scanner = new Scanner(System.in);
+        String logo = scanner.nextLine();
+        return logo;
+    }
 
+    public String saisirNomConference(Map<String,Conference>conferences){
+        System.out.println("Liste des conférences existantes : ");
+        conferences.getNomConf;
+        System.out.println("Entrez le nom de la conférence : ");
+        Scanner scanner = new Scanner(System.in);
+        String nom=scanner.nextLine();
+        return nom;
     }
 
     public String saisirNomTypeCommunication() {
-
+        System.out.println("Saisir le libelle du Type Communication");
+        Scanner scanner = new Scanner(System.in);
+        String nom = scanner.nextLine();
+        return nom;
     }
 
-    public String saisirNouveauTypeSession() {
-
-    }
-
-    public void saisirNouvelleConference(String nomConf) {
-
-    }
-
-    public void saisirNouvelleSession() {
-
-    }
-
-    public int saisirNumeroAction() {
-
-    }
-
-    public int saisirNumeroCommunication(Map<int,Communication>communications){
-
-    }
-
-    public void saisirPrenomUtilisateur() {
-
-    }
-
-    public String saisirSalle() {
-
-    }
-
-    public boolean saisirSiPDFObligatoire() {
-
-    }
-
-    public boolean saisirSiVideoObligatoire() {
-
-    }
-
-    public String saisirSupprimerOuAjouterUtilisateur(Map<String, Utilisateur> utilisateur) {
-
-    }
-
-    public String saisirSupprimerOuAjouterUtilisateur(Set<String> utilisateurs) {
-
-    }
-
-    public String saisirTitreConference() {
-
-    }
-
-    public String saisirUtilisateur(){
-
-    }
-
-    public String selectionnerSession(Map<String,Session>){
-
-    }
-
-
-
-
-
-
-   
 }
