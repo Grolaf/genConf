@@ -33,12 +33,10 @@ public class Session {
         {
             throw new Error("Impossible de créer la session (paramètres incorrects)");
         }
-        
-        
     } 
 
    /***********************************************************/
-    /**     Getters     **/
+   /**     Getters     **/
 
     public Map<String, Utilisateur> getAnimateurs() {
         return this.animateurs;
