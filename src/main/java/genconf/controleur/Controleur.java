@@ -78,16 +78,14 @@ public class Controleur {
     }
 
     public Utilisateur creerCompteGenConf() {
-    	String nom = ihm.saisirNomUtilisateur();
-    	String prenom = ihm.saisirPrenomUtilisateur();
-    	String mail = ihm.saisirMailUtilisateur();
+    	String[3] infosUtilisateur = ihm.saisirUtilisateur();
 
-    	Utilisateur u = genconf.getUtilisateur(nom, prenom, mail);
+    	Utilisateur u = genconf.getUtilisateur(infosUtilisateur[0], infosUtilisateur[1], infosUtilisateur[2]);
     	if (u) {
     		ihm.notifier("Le compte existe déjà");
     	} else {
-    		u = new Utilisateur(mail, nom, prenom);
-    		genconf.addCompteConf(nom, prenom, mail);
+    		u = new Utilisateur(infosUtilisateur[2], infosUtilisateur[0], infosUtilisateur[1]);
+    		genconf.addCompteConf(infosUtilisateur[0], infosUtilisateur[1], infosUtilisateur[2]);
     		ihm.notifier("Le compte a été créé");
     	}
     }
