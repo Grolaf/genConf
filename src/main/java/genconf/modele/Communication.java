@@ -30,8 +30,7 @@ public class Utilisateur {
     private Utilisateur correspondant;
     private HashMap<String> orateurs;
 
-    // ALED LIGNE 33
-    private Conference conference;
+    
 
     
 
@@ -89,10 +88,31 @@ public class Utilisateur {
  * @param correspondant  the correspondant
  * @return boolean
  */
-    public boolean setCorrespondant(Utilisateur correspondant){ 
+    public boolean setCorrespondant(Utilisateur nouveauCorrespondant){ 
 
-          this.correspondant=correspondant;
-    }
+    for (this.orateurs) 
+    {
+      notegal = nouveauCorrespondant != orateur;
+    } 
+
+    if (!notegal){
+
+
+    this.correspondant.removeCommunicationEnTantQueCorrespondant(this);
+    nouveauCorrespondant.addCommunicationEnTantQueCorrespondant(this);
+
+    this.correspondant=nouveauCorrespondant;
+
+    return true;
+     }
+     return false;
+         }
+
+/* Valeur de retour :
+
+0 : RAS
+1 : Erreur : echec dans l'attribution
+2 : Erreur : le correspondant choisi n'est pas un orateur de la communication
 
 
 /** 
@@ -103,6 +123,7 @@ public class Utilisateur {
  */
     public void setDate(LocalDate date){ 
 
+        dateSession=getDate();
         this.date=date;
     }
 
@@ -271,29 +292,46 @@ public class Utilisateur {
     }
    
 
-    // Fonction Suprrimer REMOVE:
+    //------- Fonction Suprrimer REMOVE:
 
 
 /** 
  *
- * Remove auteurs
+ * Remove un auteur
  *
  * @param auteur  the auteur
  */
-    public boolean removeAuteurs(String auteur){ 
+    public boolean removeAuteur(String auteur){ 
 
         auteurs.remove(auteur);
+        return true;
+
     }
 
 /** 
  *
  * Remove orateurs
  *
- * @param auteur  the orateurs 
+ * @param orateurs  the orateurs 
  */
     public boolean removeOrateur(String orateursASupprimer){ // ALED  : 294
         removeCommunicationEnTantQueOrateur(this)
         orateurs.remove(orateursASupprimer);
+        return true;
+
+    }
+
+/** 
+ *
+ * Remove session
+ *
+ * @param session  the session
+ */
+    public boolean removeSession(Session session){ 
+
+        this.session=null;
+        return true;
+
     }
 
 
@@ -304,8 +342,10 @@ public class Utilisateur {
  *
  * @param libelle  the libelle
  */
-    public void removeTypeCommunication(String libelle){ 
+    public boolean removeTypeCommunication(TypeCommunication typecommunication ){ 
 
+        this.typecommunication=null;
+        return true;
 
     }
 
