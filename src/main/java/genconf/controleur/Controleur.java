@@ -238,10 +238,10 @@ public class Controleur {
     			modifierSalleSession(session);
     			break;
     		case 8:
-    			addCommunicationASession(communication, session, conference);
+    			addCommunicationASession(NULL, session, conference);
     			break;
     		case 9:
-    			removeCommunicationASession(communication, conference, session);
+    			removeCommunicationASession(NULL, conference, session);
     			break;
     		}
     	}
@@ -260,6 +260,8 @@ public class Controleur {
     			ihm.afficherCaracteristiquesTypeCommunication(e);
     			choix = ihm.saisirOptionModifierTypeCommunication();
     			switch (choix) {
+    			case 0:
+    				break;
     			case 1:
     				String nLibelle = ihm.saisirLibelleTypeCommunication();
     				boolean r = e.setLibelle(nLibelle);
@@ -287,8 +289,6 @@ public class Controleur {
     					ihm.notifier("L'attribut PDF obligatoire n'a pu être modifié");
     				}
     				break;
-    			case 4:
-    				break;
     			}
     		}
     	}
@@ -302,7 +302,24 @@ public class Controleur {
     	}
     }
     
-    
+    public void previsualiserConference(Conference conference) {
+    	int choix = 1;
+    	while (choix != 0) {
+    		ihm.afficherNomConference(conference);
+    		HashMap<String, Session> sessions = conference.getSessions();
+    		ihm.afficherLibelleSessions(sessions);
+    		boolean choix = ihm.demandeSiPrevisualisationSession();
+    		if (choix) {
+    			String intitule = ihm.demanderNomSession();
+    			Session sessionAPrevisualiser = conference.getSession(intitule);
+    			if (sessionAPrevisualiser) {
+    				previsualiserSession(session);
+    			} else {
+    				ihm.notifier("Cette session n'existe pas");
+    			}
+    		}
+    	}
+    }
     
     
     
