@@ -1,8 +1,7 @@
-package modele;
+package genconf.modele;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Hashset;
 import java.util.Map;
 import genconf.modele.*;
 import java.util.HashMap;
