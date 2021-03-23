@@ -1,5 +1,6 @@
 package genconf.modele;
 
+import genconf.modele.*;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,9 +17,9 @@ public class Session {
     private LocalTime heureFin;
     private String lienVersVideo;
     private String salle;
-    private Map<String, Utilisateur> animateurs;
-    private Map<Integer, Communication> communications;
-    private Map<String, Track> tracks;
+    private HashMap<String, Utilisateur> animateurs;
+    private HashMap<Integer, Communication> communications;
+    private HashMap<String, Track> tracks;
     private Conference conference;
 
     Session(String intitule, String type, LocalDate date, LocalTime heureDebut, LocalTime heureFin, String videoAssociee, String salle, Conference conference, Communcation communication) {
@@ -225,7 +226,7 @@ public class Session {
         
         str += "\t Tracks : \n";
         
-        for(Map.Entry<String, Track> trk : this.tracks.entrySet())
+        for(HashMap.Entry<String, Track> trk : this.tracks.entrySet())
         {
             str += "\t\t " + trk.getValue().toString() + "\n";
         }
