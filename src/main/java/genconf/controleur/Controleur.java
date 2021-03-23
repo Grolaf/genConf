@@ -153,6 +153,8 @@ public class Controleur {
     	}
     }
     
+
+    
     public void modifierSession(Conference conference, Session session) {
     	while (session == NULL) {
     		HashMap<String, Session> sessions = conference.getSessions();
@@ -241,6 +243,14 @@ public class Controleur {
     				break;
     			}
     		}
+    	}
+    }
+    
+    public void previsualiserCommunication(Communication communication, Conference conference) {
+    	ihm.afficherInfosCommunication(communication);
+    	boolean modifier = ihm.demanderSiModifierCommunication();
+    	if (modifier) {
+    		modifierCommunication(conference, communication);
     	}
     }
     
