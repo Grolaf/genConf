@@ -71,7 +71,7 @@ public class Communication {
             
 
             
-            if(!setHoraires(heureDebut, heureFin))
+            if(!(setHoraires(heureDebut, heureFin) == 0))
             {
                throw new Error("L'heure de début est ultérieure à la date de fin : Abort");
             }
@@ -102,6 +102,11 @@ public class Communication {
 
         // ---------------------------Getters :
 
+        
+        public int getNumero()
+        {
+            return this.numero;
+        }
 
     /** 
      *
