@@ -1,4 +1,4 @@
-package modele;
+package genconf.modele;
 
 import java.io.Serializable;
 import java.time.LocalDate;

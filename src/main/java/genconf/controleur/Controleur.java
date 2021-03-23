@@ -83,6 +83,7 @@ public class Controleur {
     		ihm.notifier("La communication n'a pu être créée");
     	}
     	return communication;
+    }
     
     /**************************************************************************************/
     /**************************************************************************************/
@@ -90,7 +91,6 @@ public class Controleur {
     
     public void demarrerApplication()
     {
-        Persisteur.lireEtat();
         boolean choix;
         int choixSwitch;
         Commande cmd = Commande.PREVISUALISER_CONFERENCE;
@@ -111,7 +111,7 @@ public class Controleur {
         
         while(cmd != Commande.QUITTER)
         {
-            cmd = Commande.valueofCode(this.ihm.afficherMenuGeneral());
+            cmd = Commande.valueOfCode(this.ihm.afficherMenuGeneral());
             
             switch(cmd)
             {
@@ -124,7 +124,7 @@ public class Controleur {
                             creerSession(conferenceSelectionnee);
                             break;
                         case 2:
-                            modifierSessiono(conferenceSelectionnee, null);
+                            modifierSession(conferenceSelectionnee, null);
                             break;
                         case 3:
                             removeSession(conferenceSelectionnee);
@@ -218,13 +218,13 @@ public class Controleur {
                     switch(choixSwitch)
                     {
                         case 1:
-                            creerCompteGenConf(conferenceSelectionnee);
+                            creerCompteGenConf();
                             break;
                         case 2:
-                            donnerDroitsAdminConf(conferenceSelectionnee);
+                            donnerDroitsAdmin(conferenceSelectionnee);
                             break;
                         case 3:
-                            donnerDroitsInscrits(conferenceSelectionnee);
+                            donnerDroitsInscrit(conferenceSelectionnee);
                             break;
                         default :
                             this.ihm.notifier("Mauvaise selection");
@@ -243,8 +243,6 @@ public class Controleur {
         }
         
         this.ihm.notifier("Au revoir et à bientot ! ");
-        
-        Persisteur.sauverEtat(genconf);        
     }
     
     public Conference selectionnerConference()
@@ -472,7 +470,7 @@ public class Controleur {
         }
     }
     
-    private void modifierDateDebutConf(conference)
+    private void modifierDateDebutConf(Conference conference)
     {
         LocalDate date;
         this.ihm.notifier("Veuillez saisir la nouvelle date de début");
