@@ -67,14 +67,15 @@ public class Controleur {
     			orateurs.put(infosAuteur[2], auteurU);
     		}
     	}
-    	
-    	Communication communication = Communication(correspondant, infosCommunication[0], auteurs, infosCommunication[1], infosCommunication[2], infosCommunication[3], infosCommunication[4], infosCommunication[5], orateurs, type, conference);
+        LocalDate date = LocalDate.parse(infosCommunication[3]);
+    	Communication communication = Communication(correspondant, infosCommunication[0], auteurs, infosCommunication[1], infosCommunication[2], date, infosCommunication[4], infosCommunication[5], orateurs, type, conference);
     	boolean r = conference.addCommunication(communication, communication.getNumero());
     	if (r) {
     		ihm.notifier("La communication a correctement été créée");
     	} else {
     		ihm.notifier("La communication n'a pu être créée");
     	}
+    	return communication;
     }
 
     public Utilisateur creerCompteGenConf() {
@@ -88,7 +89,18 @@ public class Controleur {
     		genconf.addCompteConf(infosUtilisateur[0], infosUtilisateur[1], infosUtilisateur[2]);
     		ihm.notifier("Le compte a été créé");
     	}
+    	return u;
     }
     
-    
+    public Session creerSession(Conference conference) {
+    	HashMap<String, Session> sessions = conference.getSessions();
+    	ihm.afficherInfosSessions(sessions);
+    	
+    	String[7] infosNouvelleSession = ihm.saisirNouvelleSession(conference);
+    	Session nouvelleSession = new Session(infosNouvelleSession[0], infosNouvelleSession[1], infosNouvelleSession[2], infosNouvelleSession[3], infosNouvelleSession[4], infosNouvelleSession[5], infosNouvelleSession[6], conference);
+    	
+    	boolean r = conference.addSession(nouvelleSession);
+    	ihm.notifier("La session a correctmeent été crée");
+    	return session;
+    }
 }
