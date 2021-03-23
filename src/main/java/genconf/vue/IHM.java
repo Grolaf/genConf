@@ -13,6 +13,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.function.Function;
 import org.apache.commons.validator.routines.EmailValidator;
+import java.util.Map;
 
 /**
  * La classe CLI est responsable des interactions avec l'utilisa·teur/trice en
@@ -464,24 +465,24 @@ public class IHM {
     }
 
     public void afficherInformationsConf(Conference conference) {
-        System.out.println("Conférence : " + conference.getInfoConf);
+        System.out.println("Conférence : " + conference.toString());
     }
 
     public void afficherInfosCommunication(Communication comm) {
         System.out.println("Informations Communication : " + comm.toString());
     }
 
-    public void afficherInfosSessions(Map<String, Sessions> s) {
-        for (Map.Entry<String, Sessions> Str : this.s.entrySet()) {
-            System.out.println(Str.getValue().toString());
+    public void afficherInfosSessions(Map<String, Session> s) {
+        for (Map.Entry<String, Session> Str : this.s.entrySet()) {
+            System.out.println(Str.getValue().toString()); 
         }
     }
 
-    InfosSession(Session session){
-        System.out.println("Informations Session : "+session.toString());
+    public void afficherInfosSession(Session session) {
+        System.out.println("Informations Session : " + session.toString());
     }
 
-    public void afficherLibelleSession(Map<String, Session> session) {
+    public void afficherLibelleSessions(Map<String, Session> session) {
         for (Map.Entry<String, Session> str : this.session.entrySet()) {
             System.out.println(str.getValue().toString());
         }
@@ -492,14 +493,16 @@ public class IHM {
         System.out.println("1. Créer une Communication");
         System.out.println("2. Modifier une Communication");
         System.out.println("3. Supprimer une Communication");
+        System.out.println("0. Quitter");
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
         while (choix != 1 || choix != 2 || choix != 3) {
-            System.out.println("Choix inconnu veuillez choisir parmi ces 3 options :");
+            System.out.println("Choix inconnu veuillez choisir parmi ces options :");
             System.out.println("1. Créer une Communication");
             System.out.println("2. Modifier une Communication");
             System.out.println("3. Supprimer une Communication");
+            System.out.println("0. Quitter");
             System.out.println("Votre choix : ");
             choix = scanner.nextInt();
         }
@@ -511,15 +514,17 @@ public class IHM {
         System.out.println("1. Donner Droits Admin");
         System.out.println("2. Créer Compte GenConf");
         System.out.println("3. Donner Droits Inscrit");
+        System.out.println("0. Quitter");
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
         while (choix != 1 || choix != 2 || choix != 3) {
-            System.out.println("Choix inconnu veuillez choisir parmi ces 3 options :");
+            System.out.println("Choix inconnu veuillez choisir parmi ces options :");
             System.out.println("Menu Gérer Comptes");
             System.out.println("1. Donner Droits Admin");
             System.out.println("2. Créer Compte GenConf");
             System.out.println("3. Donner Droits Inscrit");
+            System.out.println("0. Quitter");
             System.out.println("Votre choix : ");
             choix = scanner.nextInt();
         }
@@ -535,11 +540,12 @@ public class IHM {
         System.out.println("5. Créer Track");
         System.out.println("6. Gérer Compte");
         System.out.println("7. Prévisualiser Conférence");
+        System.out.println("0. Quitter");
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
-        while (choix != 1 || choix != 2 || choix != 3 || choix != 4 || choix != 5 || choix != 6 || choix != 7) {
-            System.out.println("Choix inconnu veuillez choisir parmi ces 7 options :");
+        while (choix < 0 || choix > 7) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces options :");
             System.out.println("Menu Général");
             System.out.println("1. Gérer Session");
             System.out.println("2. Gérer Communications");
@@ -548,6 +554,7 @@ public class IHM {
             System.out.println("5. Créer Track");
             System.out.println("6. Gérer Compte");
             System.out.println("7. Prévisualiser Conférence");
+            System.out.println("0. Quitter");
             System.out.println("Votre choix : ");
             choix = scanner.nextInt();
         }
@@ -558,14 +565,16 @@ public class IHM {
         System.out.println("Menu Informations Conférence");
         System.out.println("1. Gérer Session");
         System.out.println("2. Gérer Communications");
+        System.out.println("0. Quitter");
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
-        while (choix != 1 || choix != 2) {
-            System.out.println("Choix inconnu veuillez choisir parmi ces 2 options :");
+        while (choix != 1 || choix != 2 || choix != 0) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces options :");
             System.out.println("Menu Informations Conférence");
             System.out.println("1. Gérer Session");
             System.out.println("2. Gérer Communications");
+            System.out.println("0. Quitter");
             choix = scanner.nextInt();
         }
         return choix;
@@ -576,15 +585,17 @@ public class IHM {
         System.out.println("1. Créer Session");
         System.out.println("2. Modifier Session");
         System.out.println("3. Supprimer Session");
+        System.out.println("0. Quitter");
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
-        while (choix != 1 || choix != 2 || choix != 3) {
-            System.out.println("Choix inconnu veuillez choisir parmi ces 3 options :");
+        while (choix != 1 || choix != 2 || choix != 3 || choix != 0) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces options :");
             System.out.println("Menu Gérer Sessions");
             System.out.println("1. Créer Session");
             System.out.println("2. Modifier Session");
             System.out.println("3. Supprimer Session");
+            System.out.println("0. Quitter");
             System.out.println("Votre choix : ");
             choix = scanner.nextInt();
         }
@@ -595,14 +606,16 @@ public class IHM {
         System.out.println("Menu Gérer Tracks");
         System.out.println("1. Créer Tracks");
         System.out.println("2. Supprimer Tracks");
+        System.out.println("0. Quitter");
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
-        while (choix != 1 || choix != 2) {
-            System.out.println("Choix inconnu veuillez choisir parmi ces 2 options :");
+        while (choix != 1 || choix != 2 || choix != 0) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces options :");
             System.out.println("Menu Gérer Tracks");
             System.out.println("1. Créer Tracks");
             System.out.println("2. Supprimer Tracks");
+            System.out.println("0. Quitter");
             System.out.println("Votre choix : ");
             choix = scanner.nextInt();
         }
@@ -614,15 +627,17 @@ public class IHM {
         System.out.println("1. Créer TypeCommunication");
         System.out.println("2. Modifier un Type Communication");
         System.out.println("3. Supprimer un Type Communication");
+        System.out.println("0. Quitter");
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
-        while (choix != 1 || choix != 2 || choix != 3) {
-            System.out.println("Choix inconnu veuillez choisir parmi ces 3 options :");
+        while (choix != 1 || choix != 2 || choix != 3 || choix != 0) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces options :");
             System.out.println("Menu Gérer Type Communications");
             System.out.println("1. Créer TypeCommunication");
             System.out.println("2. Modifier un Type Communication");
             System.out.println("3. Supprimer un Type Communication");
+            System.out.println("0. Quitter");
             System.out.println("Votre choix : ");
             choix = scanner.nextInt();
         }
@@ -654,19 +669,23 @@ public class IHM {
         System.out.println("Cette communication est déja prévue pour une session, voulez-vous la remplacer?");
         System.out.println("1. Oui");
         System.out.println("2. Non");
+        System.out.println("0. Quitter");
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
-        while (choix != 1 || choix != 2) {
-            System.out.println("Choix inconnu veuillez choisir parmi ces 2 options :");
+        while (choix != 1 || choix != 2 || choix != 0) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces options :");
             System.out.println("Cette communication est déja prévue pour une session, voulez-vous la remplacer?");
             System.out.println("1. Oui");
             System.out.println("2. Non");
+            System.out.println("0. Quitter");
             System.out.println("Votre choix : ");
             choix = scanner.nextInt();
         }
         if (choix == 1) {
             return true;
+        } else {
+            return false;
         }
     }
 
@@ -681,19 +700,23 @@ public class IHM {
         System.out.println("Voulez-vous modifier la communication ?");
         System.out.println("1. Oui");
         System.out.println("2. Non");
+        System.out.println("0. Quitter");
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
-        while (choix != 1 || choix != 2) {
-            System.out.println("Choix inconnu veuillez choisir parmi ces 2 options :");
+        while (choix != 1 || choix != 2 || choix != 0) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces options :");
             System.out.println("Voulez vous modifier la communication ?");
             System.out.println("1. Oui");
             System.out.println("2. Non");
+            System.out.println("0. Quitter");
             System.out.println("Votre choix : ");
             choix = scanner.nextInt();
         }
         if (choix == 1) {
             return true;
+        } else {
+            return false;
         }
 
     }
@@ -702,24 +725,28 @@ public class IHM {
         System.out.println("Voulez vous prévisualiser une session ou quitter ?");
         System.out.println("1. Oui");
         System.out.println("2. Non");
+        System.out.println("0. Quitter");
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
-        while (choix != 1 || choix != 2) {
-            System.out.println("Choix inconnu veuillez choisir parmi ces 2 options :");
+        while (choix != 1 || choix != 2 || choix != 0) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces options :");
             System.out.println("Voulez vous modifier la communication ?");
             System.out.println("1. Oui");
             System.out.println("2. Non");
+            System.out.println("0. Quitter");
             System.out.println("Votre choix : ");
             choix = scanner.nextInt();
         }
         if (choix == 1) {
             return true;
+        } else {
+            return false;
         }
     }
 
     public void notifier(String notification) {
-        System.out.println(notification);
+        System.out.println(notification.toString());
     }
 
     public int optionsModifierCommunication() {
@@ -733,11 +760,12 @@ public class IHM {
         System.out.println("7. Type Communication");
         System.out.println("8. Orateurs");
         System.out.println("9. Correspondant");
+        System.out.println("0. Quitter");
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
         while (choix < 0 || choix > 9) {
-            System.out.println("Choix inconnu veuillez choisir parmi ces 9 options :");
+            System.out.println("Choix inconnu veuillez choisir parmi ces options :");
             System.out.println("Options Modifiables : ");
             System.out.println("1. Titre");
             System.out.println("2. Auteurs");
@@ -748,6 +776,7 @@ public class IHM {
             System.out.println("7. Type Communication");
             System.out.println("8. Orateurs");
             System.out.println("9. Correspondant");
+            System.out.println("0. Quitter");
             System.out.println("Votre choix : ");
             choix = scanner.nextInt();
         }
@@ -768,11 +797,12 @@ public class IHM {
         System.out.println("10. Modifier Toutes les Dates");
         System.out.println("11. Texte d'Accueil");
         System.out.println("12. Logo");
+        System.out.println("0. Quitter");
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
         while (choix < 0 || choix > 12) {
-            System.out.println("Choix inconnu veuillez choisir parmi ces 12 options :");
+            System.out.println("Choix inconnu veuillez choisir parmi ces options :");
             System.out.println("Options Modifiables : ");
             System.out.println("1. Nom de la Conférence");
             System.out.println("2. Thème");
@@ -786,6 +816,7 @@ public class IHM {
             System.out.println("10. Modifier Toutes les Dates");
             System.out.println("11. Texte d'Accueil");
             System.out.println("12. Logo");
+            System.out.println("0. Quitter");
             System.out.println("Votre choix : ");
             choix = scanner.nextInt();
         }
@@ -803,11 +834,12 @@ public class IHM {
         System.out.println("7. Salle");
         System.out.println("8. Ajouter une Communication");
         System.out.println("9. Supprimer une Communication");
+        System.out.println("0. Quitter");
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
         while (choix < 0 || choix > 9) {
-            System.out.println("Choix inconnu veuillez choisir parmi ces 9 options :");
+            System.out.println("Choix inconnu veuillez choisir parmi ces options :");
             System.out.println("Options Modifiables : ");
             System.out.println("1. Animateurs");
             System.out.println("2. Intitule");
@@ -818,6 +850,7 @@ public class IHM {
             System.out.println("7. Salle");
             System.out.println("8. Ajouter une Communication");
             System.out.println("9. Supprimer une Communication");
+            System.out.println("0. Quitter");
             System.out.println("Votre choix : ");
             choix = scanner.nextInt();
         }
@@ -844,17 +877,21 @@ public class IHM {
         System.out.println("Voulez-vous créer une conférence?");
         System.out.println("1. Oui");
         System.out.println("2. Non");
+        System.out.println("0. Quitter");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
-        while (choix > 0 || choix < 3) {
-            System.out.println("Choix inconnu veuillez choisir parmi ces 2 options :");
+        while (choix < 0 || choix > 2) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces options :");
             System.out.println("Voulez-vous créer une conférence?");
             System.out.println("1. Oui");
             System.out.println("2. Non");
+            System.out.println("0. Quitter");
             choix = scanner.nextInt();
         }
         if (choix == 1) {
             return true;
+        } else {
+            return false;
         }
     }
 
@@ -873,26 +910,26 @@ public class IHM {
         return localTime;
     }
 
-    public String[] saisirInfosCommunication(TypeCommunication typeCommunication){
+    public String[] saisirInfosCommunication(TypeCommunication typeCommunication) {
         String str[];
         Scanner scanner = new Scanner(System.in);
         System.out.println("Saisir le titre : ");
-        str[0]=scanner.nextLine();   
+        str[0] = scanner.nextLine();
         System.out.println("Saisir les auteurs : ");
-        str[1]=scanner.nextLine();
+        str[1] = scanner.nextLine();
         System.out.println("Saisir la Date : (dd/MM/YYYY)");
-        str[2]=scanner.nextLine();
+        str[2] = scanner.nextLine();
         System.out.println("Saisir l'heure de début  : (hh/mm/ss)");
-        str[3]=scanner.nextLine();
+        str[3] = scanner.nextLine();
         System.out.println("Saisir l'heure de fin : (hh/mm/ss)");
-        str[4]=scanner.nextLine();
-        if(typeCommunication.videoObligatoire){
+        str[4] = scanner.nextLine();
+        if (typeCommunication.videoObligatoire) {
             System.out.println("Saisir le lien de la vidéo : ");
-            str[5]=scanner.nextLine();
+            str[5] = scanner.nextLine();
         }
-        if(typeCommunication.pDFObligatoire){
+        if (typeCommunication.pDFObligatoire) {
             System.out.println("Saisir le lien PDF : ");
-            str[6]=scanner.nextLine();
+            str[6] = scanner.nextLine();
         }
         return str;
     }
@@ -903,15 +940,17 @@ public class IHM {
         System.out.println(("2. PDF obligatoire"));
         System.out.println(("3. Vidéo et PDF obligatoire"));
         System.out.println(("4. pas de vidéo ni de PDF obligatoire obligatoire"));
+        System.out.println("0. Quitter");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
         while (choix < 0 || choix > 4) {
-            System.out.println("Choix inconnu veuillez choisir parmi ces 4 options :");
+            System.out.println("Choix inconnu veuillez choisir parmi ces options :");
             System.out.println("Choisir si des documents sont obligatoires");
             System.out.println(("1. Vidéo obligatoire"));
             System.out.println(("2. PDF obligatoire"));
             System.out.println(("3. Vidéo et PDF obligatoire"));
             System.out.println(("4. pas de vidéo ni de PDF obligatoire obligatoire"));
+            System.out.println("0. Quitter");
             choix = scanner.nextInt();
         }
         return choix;
@@ -952,12 +991,14 @@ public class IHM {
         return logo;
     }
 
-    public String saisirNomConference(Map<String,Conference>conferences){
+    public String saisirNomConference(Map<String, Conference> conferences) {
         System.out.println("Liste des conférences existantes : ");
-        conferences.getNomConf;
+        for (Map.Entry<String, Conference> Str : this.conferences.entrySet()) {
+            System.out.println(Str.getNom().toString());
+        }
         System.out.println("Entrez le nom de la conférence : ");
         Scanner scanner = new Scanner(System.in);
-        String nom=scanner.nextLine();
+        String nom = scanner.nextLine();
         return nom;
     }
 
@@ -967,16 +1008,18 @@ public class IHM {
         String nom = scanner.nextLine();
         return nom;
     }
-    public String saisirNouveauTypeSession(){
+
+    public String saisirNouveauTypeSession() {
         System.out.println("Entrez le nouveau type pour la session");
         Scanner scanner = new Scanner(System.in);
         String nom = scanner.nextLine();
         return nom;
     }
-    public String[] saisirNouvellesSessions(Conference conf){
-        String str[];
-        System.out.println("Saisir nom de la Session : ");
+
+    public String[] saisirNouvellesSessions(Conference conf) {
+        String[] str;
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Saisir nom de la Session : ");
         str[0] = scanner.nextLine();
         System.out.println("Saisir le type de Session : ");
         str[1] = scanner.nextLine();
@@ -990,66 +1033,206 @@ public class IHM {
         str[5] = scanner.nextLine();
         System.out.println("Saisir la salle : ");
         str[6] = scanner.nextLine();
-
-
-
-
-
+        return str;
     }
-    public int saisirNumeroCommunication(){
+
+    public int saisirNumeroCommunication() {
         System.out.println(("Saisir le numéro de Communication : "));
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
         return choix;
     }
-    public int saisirNumeroCommunication(Map<String,Communication>communications){
+
+    public int saisirNumeroCommunication(Map<String, Communication> communications) {
         for (Map.Entry<String, Communication> Str : this.communications.entrySet()) {
             System.out.println(Str.getNumeroCommunication.toString());
             System.out.println(Str.getTitre.toString());
-         }
+        }
         System.out.println(("Saisir le numéro de Communication à modifier : "));
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
         return choix;
     }
-    public int saisirOptionModifierTypeCommunication(){
+
+    public int saisirOptionModifierTypeCommunication() {
         System.out.println("Options modifiables pour Type Communication");
         System.out.println("1. Libelle");
         System.out.println("2. Vidéo Obligatoire");
         System.out.println("3. PDF Obligatoire");
-        System.out.println("4. Quitter");
+        System.out.println("0. Quitter");
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
-        while (choix < 0 || choix > 4){
-            System.out.println("Choix inconnu veuillez choisir parmi ces 4 options :");
+        while (choix < 0 || choix > 3) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces options :");
             System.out.println("1. Libelle");
             System.out.println("2. Vidéo Obligatoire");
             System.out.println("3. PDF Obligatoire");
-            System.out.println("4. Quitter");
-            System.out.println("Votre choix : ");
-            choix = scanner.nextInt();
-        }  
-        return choix;
-    }
-    public String saisirOptionPrevisualiserSession(){
-        System.out.println("Options de Session");
-        System.out.println("1. Prévisualiser une Communication");
-        System.out.println("2. Modifier la Session");
-        System.out.println("3. Quitter");
-        System.out.println("Votre choix : ");
-        Scanner scanner = new Scanner(System.in);
-        int choix = scanner.nextInt();
-        while (choix < 0 || choix > 3){
-            System.out.println("Choix inconnu veuillez choisir parmi ces 3 options :");
-            System.out.println("Options de Session");
-            System.out.println("1. Prévisualiser une Communication");
-            System.out.println("2. Modifier la Session");
-            System.out.println("3. Quitter");
+            System.out.println("0. Quitter");
             System.out.println("Votre choix : ");
             choix = scanner.nextInt();
         }
         return choix;
+    }
+
+    public int saisirOptionPrevisualiserSession() {
+        System.out.println("Options de Session");
+        System.out.println("1. Prévisualiser une Communication");
+        System.out.println("2. Modifier la Session");
+        System.out.println("0. Quitter");
+        System.out.println("Votre choix : ");
+        Scanner scanner = new Scanner(System.in);
+        int choix = scanner.nextInt();
+        while (choix < 0 || choix > 3) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces options :");
+            System.out.println("Options de Session");
+            System.out.println("1. Prévisualiser une Communication");
+            System.out.println("2. Modifier la Session");
+            System.out.println("0. Quitter");
+            System.out.println("Votre choix : ");
+            choix = scanner.nextInt();
+        }
+        return choix;
+    }
+
+    public String saisirSalle() {
+        System.out.println("Entrez la salle");
+        Scanner scanner = new Scanner(System.in);
+        String nom = scanner.nextLine();
+        return nom;
+    }
+
+    public boolean saisirSiPDFObligatoire() {
+        System.out.println("Le PDF est-il obligatoire ?");
+        System.out.println("1.Oui");
+        System.out.println("2.Non");
+        System.out.println("Votre choix : ");
+        Scanner scanner = new Scanner(System.in);
+        int choix = scanner.nextInt();
+        while (choix < 1 || choix > 2) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces 3 options :");
+            System.out.println("Le PDF est-il obligatoire ?");
+            System.out.println("1.Oui");
+            System.out.println("2.Non");
+            System.out.println("Votre choix : ");
+        }
+        if (choix == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean saisirSiVideoObligatoire() {
+        System.out.println("La vidéo est-elle obligatoire ?");
+        System.out.println("1.Oui");
+        System.out.println("2.Non");
+        System.out.println("Votre choix : ");
+        Scanner scanner = new Scanner(System.in);
+        int choix = scanner.nextInt();
+        while (choix < 1 || choix > 2) {
+            System.out.println("Choix inconnu veuillez choisir parmi ces 3 options :");
+            System.out.println("Le PDF est-il obligatoire ?");
+            System.out.println("1.Oui");
+            System.out.println("2.Non");
+            System.out.println("Votre choix : ");
+        }
+        if (choix == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public int saisirSupprimerOuAjouterUtilisateur(Map<String, Utilisateur> utilisateurs) {
+        System.out.println("Existants : ");
+        for (Map.Entry<String, Utilisateur> str : this.utilisateurs.entrySet()) {
+            System.out.println(str.getValue().toString());
+        }
+        System.out.println("Voulez vous ajouter ou supprimer un animateur?");
+        System.out.println("1. Ajouter");
+        System.out.println("2. Supprimer");
+        System.out.println("0. Quitter");
+        System.out.println("Votre choix : ");
+        Scanner scanner = new Scanner(System.in);
+        int choix = scanner.nextInt();
+        while (choix < 1 || choix > 3) {
+            System.out.println("1. Ajouter");
+            System.out.println("2. Supprimer");
+            System.out.println("0. Quitter");
+            System.out.println("Votre choix : ");
+            choix = scanner.nextInt();
+        }
+        return choix;
+    }
+
+    public int saisirSupprimerOuAjouterUtilisateur(Set<String> utilisateurs) {
+        System.out.println("Existants : ");
+        for (Set.Entry<String> str : this.utilisateurs.entrySet()) {
+            System.out.println(str.getValue().toString());
+        }
+        System.out.println("Voulez vous ajouter ou supprimer un auteur?");
+        System.out.println("1. Ajouter");
+        System.out.println("2. Supprimer");
+        System.out.println("0. Quitter");
+        System.out.println("Votre choix : ");
+        Scanner scanner = new Scanner(System.in);
+        int choix = scanner.nextInt();
+        while (choix < 1 || choix > 3) {
+            System.out.println("1. Ajouter");
+            System.out.println("2. Supprimer");
+            System.out.println("0. Quitter");
+            System.out.println("Votre choix : ");
+            choix = scanner.nextInt();
+        }
+        return choix;
+    }
+
+    public String saisirTexteAccueilConference() {
+        System.out.println("Entrez le texte d'accueil");
+        Scanner scanner = new Scanner(System.in);
+        String texte = scanner.nextLine();
+        return texte;
+    }
+
+    public String saisirThemeConference() {
+        System.out.println("Veuillez entrer le thème : ");
+        Scanner scanner = new Scanner(System.in);
+        String theme = scanner.nextLine();
+        return theme;
+    }
+
+    public String saisirTracks(Map<String, Track> tracks) {
+        for (Map.Entry<String> str : this.tracks.entrySet()) {
+            System.out.println(str.getValue().toString());
+        }
+        System.out.println("Entrez le libelle du track");
+        System.out.println("Entrez le texte d'accueil");
+        Scanner scanner = new Scanner(System.in);
+        String libelle = scanner.nextLine();
+        return libelle;
+    }
+
+    public String[] saisirUtilisateur() {
+        String str[];
+        System.out.println("Saisir le Nom : ");
+        Scanner scanner = new Scanner(System.in);
+        str[0] = scanner.nextLine();
+        System.out.println("Saisir le prenom : ");
+        str[1] = scanner.nextLine();
+        System.out.println("Saisir le mail : ");
+        str[2] = scanner.nextLine();
+        return str;
+    }
+
+    public String selectionnerSession(Map<String, Session> sessions) {
+        for (Map.Entry<String> str : this.utilisateurs.entrySet()) {
+            System.out.println(str.getValue().toString());
+        }
+        System.out.println("Veuillez saisir l'intitulé de la session");
+        Scanner scanner = new Scanner(System.in);
+        String intitule = scanner.nextLine();
+        return intitule;
     }
 
 }
