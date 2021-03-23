@@ -1057,7 +1057,7 @@ public class Controleur {
     	if (r) {
     		ihm.notifier("Le lien vers le PDF a correctement été modifié");
     	} else {
-    		ihm.notifier("Le lien vers le PDF n'a pu être modifié);
+    		ihm.notifier("Le lien vers le PDF n'a pu être modifié");
     	}
     }
     
