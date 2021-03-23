@@ -100,7 +100,12 @@ public class Controleur {
     	Session nouvelleSession = new Session(infosNouvelleSession[0], infosNouvelleSession[1], infosNouvelleSession[2], infosNouvelleSession[3], infosNouvelleSession[4], infosNouvelleSession[5], infosNouvelleSession[6], conference);
     	
     	boolean r = conference.addSession(nouvelleSession);
-    	ihm.notifier("La session a correctmeent été crée");
+    	if (r) {
+    		ihm.notifier("La session a correctement été crée");
+    	} else {
+    		ihm.notifier("La session n'a pu être crée");
+    	}
+    	
     	return session;
     }
 
@@ -153,7 +158,50 @@ public class Controleur {
     	}
     }
     
-
+    public void modifiercommunication(Conference conference, Communication communication) {
+    	while (communication == NULL) {
+    		HashMap<String, Communication> communications = conference.getCommunications();
+    		int saisir = ihm.saisirNumeroCommunication(communications);
+    		communication = conference.getCommunication(saisir);
+    	}
+    	ihm.afficherInfosCommunication(communication);
+    	
+    	int choix = 1;
+    	while (choix != 0) {
+    		choix = ihm.optionsModifierCommunication();
+    		switch (choix) {
+    		case 0:
+    			break;
+    		case 1:
+    			modifierTitreCommunication(communication);
+    			break;
+    		case 2:
+    			modifierAuteursCommunication(communication);
+    			break;
+    		case 3:
+    			modifierLienPDFCommunication(communication);
+    			break;
+    		case 4:
+    			modifierLienVideoCommunication(communication);
+    			break;
+    		case 5:
+    			modifierDateCommunication(communication);
+    			break;
+    		case 6:
+    			modifierHorairesCommunication(communication);
+    			break;
+    		case 7:
+    			modifierTypeCommunicationDeCommunication(communication, conference);
+    			break;
+    		case 8:
+    			modifierOrateursCommunication(communication);
+    			break;
+    		case 9:
+    			modifierCorrespondantCommunication(communication);
+    			break;
+    		}
+    	}
+    }
     
     public void modifierSession(Conference conference, Session session) {
     	while (session == NULL) {
@@ -253,6 +301,12 @@ public class Controleur {
     		modifierCommunication(conference, communication);
     	}
     }
+    
+    
+    
+    
+    
+    
     
     private void modifierAnimateursSession(Session session) {
     	int option = 1;
@@ -367,5 +421,162 @@ public class Controleur {
     	}
     }
 
-
+    private void modifierTitreCommunication(Communication communication) {
+    	// manque méthode ihm
+    	String nouveauTitre = ihm.;
+    	boolean r = communication.setTitre(nouveauTitre);
+    	if (r) {
+    		ihm.notifier("Le titre a correctement été changé");
+    	} else {
+    		ihm.notifier("Le titre n'a pu être changé");
+    	}
+    }
+    
+    private void modifierAuteursCommunication(Communication communication) {
+    	int option = 1;
+    	while (option != 0) {
+    		HashSet<String> auteurs = communication.getAuteurs();
+    		option = saisirSupprimerOuAjouterUtilisateur(auteurs);
+    		switch (option) {
+    		case 0:
+    			break;
+    		case 1:
+    			String[3] infosUtilisateur = ihm.saisirUtilisateur();
+    			Set<String> utilisateur = new Set<>();
+    			utilisateur.add(infosUtilisateur[0]);
+    			utilisateur.add(infosUtilisateur[1]);
+    			utilisateur.add(infosUtilisateur[2]);
+    			
+    			boolean r = communication.addAuteur(utilisateur);
+    			if (r) {
+    				ihm.notifier("L'auteur a correctement été ajouté");
+    			} else {
+    				ihm.notifier("L'auteur n'a pu être ajouté");
+    			}
+    			break;
+    		case 2:
+    			break;
+    		}
+    	}
+    }
+    
+    private void modifierLienPDFCommunication(Communication communication) {
+    	String lienPDF = ihm.saisirLienPDF();
+    	boolean r = communication.setLienPDF(lienPDF);
+    	if (r) {
+    		ihm.notifier("Le lien vers le PDF a correctement été modifié");
+    	} else {
+    		ihm.notifier("Le lien vers le PDF n'a pu être modifié);
+    	}
+    }
+    
+    private void modifierLienVideoCommunication(Communication communication) {
+    	String lienVideo = ihm.saisirLienVideo();
+    	boolean r = communication.setLienVideo(lienVideo);
+    	if (r) {
+    		ihm.notifier("Le lien vers la vidéo a correctement été modifié");
+    	} else {
+    		ihm.notifier("Le lien vers la vidéo n'a pu être modifié);
+    	}
+    }
+    
+    private void modifierDateCommunication(Communication communication) {
+    	String date = ihm.saisirDate();
+    	boolean r = communication.setDate(date);
+    	if (r) {
+    		ihm.notifier("La date a correctement été modifiée");
+    	} else {
+    		ihm.notifier("La date n'a pu être modifiée");
+    	}
+    }
+    
+    private void modifierHorairesCommunication(Communication communication) {
+    	ihm.notifier("Entrez la nouvelle heure de début");
+    	String nouvelleHeureDebut = ihm.saisirHeure();
+    	
+    	ihm.notifier("Entrez la nouvelle heure de fin");
+    	String nouvelleHeureFin = ihm.saisirHeure();
+    	
+    	int r = communication.setHoraires(nouvelleHeureDebut, nouvelleHeureFin);
+    	if (r == 0) {
+    		ihm.notifier("Les horaires ont correctement été modifiés");
+    	} else {
+    		ihm.notifier("Les horaires n'ont pu être modifiés");
+    	}
+    }
+    
+    private void modifierTypeCommunicationDeCommunication(Communication communication, Conference conference) {
+    	HashMap<String, TypeCommunication> types = conference.getTypesCommunications();
+    	String libelleNouveauType = ihm.saisirLibelleTypeCommunication();
+    	TypeCommunication nouveauType = conference.getTypeCommunication(libelleNouveauType);
+    	boolean r = false;
+    	if (nouveauType) {
+    		r = communication.setTypeCommunication(nouveauType);
+    	}
+    	if (r) {
+    		ihm.notifier("Le type de communication a correctmeent été ajouté");
+    	} else {
+    		ihm.notifier("Le type de communication n'a pu être ajouté");
+    	}
+    }
+    
+    private void modifierOrateursCommunication(Communication communication) {
+    	int option = 1;
+    	while (option != 0) {
+    		HashMap<String, Utilisateur> orateurs = communication.getOrateurs();
+    		option = saisirSupprimerOuAjouterUtilisateur(orateurs);
+    		switch (option) {
+    		case 0:
+    			break;
+    		case 1:
+    			String[3] infosUtilisateur = ihm.saisirUtilisateur();
+    			Utilisateur nouvelOrateur = genconf.getUtilisateur(infosUtilisateur[0], infosUtilisateur[1], infosUtilisateur[2]);
+    			if (nouvelOrateur == NULL) {
+    				nouvelOrateur = creerCompteGenConf();
+    			}
+    			
+    			boolean r = communication.setOrateur(nouvelOrateur);
+    			if (r) {
+    				ihm.notifier("L'orateur a correctement été ajouté");
+    			} else {
+    				ihm.notifier("L'orateur n'a pu être ajouté");
+    			}
+    			break;
+    		case 2:
+    			String[3] infosUtilisateur = ihm.saisirUtilisateur();
+    			Utilisateur orateurASupprimer = genconf.getUtilisateur(infosUtilisateur[0], infosUtilisateur[1], infosUtilisateur[2]);
+    			
+    			boolean r = false;
+    			if (orateurASupprimer) {
+    				r = communication.removeOrateur(orateurASupprimer);
+    			}
+    			if (r) {
+    				ihm.notifier("L'orateur a correctement été supprimé");
+    			} else {
+    				ihm.notifier("L'orateur n'a pu être supprimé");
+    			}
+    			break;
+    		}
+    	}
+    }
+    
+    private void modifierCorrespondantCommunication(Communication communication) {
+    	String[3] infosUtilisateur = ihm.saisirUtilisateur();
+		Utilisateur correspondant = genconf.getUtilisateur(infosUtilisateur[0], infosUtilisateur[1], infosUtilisateur[2]);
+		boolean r = communication.setCorrespondant(correspondant);
+		if (r) {
+			ihm.notifier("Le correspondant a correctement été ajouté");
+		} else {
+			ihm.notifier("Le correspondant n'a pu être supprimé");
+		}
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
