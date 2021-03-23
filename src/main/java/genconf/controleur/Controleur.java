@@ -103,4 +103,36 @@ public class Controleur {
     	ihm.notifier("La session a correctmeent été crée");
     	return session;
     }
+
+    public void creerTypeCommunication(Conference conference) {
+    	HashMap<String, TypeCommunication> typesCommunication = conference.getTypeCommunications();
+    	ihm.afficherCaracteristiquesTypesCommunications(typesCommunication);
+    	String libelle = ihm.saisirNomTypeCommunication();
+    	TypeCommunication type = conference.getTypeCommunication(libelle);
+    	if (type) {
+    		ihm.notifier("Ce type existe déjà");
+    	} else {
+    		boolean videoObligatoire, pdfObligatoire;
+    		videoObligatoire = pdfObligatoire = false;
+    		switch(ihm.saisirInfosTypeCommunication()) {
+    		case 1:
+    			videoObligatoire = true;
+    			break;
+    		case 2:
+    			pdfObligatoire = true;
+    			break;
+    		case 3:
+    			videoObligatoire = pdfObligatoire = true;
+    			break;
+    		case 4:
+    			break;
+    		}
+    		TypeCommunication type = new TypeCommunication(libelle, videoObligatoire, pdfObligatoire);
+    		if (conference.addTypeCommunication(type)) {
+    			ihm.notifier("Le type de communication a été ajouté à la conférence");
+    		} else {
+    			ihm.notifier("Le type de communication n'a pu être ajouté à la conférence");
+    		}
+    	}
+    }
 }
