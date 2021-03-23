@@ -135,4 +135,21 @@ public class Controleur {
     		}
     	}
     }
+
+    public void donnerDroitsAdmin(Conference conference) {
+    	HashMap<String, Utilisateur> utilisateurs = genconf.getUtilisateurs();
+    	ihm.afficherUtilisateurs(utilisateurs);
+    	String[3] infosUtilisateur = ihm.saisirUtilisateur();
+    	Utilisateur u = genconf.getUtilisateur(infosUtilisateur[0], infosUtilisateur[1], infosUtilisateur[2]);
+    	if (!u) {
+    		u = creerCompteGenConf();
+    	}
+    	boolean r1 = conference.addAdminConf(u, infosUtilisateur[2]);
+    	boolean r2 = u.addConferenceAdministree(conference);
+    	if (r1 && r2) {
+    		ihm.notifier("Le compte a été promu admin conf");
+    	} else {
+    		ihm.notifier("Le compte n'a pu être promu");
+    	}
+    }
 }
