@@ -18,6 +18,11 @@ public class Controleur {
     }
 
     public void addCommunicationASession(Communication communication, Session session, Conference conference) {
+    	while (communication == NULL) {
+    		HashMap<String, Communication> communications = session.getCommunications();
+    		int numero = ihm.saisirNumeroCommunication(communications);
+    		Communication communication = session.getCommunication(numero);
+    	}
         Session sessionRattachee = communication.getSession();
         boolean choix = false;
         if (sessionRattachee) {
@@ -29,6 +34,8 @@ public class Controleur {
         }
         if (r) {
         	ihm.notifier("La communication a correctement été ajoutée à la session");
+        } else {
+        	ihm.notifier("La communication n'a pu être ajoutée à la session");
         }
     }
     
