@@ -321,7 +321,36 @@ public class Controleur {
     	}
     }
     
-    
+    public void previsualiserSession(Session session, Conference conference) {
+    	int choix = 1;
+    	while (choix != 0) {
+    		ihm.afficherInfosSession(this);
+    		HashMap<String, Communication> communications = session.getCommunications();
+    		
+    		Iterator<Communication> it = communications.iterator();
+    		while (it.hasNext()) {
+    			Communication c = it.next();
+    			ihm.afficherTitreCommunication(c);
+    		}
+    	}
+    	choix = ihm.saisirOptionPrevisualiserSession();
+    	switch (choix) {
+    	case 0:
+    		break;
+    	case 1:
+    		int numero = ihm.saisirNumeroCommunication();
+    		Communication communication = session.getCommunication(numero);
+    		if (communication) {
+    			previsualiserCommunication(communication);
+    		} else {
+    			ihm.notifier("Cette communication n'existe pas");
+    		}
+    		break;
+    	case 2:
+    		modifierSession(conference, session)
+    		break;
+    	}
+    }
     
     
     
