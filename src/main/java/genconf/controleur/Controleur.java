@@ -511,6 +511,7 @@ public class Controleur {
             this.ihm.notifier("La date de fin est antérieure à la date de début")
         }
 
+
     }
     private void modifierDateT1Conf(Conference conference)
     {
@@ -644,11 +645,7 @@ public class Controleur {
         }
     }
     
-    private void modifierTexteAccueil(Conference conference)
-    {
-        String texteAccueil;
-        
-        texteAccueil = this.ihm.saisirTexteAccueilConference();
+    
 
 
     public void donnerDroitsAdmin(Conference conference) {
@@ -1163,11 +1160,11 @@ public class Controleur {
     
     
     
-    
-    
-    
-    
-    
+    private void modifierTexteAccueil(Conference conference)
+    {
+        String texteAccueil;
+        
+        texteAccueil = this.ihm.saisirTexteAccueilConference();
     
 
         if(conference.setTexteAccueil(texteAccueil))
@@ -1179,6 +1176,7 @@ public class Controleur {
             this.ihm.notifier("Le texte d'accueil n'a pu être modifié");
         }
     }
+
     private void modifierLogoConference(Conference conference)
     {
         String logo;

@@ -1,4 +1,4 @@
-package genconf.modele;
+package modele;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -230,8 +230,5 @@ public class Conference implements Serializable {
     	infosConference += this.logo + this.texteAccueil;
     	return infosConference;
     }
-
-
-
 
 }
