@@ -582,10 +582,9 @@ public class Controleur {
         
         date = parse(this.ihm.saisirDate());
         
-        switch(conference.setDateT4(date));
-        {
+        switch(conference.setDateT4(date)) {
             case 0 :
-                this.ihm.notifier("La dateT4 a correctement été modifiée")
+                this.ihm.notifier("La dateT4 a correctement été modifiée");
                 break;
             case 1 : 
                 this.ihm.notifier("La dateT4 est antérieure à la date T3");
