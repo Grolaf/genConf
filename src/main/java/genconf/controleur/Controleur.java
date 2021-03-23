@@ -1,5 +1,7 @@
 package genconf.controleur;
 
+import java.util.Iterator;
+
 import genconf.*;
 import genconf.controleur.*;
 import genconf.modele.*;
@@ -359,7 +361,37 @@ public class Controleur {
     	}
     }
     
-    
+    public void removeCommunication(Conference conference) {
+    	HashMap<int, Communication> communications = conference.getCommunications();
+    	int numero = ihm.saisirNumeroCommunication(communications);
+    	Communication communication = conference.getCommunication(numero);
+    	if (communication) {
+    		Session session = communication.getSession();
+    		boolean r = session.removeCommunication(communication);
+    		if (r) {
+    			HashMap<String, Utilisateur> orateurs = communication.getOrateurs();
+    			Iterator<Utilisateur> it = orateurs.iterator();
+    			while (it.hasNext()) {
+    				Utilisateur u = it.next();
+    				if (u.removeCommunicationEnTantQueOrateur(communication) == false) {
+    					ihm.notifier("L'orateur n'a pas pu être retiré de la communication");
+    				}
+    			}
+    			Utilisateur correspondant = communication.getCorrespondant();
+    			if (correspondant.removeCommunicationEnTantQueCorrespondant(communication)) {
+    				if (conference.removeCommunication(communication)) {
+    					ihm.notifier("La communication a correctement été supprimée de la conférence");
+    				} else {
+    					ihm.notifier("La communication n'a pas pu être supprimée de la conférence");
+    				}
+    			} else {
+    				ihm.notifier("La communication n'a pu être retirée du correspondant");
+    			}
+    		} else {
+    			ihm.notifier("La communication n'a pu être retirée de la session ");
+    		}
+    	}
+    }
     
     private void modifierAnimateursSession(Session session) {
     	int option = 1;
