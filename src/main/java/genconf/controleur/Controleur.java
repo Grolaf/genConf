@@ -511,6 +511,7 @@ public class Controleur {
             this.ihm.notifier("La date de fin est antérieure à la date de début")
         }
 
+
     }
     private void modifierDateT1Conf(Conference conference)
     {
