@@ -39,11 +39,11 @@ public class Session {
    /***********************************************************/
    /**     Getters     **/
 
-    public Map<String, Utilisateur> getAnimateurs() {
+    public HashMap<String, Utilisateur> getAnimateurs() {
         return this.animateurs;
     }
 
-    public Map<String, Communication> getCommunications() {
+    public HashMap<Integer, Communication> getCommunications() {
         return this.communications;
     }
     
@@ -68,7 +68,7 @@ public class Session {
         return this.salle;
     }
 
-    public Map<String, Track> getTracks() {
+    public HashMap<String, Track> getTracks() {
         return this.tracks;
     }
 

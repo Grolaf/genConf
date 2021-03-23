@@ -1,13 +1,13 @@
-package modele; 
+package genconf.modele; 
 
 import java.time.LocalDate;
 
 
-public class TypeCommunication(){
+public class TypeCommunication{
 
     private String libelle;
     private boolean videoObligatoire;
-    private boolean pdfObligatoire;~
+    private boolean pdfObligatoire;
 
     // Constructeur : 
     public TypeCommunication(String libelle, boolean videoObligatoire, boolean pdfObligatoire) {
@@ -19,30 +19,45 @@ public class TypeCommunication(){
     }
 
     // Getters :
-
-    public boolean getLienPDFObligatoire(){
-      return this.LienPDFObligatoire
+    
+    public String getLibelle()
+    {
+        return this.libelle;
     }
 
-    public TypeCommunication getTypeCommunication(String libelle){
-      return this.libelle=libelle;
-
+    public boolean getLienPDFObligatoire(){
+      return this.pdfObligatoire;
+    }
+    
+    public boolean getLienVideoObligatoire()
+    {
+        return this.videoObligatoire;
     }
 
     // Setters
 
-    public void setLibelle(String libelle){
-       this.libelle=libelle:
+    public boolean setLibelle(String libelle){
+       this.libelle = libelle;
+       return true;
     }
 
-    public void setpdfObligatoire(boolean pdfObligatoire){
-          this.pdfObligatoire=pdfObligatoire;
+    public boolean setpdfObligatoire(boolean pdfObligatoire){
+        this.pdfObligatoire=pdfObligatoire;
+        return true;
     }
 
-    public void setVideoObligatoire(boolean videoObligatoire){
-          this.videoObligatoire=videoObligatoire;
+    public boolean setVideoObligatoire(boolean videoObligatoire){
+        this.videoObligatoire=videoObligatoire;
+        return true;
     }
 
-    // Destruceur ? 
+    // Fonctions usuelles
+    
+    public String toString()
+    {
+        return "TypeCommunication : " + this.libelle + "\n" +
+                "\tPDF Obligatoire : " + this.pdfObligatoire + "\n" +
+                "\tVideo Obligatoire : " + this.videoObligatoire;
+    }
 
 }
