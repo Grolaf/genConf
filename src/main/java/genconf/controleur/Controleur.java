@@ -20,7 +20,7 @@ public class Controleur {
 
 
     public void addCommunicationASession(Communication communication, Session session, Conference conference) {
-    	while (communication == NULL) {
+    	while (communication == null) {
     		HashMap<String, Communication> communications = session.getCommunications();
     		int numero = ihm.saisirNumeroCommunication(communications);
     		Communication communication = session.getCommunication(numero);
@@ -57,7 +57,7 @@ public class Controleur {
     	ihm.notifier("Veuillez saisir le correspondant de la communication");
     	String[3] infosCorrespondant = ihm.saisirUtilisateur();
     	Utilisateur correspondant = genconf.getUtilisateur(infosCorrespondant[0], infosCorrespondant[1], infosCorrespondant[2]);
-    	if (correspondant == NULL) {
+    	if (correspondant == null) {
     		correspondant = creerCompteGenConf();
     	}
     	
@@ -581,10 +581,9 @@ public class Controleur {
         
         date = parse(this.ihm.saisirDate());
         
-        switch(conference.setDateT4(date));
-        {
+        switch(conference.setDateT4(date)) {
             case 0 :
-                this.ihm.notifier("La dateT4 a correctement été modifiée")
+                this.ihm.notifier("La dateT4 a correctement été modifiée");
                 break;
             case 1 : 
                 this.ihm.notifier("La dateT4 est antérieure à la date T3");
@@ -670,7 +669,7 @@ public class Controleur {
     }
     
     public void modifiercommunication(Conference conference, Communication communication) {
-    	while (communication == NULL) {
+    	while (communication == null) {
     		HashMap<String, Communication> communications = conference.getCommunications();
     		int saisir = ihm.saisirNumeroCommunication(communications);
     		communication = conference.getCommunication(saisir);
@@ -715,7 +714,7 @@ public class Controleur {
     }
     
     public void modifierSession(Conference conference, Session session) {
-    	while (session == NULL) {
+    	while (session == null) {
     		HashMap<String, Session> sessions = conference.getSessions();
     		String intituleSession = ihm.selectionnerSession(sessions);
     		Session session = conference.getSesession(intituleSession);
@@ -749,10 +748,10 @@ public class Controleur {
     			modifierSalleSession(session);
     			break;
     		case 8:
-    			addCommunicationASession(NULL, session, conference);
+    			addCommunicationASession(null, session, conference);
     			break;
     		case 9:
-    			removeCommunicationASession(NULL, conference, session);
+    			removeCommunicationASession(null, conference, session);
     			break;
     		}
     	}
@@ -763,7 +762,7 @@ public class Controleur {
     	ihm.afficherCaracteristiquesTypesCommunication(typesCommunication);
     	String libelle = ihm.saisirLibelleTypeCommunication();
     	TypeCommunication e = conference.getTypeCommunication(libelle);
-    	if (e == NULL) {
+    	if (e == null) {
     		ihm.notifier("Ce type n'existe pas");
     	} else {
     		int choix = 1;
@@ -906,7 +905,7 @@ public class Controleur {
     		case 1:	// ajouter
     			String[3] infosUtilisateur = ihm.saisirUtilisateur();
     			Utilisateur utilisateur = genconf.getUtilisateur(infosUtilisateur[0], infosUtilisateur[1], infosUtilisateur[2]);
-    			if (utilisateur == NULL) {
+    			if (utilisateur == null) {
     				utilisateur = creerCompteGenConf();
     			}
     			
@@ -1122,7 +1121,7 @@ public class Controleur {
     		case 1:
     			String[3] infosUtilisateur = ihm.saisirUtilisateur();
     			Utilisateur nouvelOrateur = genconf.getUtilisateur(infosUtilisateur[0], infosUtilisateur[1], infosUtilisateur[2]);
-    			if (nouvelOrateur == NULL) {
+    			if (nouvelOrateur == null) {
     				nouvelOrateur = creerCompteGenConf();
     			}
     			
