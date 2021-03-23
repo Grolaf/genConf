@@ -11,9 +11,15 @@ import java.util.Map;
  */
 public enum Commande {
 
+    GERER_SESSIONS(1, "Gerer sessions"),
+    GERER_COMMUNICATIONS(2, "Gerer communications"),
+    GERER_TYPES_COMMUNCATIONS(3, "Gerer types communications"),
+    GERER_INFOS_CONFERENCE(4, "Gerer infos conference"),
+    GERER_TRACKS(5, "Gerer tracks"),
+    GERER_COMPTES(6, "Gerer comptes"),
+    PREVISUALISER_CONFERENCE(7, "Previsualiser conference"),
     QUITTER(0, "Quitter"),
-    CREER_UTILISATEUR(1, "Créer un nouvel utilisateur"),
-    CREER_CONFERENCE(2,"Créer une nouvelle conférence"),
+    
     ;
 
     private final int code;

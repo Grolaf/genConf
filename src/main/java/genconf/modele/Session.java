@@ -19,20 +19,24 @@ public class Session {
     private Map<String, Utilisateur> animateurs;
     private Map<Integer, Communication> communications;
     private Map<String, Track> tracks;
+    private Conference conference;
 
-    Session(String intitule, String type, LocalDate date, String heureDebut, String heureFin, String videoAssociee, String salle, Conference conference, Communcation communication) {
-        this.intituleSession = intitule;
-        this.type = type;
-        this.date = date;
-        this.heureDebut = heureDebut;
-        this.heureFin = heureFin;
-        this.videoAssociee = videoAssociee;
-        this.salle = salle;
-        this.;               // pas terminé
-  } 
+    Session(String intitule, String type, LocalDate date, LocalTime heureDebut, LocalTime heureFin, String videoAssociee, String salle, Conference conference, Communcation communication) {
+        
+        if(setIntitule(intitule) && setDate(date) == 0 && !setSalle(salle) && heureDebut.isBefore(heureFin))
+        {
+            this.heureDebut = heureDebut;
+            this.heureFin = heureFin;
+            this.conference = conference;           
+        }
+        else
+        {
+            throw new Error("Impossible de créer la session (paramètres incorrects)");
+        }
+    } 
 
    /***********************************************************/
-    /**     Getters     **/
+   /**     Getters     **/
 
     public Map<String, Utilisateur> getAnimateurs() {
         return this.animateurs;
@@ -175,14 +179,18 @@ public class Session {
     }
     
     
-    public void addAnimateur(Utilisateur animateur) {
+    public boolean addAnimateur(Utilisateur animateur) {
         this.animateurs.put(animateur.getEmail(), animateur);
         animateur.addSessionEnTantQueAnimateur(this);
+        
+        return true;
     }
     
-    public void removeAnimateur(Utilisateur animateur) {
+    public boolean removeAnimateur(Utilisateur animateur) {
         animateur.removeSessionEnTantQueAnimateur(this);
         this.animateurs.remove(animateur);
+        
+        return true;
     }
 
     public boolean addCommunication(Communication communication) {
@@ -217,13 +225,15 @@ public class Session {
         
         str += "\t Tracks : \n";
         
-        for(Track trk : this.tracks)
+        for(Map.Entry<String, Track> trk : this.tracks.entrySet())
         {
-            str += "\t\t " + trk.toString() + "\n";
+            str += "\t\t " + trk.getValue().toString() + "\n";
         }
+        
+        return str;
     }
 }
-
+/*
 © 2021 GitHub, Inc.
     Terms
     Privacy
@@ -237,3 +247,4 @@ public class Session {
     Training
     Blog
     About
+*/
