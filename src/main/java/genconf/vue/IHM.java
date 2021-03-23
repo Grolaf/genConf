@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.HashSet;
 import java.util.function.Function;
 import org.apache.commons.validator.routines.EmailValidator;
 import java.util.Map;
@@ -857,13 +858,31 @@ public class IHM {
         return choix;
     }
 
-    public Set<Set<String>> saisirAuteursCommunication() {
-        Set<String[]> auteurs;
+    public Set<String[]> saisirAuteursCommunication() {
+        Set<String[]> auteurs= new HashSet<>();
+        boolean continuer=true;
         while (continuer) {
             System.out.println("Entrez le nom, prenom, mail");
             auteurs.add(saisirUtilisateur());
+            System.out.println("Souhaitez vous continuer ? ");
+            System.out.println("1. Oui ");
+            System.out.println("2. Nom ");
+            Scanner scanner= new Scanner(System.in);
+            int choix= scanner.nextInt();
+            while(choix != 1 || choix !=2){
+                System.out.println("Choix inconnu veuillez choisir parmi ces options :"); 
+                System.out.println("Souhaitez vous continuer ? ");
+                System.out.println("1. Oui ");
+                System.out.println("2. Nom ");
+                choix= scanner.nextInt();
+            }
+            if(choix==1){
+                continuer=true;
+            }else{
+                continuer=false;
+            }
         }
-
+        return auteurs;
     }
 
     public Couleur saisirCouleurtrack() {
@@ -906,12 +925,13 @@ public class IHM {
     public LocalTime saisirHeure() {
         System.out.println("Saissiez l'heure : (hh/mm/ss) ");
         Scanner scanner = new Scanner(System.in);
-        LocalTime localTime = LocalTime.parse(scanner);
+        String heure=scanner.nextLine();
+        LocalTime localTime = LocalTime.parse(heure);
         return localTime;
     }
 
     public String[] saisirInfosCommunication(TypeCommunication typeCommunication) {
-        String str[];
+        String str[]=new String[7];
         Scanner scanner = new Scanner(System.in);
         System.out.println("Saisir le titre : ");
         str[0] = scanner.nextLine();
@@ -1017,7 +1037,7 @@ public class IHM {
     }
 
     public String[] saisirNouvellesSessions(Conference conf) {
-        String[] str;
+        String str[]=new String[7];
         Scanner scanner = new Scanner(System.in);
         System.out.println("Saisir nom de la Session : ");
         str[0] = scanner.nextLine();
@@ -1214,7 +1234,7 @@ public class IHM {
     }
 
     public String[] saisirUtilisateur() {
-        String str[];
+        String str[]=new String[3];
         System.out.println("Saisir le Nom : ");
         Scanner scanner = new Scanner(System.in);
         str[0] = scanner.nextLine();
