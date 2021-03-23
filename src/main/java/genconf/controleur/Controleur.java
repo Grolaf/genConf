@@ -62,18 +62,16 @@ public class Controleur {
     	}
     	
     	ihm.notifier("Veuillez saisir les auteurs de la communication");
-    	Set<Set<String>> auteurs = ihm.saisirAuteursCommunication();
+    	Set<String[3]> auteurs = ihm.saisirAuteursCommunication();
     	
     	HashMap<String, Utilisateur> orateurs;
-    	Iterator<Set<String>> it = auteurs.iterator;
+    	Iterator<String[3]> it = auteurs.iterator;
     	while (it.hasNext()) {
-    		Set<String> auteur = it.next();
-    		
-    		String[3] infosAuteur = auteur.toArray();
+    		String[3] auteur = it.next();
     		Utilisateur auteurU = getUtilisateur(infosAuteur[0], infosAuteur[1], infosAuteur[2]);
     		
     		if (auteurU) {
-    			orateurs.put(infosAuteur[2], auteurU);
+    			orateurs.put(auteur[2], auteurU);
     		}
     	}
         LocalDate date = LocalDate.parse(infosCommunication[3]);
@@ -527,12 +525,8 @@ public class Controleur {
     			break;
     		case 1:
     			String[3] infosUtilisateur = ihm.saisirUtilisateur();
-    			Set<String> utilisateur = new Set<>();
-    			utilisateur.add(infosUtilisateur[0]);
-    			utilisateur.add(infosUtilisateur[1]);
-    			utilisateur.add(infosUtilisateur[2]);
     			
-    			boolean r = communication.addAuteur(utilisateur);
+    			boolean r = communication.addAuteur(infosUtilisateur[0], infosUtilisateur[1], infosUtilisateur[2]);
     			if (r) {
     				ihm.notifier("L'auteur a correctement été ajouté");
     			} else {
@@ -540,6 +534,14 @@ public class Controleur {
     			}
     			break;
     		case 2:
+    			String[3] infosUtilisateur = ihm.saisirUtilisateur();
+    			
+    			boolean r = communication.removeAuteur(infosUtilisateur[0], infosUtilisateur[1], infosUtilisateur[2]);
+    			if (r) {
+    				ihm.notifier("L'auteur a correctement été supprimé");
+    			} else {
+    				ihm.notifier("L'auteur n'a pu être supprimé");
+    			}
     			break;
     		}
     	}
