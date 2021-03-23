@@ -446,46 +446,52 @@ public class IHM {
     // return IHM.lireDate(Optional.of(apres));
     // }
     // */
+    
+    private Controleur controleur;
+    
+    public IHM(Controleur controleur)
+    {
+        this.controleur = controleur;
+    }
 
     public void afficherCaracteristiquesTypeCommunication(TypeCommunication typeCommunication) {
-        System.out.println("Libellés : " + typeCommunication.getLibelle);
-        System.out.println("Propriétés : " + typeCommunication.getPropriete);
+        System.out.println(typeCommunication.toString());
 
     }
 
     public void afficherCaracteristiquesTypesCommunication(Map<String, TypeCommunication> typesCommunication) {
-        for (Map.Entry<String, TypeCommunication> typC : this.typesCommunication.entrySet()) {
+        for (Map.Entry<String, TypeCommunication> typC : typesCommunication.entrySet()) {
             System.out.println(typC.getValue().toString());
         }
     }
 
     public void afficherCommuncations(Map<String, Communication> communications) {
-        for (Map.Entry<String, Communication> Com : this.communications.entrySet()) {
+        for (Map.Entry<String, Communication> Com : communications.entrySet()) {
             System.out.println(Com.getValue().toString());
         }
     }
 
     public void afficherInformationsConf(Conference conference) {
-        System.out.println("Conférence : " + conference.toString());
+        System.out.println(conference.toString());
     }
 
     public void afficherInfosCommunication(Communication comm) {
-        System.out.println("Informations Communication : " + comm.toString());
+        System.out.println(comm.toString());
     }
 
     public void afficherInfosSessions(Map<String, Session> s) {
-        for (Map.Entry<String, Session> Str : this.s.entrySet()) {
+        for (Map.Entry<String, Session> Str : s.entrySet()) {
             System.out.println(Str.getValue().toString()); 
         }
     }
 
     public void afficherInfosSession(Session session) {
-        System.out.println("Informations Session : " + session.toString());
+        System.out.println(session.toString());
     }
 
     public void afficherLibelleSessions(Map<String, Session> session) {
-        for (Map.Entry<String, Session> str : this.session.entrySet()) {
-            System.out.println(str.getValue().toString());
+        for (Map.Entry<String, Session> str : session.entrySet()) {
+            System.out.println(str.getValue().getIntitule());
         }
     }
 
@@ -570,7 +576,7 @@ public class IHM {
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
-        while (choix != 1 || choix != 2 || choix != 0) {
+        while (choix != 1 || choix != 2 ||choix != 0) {
             System.out.println("Choix inconnu veuillez choisir parmi ces options :");
             System.out.println("Menu Informations Conférence");
             System.out.println("1. Gérer Session");
@@ -650,19 +656,19 @@ public class IHM {
     }
 
     public void afficherNomConferences(Map<String, Conference> conferences) {
-        for (Map.Entry<String, Conference> Str : this.conferences.entrySet()) {
-            System.out.println(Str.getValue().toString());
+        for (Map.Entry<String, Conference> Str : conferences.entrySet()) {
+            System.out.println(Str.getValue());
         }
     }
 
     public void afficherTitreCommunication(Communication communication) {
-        System.out.println("titre : " + communication.getTitre);
-        System.out.println("numero : " + communication.getNumero);
+        System.out.println("titre : " + communication.getTitre());
+        System.out.println("numero : " + communication.getNumero());
     }
 
     public void afficherUtilisateurs(Map<String, Utilisateur> utilisateurs) {
-        for (Map.Entry<String, Utilisateur> Str : this.utilisateurs.entrySet()) {
-            System.out.println(Str.getValue().toString());
+        for (Map.Entry<String, Utilisateur> Str : utilisateurs.entrySet()) {
+            System.out.println(Str.getValue());
         }
     }
 
@@ -747,7 +753,7 @@ public class IHM {
     }
 
     public void notifier(String notification) {
-        System.out.println(notification.toString());
+        System.out.println(notification);
     }
 
     public int optionsModifierCommunication() {
@@ -885,11 +891,11 @@ public class IHM {
         return auteurs;
     }
 
-    public Couleur saisirCouleurtrack() {
+    public String saisirCouleurtrack() {
         System.out.println("Entrez la couleur du track : ");
         Scanner scanner = new Scanner(System.in);
         String couleur = scanner.nextLine();
-        return couleur.getCouleur();
+        return couleur;
     }
 
     public boolean saisirCreationConference(Map<String, Conference> conferences) {
@@ -943,11 +949,11 @@ public class IHM {
         str[3] = scanner.nextLine();
         System.out.println("Saisir l'heure de fin : (hh/mm/ss)");
         str[4] = scanner.nextLine();
-        if (typeCommunication.videoObligatoire) {
+        if (typeCommunication.getLienVideoObligatoire()) {
             System.out.println("Saisir le lien de la vidéo : ");
             str[5] = scanner.nextLine();
         }
-        if (typeCommunication.pDFObligatoire) {
+        if (typeCommunication.getLienPDFObligatoire()) {
             System.out.println("Saisir le lien PDF : ");
             str[6] = scanner.nextLine();
         }
@@ -1013,8 +1019,8 @@ public class IHM {
 
     public String saisirNomConference(Map<String, Conference> conferences) {
         System.out.println("Liste des conférences existantes : ");
-        for (Map.Entry<String, Conference> Str : this.conferences.entrySet()) {
-            System.out.println(Str.getNom().toString());
+        for (Map.Entry<String, Conference> Str : conferences.entrySet()) {
+            System.out.println(Str.getValue().getNom());
         }
         System.out.println("Entrez le nom de la conférence : ");
         Scanner scanner = new Scanner(System.in);
@@ -1064,9 +1070,9 @@ public class IHM {
     }
 
     public int saisirNumeroCommunication(Map<String, Communication> communications) {
-        for (Map.Entry<String, Communication> Str : this.communications.entrySet()) {
-            System.out.println(Str.getNumeroCommunication.toString());
-            System.out.println(Str.getTitre.toString());
+        for (Map.Entry<String, Communication> Str : communications.entrySet()) {
+            System.out.println(Str.getValue().getNumero());
+            System.out.println(Str.getValue().getTitre());
         }
         System.out.println(("Saisir le numéro de Communication à modifier : "));
         Scanner scanner = new Scanner(System.in);
@@ -1166,7 +1172,7 @@ public class IHM {
 
     public int saisirSupprimerOuAjouterUtilisateur(Map<String, Utilisateur> utilisateurs) {
         System.out.println("Existants : ");
-        for (Map.Entry<String, Utilisateur> str : this.utilisateurs.entrySet()) {
+        for (Map.Entry<String, Utilisateur> str : utilisateurs.entrySet()) {
             System.out.println(str.getValue().toString());
         }
         System.out.println("Voulez vous ajouter ou supprimer un animateur?");
@@ -1188,8 +1194,8 @@ public class IHM {
 
     public int saisirSupprimerOuAjouterUtilisateur(Set<String> utilisateurs) {
         System.out.println("Existants : ");
-        for (Set.Entry<String> str : this.utilisateurs.entrySet()) {
-            System.out.println(str.getValue().toString());
+        for (String str : utilisateurs) {
+            System.out.println(str);
         }
         System.out.println("Voulez vous ajouter ou supprimer un auteur?");
         System.out.println("1. Ajouter");
@@ -1223,7 +1229,7 @@ public class IHM {
     }
 
     public String saisirTracks(Map<String, Track> tracks) {
-        for (Map.Entry<String> str : this.tracks.entrySet()) {
+        for (Map.Entry<String, Track> str :tracks.entrySet()) {
             System.out.println(str.getValue().toString());
         }
         System.out.println("Entrez le libelle du track");
@@ -1246,7 +1252,7 @@ public class IHM {
     }
 
     public String selectionnerSession(Map<String, Session> sessions) {
-        for (Map.Entry<String> str : this.utilisateurs.entrySet()) {
+        for (Map.Entry<String, Session> str : sessions.entrySet()) {
             System.out.println(str.getValue().toString());
         }
         System.out.println("Veuillez saisir l'intitulé de la session");

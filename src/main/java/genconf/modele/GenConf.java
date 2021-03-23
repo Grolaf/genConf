@@ -33,9 +33,9 @@ public class GenConf implements Serializable {
      * Conference.initialiseConference(this, nom, dateDebut, dateFin, admin);
      * this.conferences.put(nom, conf); }
      */
-    private Map<String, Utilisateur> utilisateurs;
-    private Map<String, Utilisateur> adminGenConf;
-    private Map<String, Conference> conference;
+    private HashMap<String, Utilisateur> utilisateurs;
+    private HashMap<String, Utilisateur> adminGenConf;
+    private HashMap<String, Conference> conference;
 
     public boolean addCompteConf(String nom, String prenom, String email) {
         Utilisateur utilisateur = new Utilisateur(email, nom, prenom);
@@ -52,7 +52,7 @@ public class GenConf implements Serializable {
         return conference.get(nomConf);
     }
 
-    public Map<String, Conference> getConferences() {
+    public HashMap<String, Conference> getConferences() {
         return conference;
     }
 
@@ -60,7 +60,7 @@ public class GenConf implements Serializable {
         return utilisateurs.get(mail);
     }
 
-    public Map<String, Utilisateur> getUtilisateurs() {
+    public HashMap<String, Utilisateur> getUtilisateurs() {
         return utilisateurs;
     }
 

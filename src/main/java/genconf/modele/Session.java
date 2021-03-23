@@ -38,6 +38,11 @@ public class Session {
 
    /***********************************************************/
    /**     Getters     **/
+    
+    public String getIntitule()
+    {
+        return this.intituleSession;
+    }
 
     public HashMap<String, Utilisateur> getAnimateurs() {
         return this.animateurs;
