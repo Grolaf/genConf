@@ -197,6 +197,53 @@ public class Controleur {
     	}
     }
     
+    public void modifierTypeCommunication(Conference conference) {
+    	HashMap<String, TypeCommunication> typesCommunication = conference.getTypesCommunications();
+    	ihm.afficherCaracteristiquesTypesCommunication(typesCommunication);
+    	String libelle = ihm.saisirLibelleTypeCommunication();
+    	TypeCommunication e = conference.getTypeCommunication(libelle);
+    	if (e == NULL) {
+    		ihm.notifier("Ce type n'existe pas");
+    	} else {
+    		int choix = 1;
+    		while (choix != 0) {
+    			ihm.afficherCaracteristiquesTypeCommunication(e);
+    			choix = ihm.saisirOptionModifierTypeCommunication();
+    			switch (choix) {
+    			case 1:
+    				String nLibelle = ihm.saisirLibelleTypeCommunication();
+    				boolean r = e.setLibelle(nLibelle);
+    				if (r) {
+    					ihm.notifier("Le libellé a correctement été modifié");
+    				} else {
+    					ihm.notifier("Le libellé n'a pu être modifié");
+    				}
+    				break;
+    			case 2:
+    				boolean videoObligatoire = ihm.saisirSiVideoObligatoire();
+    				boolean r = e.setVideoObligatoire(videoObligatoire);
+    				if (r) {
+    					ihm.notifier("L'attribut video obligatoire a correctement été modifié");
+    				} else {
+    					ihm.notifier("L'attribut video obligatoire n'a pu être modifié");
+    				}
+    				break;
+    			case 3:
+    				boolean pdfObligatoire = ihm.saisirSiPDFbligatoire();
+    				boolean r = e.setPDFObligatoire(pdfObligatoire);
+    				if (r) {
+    					ihm.notifier("L'attribut PDF obligatoire a correctement été modifié");
+    				} else {
+    					ihm.notifier("L'attribut PDF obligatoire n'a pu être modifié");
+    				}
+    				break;
+    			case 4:
+    				break;
+    			}
+    		}
+    	}
+    }
+    
     private void modifierAnimateursSession(Session session) {
     	int option = 1;
     	while (option != 0) {
