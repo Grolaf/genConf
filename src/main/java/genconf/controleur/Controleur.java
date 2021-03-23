@@ -152,4 +152,163 @@ public class Controleur {
     		ihm.notifier("Le compte n'a pu être promu");
     	}
     }
+    
+    public void modifierSession(Conference conference, Session session) {
+    	while (session == NULL) {
+    		HashMap<String, Session> sessions = conference.getSessions();
+    		String intituleSession = ihm.selectionnerSession(sessions);
+    		Session session = conference.getSesession(intituleSession);
+    	}
+    	int choix = 1;
+    	while (choix != 0) { // choix == 0 == quitter
+    		ihm.afficherInfosSession(session);
+    		choix = ihm.optionsModifierSession();
+    		switch (choix) {
+    		case 0:
+    			break;
+    		case 1:
+    			modifierAnimateursSession(session);
+    			break;
+    		case 2:
+    			modifierIntituleSession(session, conference);
+    			break;
+    		case 3:
+    			modifierTypeSession(session);
+    			break;
+    		case 4:
+    			modifierDateSession(session);
+    			break;
+    		case 5:
+    			modifierHorairesSession(session);
+    			break;
+    		case 6:
+    			modifierVideoAssociee(session);
+    			break;
+    		case 7:
+    			modifierSalleSession(session);
+    			break;
+    		case 8:
+    			addCommunicationASession(communication, session, conference);
+    			break;
+    		case 9:
+    			removeCommunicationASession(communication, conference, session);
+    			break;
+    		}
+    	}
+    }
+    
+    private void modifierAnimateursSession(Session session) {
+    	int option = 1;
+    	while (option != 0) {
+    		HashMap<String, Utilisateur> animateurs = session.getAnimateurs();
+    		option = ihm.saisirSupprimerOuAjouterUtilisateur(animateurs);
+    		switch (option) {
+    		case 0:
+    			break;
+    		case 1:	// ajouter
+    			String[3] infosUtilisateur = ihm.saisirUtilisateur();
+    			Utilisateur utilisateur = genconf.getUtilisateur(infosUtilisateur[0], infosUtilisateur[1], infosUtilisateur[2]);
+    			if (utilisateur == NULL) {
+    				utilisateur = creerCompteGenConf();
+    			}
+    			
+    			boolean r = session.addAnimateur(utilisateur);
+    			if (r) {
+    				ihm.notifier("L'animateur a correctement été ajouté");
+    			} else {
+    				ihm.notifier("L'animateur n'a pu être ajouté");
+    			}
+    			break;
+    		case 2:	// supprimer
+    			String[3] infosUtilisateur = ihm.saisirUtilisateur();
+    			Utilisateur utilisateur = genconf.getUtilisateur(infosUtilisateur[0], infosUtilisateur[1], infosUtilisateur[2]);
+    			
+    			boolean r = false;
+    			if (utilisateur) {
+    				r = session.removeAnimateur(utilisateur);
+    			}
+    			if (r) {
+    				ihm.notifier("L'animateur a correctement été supprimé");
+    			} else {
+    				ihm.notifier("L'animateur n'a pu être supprimé");
+    			}
+    			break;
+    		}
+    	}
+    }
+
+    private void modifierIntituleSession(Session session, Conference conference) {
+    	Session existe;
+    	String nouvelIntitule;
+    	do {
+	    	nouvelIntitule = ihm.demanderNomSession();
+	    	existe = conference.getSession(nouvelIntitule);
+	    	if (existe) {
+	    		ihm.notifier("La session existe déjà");
+	    	}
+    	} while (existe);
+    	boolean r = session.setIntituleSession(nouvelIntitule);
+    	if (r) {
+    		ihm.notifier("L'intitulé a correctement été modifié");
+    	} else {
+    		ihm.notifier("L'intitulé n'a pu être changé");
+    	}
+    }
+
+    private void modifierTypeSession(Session session) {
+    	String nouveauType = ihm.saisirNouveauTypeSession();
+    	boolean r = session.setType(nouveauType);
+    	if (r) {
+    		ihm.notifier("Le type a correctement été modifié");
+    	} else {
+    		ihm.notifier("Le type n'a pu être modifié");
+    	}
+    }
+    
+    private void modifierDateSession(Session session) {
+    	String nouvelleDate = ihm.saisirDate();
+    	int r = session.setDate(nouvelleDate);
+    	if (r == 0) {
+    		ihm.notifier("La date a correctement été modifiée");
+    	} else {
+    		ihm.notifier("La date n'a pu être modifiée");
+    	}
+    }
+
+    private void modifierHorairesSession(Session session) {
+    	ihm.notifier("Entrez la nouvelle heure de début");
+    	String nouvelleHeureDebut = ihm.saisirHeure();
+    	
+    	ihm.notifier("Entrez la nouvelle heure de fin");
+    	String nouvelleHeureFin = ihm.saisirHeure();
+    	
+    	int r = session.setHoraires(nouvelleHeureDebut, nouvelleHeureFin);
+    	if (r == 0) {
+    		ihm.notifier("L'horaire a été changé");
+    	} else {
+    		ihm.notifier("L'horaire n'a pu être changé");
+    	}
+    }
+
+    private void modifierVideoAssociee(Session session) {
+    	String nouveauLien = ihm.saisirLienVideo();
+    	boolean r = session.setLienVideo(nouveauLien);
+    	if (r) {
+    		ihm.notifier("Lien vidéo changé");
+    	} else {
+    		ihm.notifier("Le lien vidéo n'a pu être changé");
+    	}
+    }
+
+    private void modifierSalleSession(Session session) {
+    	String nouvelleSalle = ihm.saisirSalle();
+    	boolean r = session.setSalle(nouvelleSalle);
+    	if (r) {
+    		ihm.notifier("La salle a correctement été modifiée");
+    	} else {
+    		ihm.notifier("La salle n'a pu être changée");
+    	}
+    }
+
+
 }
