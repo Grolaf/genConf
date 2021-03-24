@@ -13,7 +13,7 @@ import java.util.Set;
  */
 
  /**
- * The class Utilisateur
+ * The class Communication
  */ 
 public class Communication {
 
