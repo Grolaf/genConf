@@ -942,7 +942,7 @@ public class IHM {
         str[0] = scanner.nextLine();
         System.out.println("Saisir les auteurs : ");
         str[1] = scanner.nextLine();
-        System.out.println("Saisir la Date : (dd/MM/YYYY)");
+        System.out.println("Saisir la Date : (YYYY-MM-DD)");
         str[2] = scanner.nextLine();
         System.out.println("Saisir l'heure de début  : (hh/mm/ss)");
         str[3] = scanner.nextLine();
@@ -1056,7 +1056,7 @@ public class IHM {
         str[0] = scanner.nextLine();
         System.out.println("Saisir le type de Session : ");
         str[1] = scanner.nextLine();
-        System.out.println("Saisir la date : (dd/MM/YYYY)");
+        System.out.println("Saisir la date : (YYYY-MM-DD)");
         str[2] = scanner.nextLine();
         System.out.println("Saisir l'heure de début' : (hh/mm/ss)");
         str[3] = scanner.nextLine();
