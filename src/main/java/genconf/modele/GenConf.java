@@ -37,9 +37,8 @@ public class GenConf implements Serializable {
     private HashMap<String, Utilisateur> adminGenConf;
     private HashMap<String, Conference> conference;
 
-    public boolean addCompteConf(String nom, String prenom, String email) {
-        Utilisateur utilisateur = new Utilisateur(email, nom, prenom);
-        utilisateurs.put(email, utilisateur);
+    public boolean addCompteConf(Utilisateur u) {
+        utilisateurs.put(u.getEmail(), u);
         return true;
     }
 

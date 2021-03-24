@@ -5,7 +5,9 @@ import genconf.modele.*;
 import genconf.util.Persisteur;
 import genconf.vue.IHM;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
+import java.util.Set;
 
 
 public class Controleur {
@@ -21,13 +23,13 @@ public class Controleur {
 
     public void addCommunicationASession(Communication communication, Session session, Conference conference) {
     	while (communication == null) {
-    		HashMap<String, Communication> communications = session.getCommunications();
+    		HashMap<Integer, Communication> communications = session.getCommunications();
     		int numero = ihm.saisirNumeroCommunication(communications);
-    		Communication communication = session.getCommunication(numero);
+    		communication = session.getCommunication(numero);
     	}
         Session sessionRattachee = communication.getSession();
         boolean choix = false;
-        if (sessionRattachee) {
+        if (sessionRattachee != null) {
         	choix = ihm.demanderARemplacerSessionDeCommunication();
         }
         boolean r = false;
@@ -46,51 +48,50 @@ public class Controleur {
     }
     
     public Communication creerCommunication(Conference conference) {
-    	HashMap<int, Communication> communications = conference.getCommunications();
+    	HashMap<Integer, Communication> communications = conference.getCommunications();
     	ihm.afficherCommunications(communications);
     	
     	String libelle = ihm.saisirNomTypeCommunication();
     	TypeCommuincation type = conference.getTypeCommunication(libelle);
     	
-    	String[6] infosCommunication = ihm.saisirInfosCommunication(type);
+    	String infosCommunication[] = ihm.saisirInfosCommunication(type);
     	
     	ihm.notifier("Veuillez saisir le correspondant de la communication");
-    	String[3] infosCorrespondant = ihm.saisirUtilisateur();
-    	Utilisateur correspondant = genconf.getUtilisateur(infosCorrespondant[0], infosCorrespondant[1], infosCorrespondant[2]);
+    	String infosCorrespondant[] = ihm.saisirUtilisateur();
+    	Utilisateur correspondant = genconf.getUtilisateur(infosCorrespondant[2]);
     	if (correspondant == null) {
     		correspondant = creerCompteGenConf();
     	}
     	
     	ihm.notifier("Veuillez saisir les auteurs de la communication");
-    	Set<String[3]> auteurs = ihm.saisirAuteursCommunication();
+    	Set<String[]> auteurs = ihm.saisirAuteursCommunication();
     	
-    	HashMap<String, Utilisateur> orateurs;
-    	Iterator<String[3]> it = auteurs.iterator;
+    	HashMap<String, Utilisateur> orateurs = new HashMap<>();
+    	Iterator<String[]> it = auteurs.iterator();
     	while (it.hasNext()) {
-    		String[3] auteur = it.next();
-    		Utilisateur auteurU = getUtilisateur(infosAuteur[0], infosAuteur[1], infosAuteur[2]);
+    		String auteur[] = it.next();
+    		Utilisateur auteurU = this.genconf.getUtilisateur(auteur[2]);
     		
-    		if (auteurU) {
+    		if (auteurU != null) {
     			orateurs.put(auteur[2], auteurU);
     		}
     	}
         LocalDate date = LocalDate.parse(infosCommunication[3]);
     	Communication communication = Communication(correspondant, infosCommunication[0], auteurs, infosCommunication[1], infosCommunication[2], date, infosCommunication[4], infosCommunication[5], orateurs, type, conference);
-    	boolean r = conference.addCommunication(communication, communication.getNumero());
-    	if (r) {
+    	
+    	if (conference.addCommunication(communication)) {
     		ihm.notifier("La communication a correctement été créée");
     	} else {
     		ihm.notifier("La communication n'a pu être créée");
     	}
     	return communication;
-    
+    }
     /**************************************************************************************/
     /**************************************************************************************/
     /**************************************************************************************/
     
     public void demarrerApplication()
     {
-        Persisteur.lireEtat();
         boolean choix;
         int choixSwitch;
         Commande cmd = Commande.PREVISUALISER_CONFERENCE;
@@ -111,7 +112,7 @@ public class Controleur {
         
         while(cmd != Commande.QUITTER)
         {
-            cmd = Commande.valueofCode(this.ihm.afficherMenuGeneral());
+            cmd = Commande.valueOfCode(this.ihm.afficherMenuGeneral());
             
             switch(cmd)
             {
@@ -124,7 +125,7 @@ public class Controleur {
                             creerSession(conferenceSelectionnee);
                             break;
                         case 2:
-                            modifierSessiono(conferenceSelectionnee, null);
+                            modifierSession(conferenceSelectionnee, null);
                             break;
                         case 3:
                             removeSession(conferenceSelectionnee);
@@ -142,7 +143,7 @@ public class Controleur {
                     switch(choixSwitch)
                     {
                         case 1:
-                            creerCommunication(conferenceSelectionee);
+                            creerCommunication(conferenceSelectionnee);
                             break;
                         case 2:
                             modifierCommunication(conferenceSelectionnee, null);
@@ -183,10 +184,10 @@ public class Controleur {
                     switch(choixSwitch)
                     {
                         case 1:
-                            modifierMetadonneesConference(conferenceSelectionnee);
+                            saisirMetadonneesConference(conferenceSelectionnee);
                             break;
                         case 2:
-                            consulterInfosConf(conferenceSelectionnee);
+                            consulterMetadonneesConference(conferenceSelectionnee);
                             break;
                         default :
                             this.ihm.notifier("Mauvaise selection");
@@ -218,10 +219,10 @@ public class Controleur {
                     switch(choixSwitch)
                     {
                         case 1:
-                            creerCompteGenConf(conferenceSelectionnee);
+                            creerCompteGenConf();
                             break;
                         case 2:
-                            donnerDroitsAdminConf(conferenceSelectionnee);
+                            donnerDroitsAdmin(conferenceSelectionnee);
                             break;
                         case 3:
                             donnerDroitsInscrits(conferenceSelectionnee);
@@ -244,7 +245,6 @@ public class Controleur {
         
         this.ihm.notifier("Au revoir et à bientot ! ");
         
-        Persisteur.sauverEtat(genconf);        
     }
     
     public Conference selectionnerConference()
@@ -274,14 +274,14 @@ public class Controleur {
 
 
     public Utilisateur creerCompteGenConf() {
-    	String[3] infosUtilisateur = ihm.saisirUtilisateur();
+    	String infosUtilisateur[] = ihm.saisirUtilisateur();
 
-    	Utilisateur u = genconf.getUtilisateur(infosUtilisateur[0], infosUtilisateur[1], infosUtilisateur[2]);
-    	if (u) {
+    	Utilisateur u = genconf.getUtilisateur(infosUtilisateur[2]);
+    	if (u != null) {
     		ihm.notifier("Le compte existe déjà");
     	} else {
     		u = new Utilisateur(infosUtilisateur[2], infosUtilisateur[0], infosUtilisateur[1]);
-    		genconf.addCompteConf(infosUtilisateur[0], infosUtilisateur[1], infosUtilisateur[2]);
+    		genconf.addCompteConf(u);
     		ihm.notifier("Le compte a été créé");
     	}
     	return u;
@@ -290,9 +290,13 @@ public class Controleur {
     public Session creerSession(Conference conference) {
     	HashMap<String, Session> sessions = conference.getSessions();
     	ihm.afficherInfosSessions(sessions);
-    	
-    	String[7] infosNouvelleSession = ihm.saisirNouvelleSession(conference);
-    	Session nouvelleSession = new Session(infosNouvelleSession[0], infosNouvelleSession[1], infosNouvelleSession[2], infosNouvelleSession[3], infosNouvelleSession[4], infosNouvelleSession[5], infosNouvelleSession[6], conference);
+    	String infosNouvelleSession[] = ihm.saisirNouvellesSession(conference);
+        
+        LocalDate date = LocalDate.parse(infosNouvelleSession[2]);
+        LocalTime heureDebut = LocalTime.parse(infosNouvelleSession[3]);
+        LocalTime heureFin = LocalTime.parse(infosNouvelleSession[3]);
+        
+    	Session nouvelleSession = new Session(infosNouvelleSession[0], infosNouvelleSession[1], date, heureDebut, heureFin, infosNouvelleSession[5], infosNouvelleSession[6], conference);
     	
     	boolean r = conference.addSession(nouvelleSession);
     	if (r) {
@@ -301,15 +305,15 @@ public class Controleur {
     		ihm.notifier("La session n'a pu être crée");
     	}
     	
-    	return session;
+    	return nouvelleSession;
     }
 
     public void creerTypeCommunication(Conference conference) {
-    	HashMap<String, TypeCommunication> typesCommunication = conference.getTypeCommunications();
-    	ihm.afficherCaracteristiquesTypesCommunications(typesCommunication);
+    	HashMap<String, TypeCommunication> typesCommunication = conference.getTypesCommunications();
+    	ihm.afficherCaracteristiquesTypesCommunication(typesCommunication);
     	String libelle = ihm.saisirNomTypeCommunication();
     	TypeCommunication type = conference.getTypeCommunication(libelle);
-    	if (type) {
+    	if (type != null) {
     		ihm.notifier("Ce type existe déjà");
     	} else {
     		boolean videoObligatoire, pdfObligatoire;
@@ -327,19 +331,20 @@ public class Controleur {
     		case 4:
     			break;
     		}
-    		TypeCommunication type = new TypeCommunication(libelle, videoObligatoire, pdfObligatoire);
+    		type = new TypeCommunication(libelle, videoObligatoire, pdfObligatoire);
     		if (conference.addTypeCommunication(type)) {
     			ihm.notifier("Le type de communication a été ajouté à la conférence");
     		} else {
     			ihm.notifier("Le type de communication n'a pu être ajouté à la conférence");
     		}
     	}
+    }
 
     public Conference creerConference()
     {
         String nomNouvelleConf;
         LocalDate dateDebut, dateFin;
-        Conference nouvelleConference;
+        Conference nouvelleConference = null;
         
         HashMap<String, Conference> conferences = this.genconf.getConferences();
         
@@ -347,13 +352,13 @@ public class Controleur {
 
         this.ihm.notifier("Veuillez entrer la date de début");
         
-        dateDebut = this.ihm.saisirDate();
+        dateDebut = LocalDate.parse(this.ihm.saisirDate());
         
         this.ihm.notifier("Veuillez entrer la date de fin");
         
-        dateFin = this.ihm.saisirDate();
+        dateFin = LocalDate.parse(this.ihm.saisirDate());
         
-        if(!this.genconf.getConference(nomNouvelleConf))
+        if(this.genconf.getConference(nomNouvelleConf) == null)
         {
             nouvelleConference = new Conference(nomNouvelleConf, dateDebut, dateFin);
         }
@@ -382,7 +387,7 @@ public class Controleur {
         
         while(choix != 0)
         {
-            consulterInfosConf(conference);
+            consulterMetadonneesConference(conference);
             
             choix = this.ihm.optionsModifierConference();
             
@@ -472,17 +477,17 @@ public class Controleur {
         }
     }
     
-    private void modifierDateDebutConf(conference)
+    private void modifierDateDebutConf(Conference conference)
     {
         LocalDate date;
         this.ihm.notifier("Veuillez saisir la nouvelle date de début");
         
-        date = parse(this.ihm.saisirDate());
+        date = LocalDate.parse(this.ihm.saisirDate());
         
-        switch(conference.setDateDebut(date));
+        switch(conference.setDateDebut(date))
         {
             case 0 :
-                this.ihm.notifier("La date de début a correctement été modifiée")
+                this.ihm.notifier("La date de début a correctement été modifiée");
                 break;
             case 1 : 
                 this.ihm.notifier("La date de début est antérieure à la date T4");
@@ -500,15 +505,15 @@ public class Controleur {
         LocalDate date;
         this.ihm.notifier("Veuillez saisir la nouvelle date de fin");
         
-        date = parse(this.ihm.saisirDate());
+        date = LocalDate.parse(this.ihm.saisirDate());
         
-        if(conference.setDateFin(date));
+        if(conference.setDateFin(date))
         {
             this.ihm.notifier("La date de fin a correctement été modifiée");
         }
         else
         {
-            this.ihm.notifier("La date de fin est antérieure à la date de début")
+            this.ihm.notifier("La date de fin est antérieure à la date de début");
         }
 
 
@@ -518,12 +523,12 @@ public class Controleur {
     	LocalDate date;
         this.ihm.notifier("Veuillez saisir la nouvelle dateT1");
         
-        date = parse(this.ihm.saisirDate());
+        date = LocalDate.parse(this.ihm.saisirDate());
         
-        switch(conference.setDateT1(date));
+        switch(conference.setDateT1(date))
         {
             case 0 :
-                this.ihm.notifier("La dateT1 a correctement été modifiée")
+                this.ihm.notifier("La dateT1 a correctement été modifiée");
                 break;
             case 1 : 
                 this.ihm.notifier("La dateT1 est ultérieure à la dateT2");
@@ -538,12 +543,12 @@ public class Controleur {
         LocalDate date;
         this.ihm.notifier("Veuillez saisir la nouvelle dateT2");
         
-        date = parse(this.ihm.saisirDate());
+        date = LocalDate.parse(this.ihm.saisirDate());
         
-        switch(conference.setDateT2(date));
+        switch(conference.setDateT2(date))
         {
             case 0 :
-                this.ihm.notifier("La dateT2 a correctement été modifiée")
+                this.ihm.notifier("La dateT2 a correctement été modifiée");
                 break;
             case 1 : 
                 this.ihm.notifier("La dateT2 est antérieure à la date T1");
@@ -560,12 +565,12 @@ public class Controleur {
         LocalDate date;
         this.ihm.notifier("Veuillez saisir la nouvelle dateT3");
         
-        date = parse(this.ihm.saisirDate());
+        date = LocalDate.parse(this.ihm.saisirDate());
         
-        switch(conference.setDateT3(date));
+        switch(conference.setDateT3(date))
         {
             case 0 :
-                this.ihm.notifier("La dateT3 a correctement été modifiée")
+                this.ihm.notifier("La dateT3 a correctement été modifiée");
                 break;
             case 1 : 
                 this.ihm.notifier("La dateT3 est antérieure à la date T2");
@@ -583,7 +588,7 @@ public class Controleur {
         LocalDate date;
         this.ihm.notifier("Veuillez saisir la nouvelle dateT4");
         
-        date = parse(this.ihm.saisirDate());
+        date = LocalDate.parse(this.ihm.saisirDate());
         
         switch(conference.setDateT4(date)) {
             case 0 :
@@ -605,22 +610,22 @@ public class Controleur {
         LocalDate dateDebut, dateFin, dateT1, dateT2, dateT3, dateT4;
         
         this.ihm.notifier("Veuillez saisir la nouvelle date de debut");
-        dateDebut = this.ihm.saisirDate();
+        dateDebut = LocalDate.parse(this.ihm.saisirDate());
         
         this.ihm.notifier("Veuillez saisir la nouvelle date de fin");
-        dateFin = this.ihm.saisirDate();
+        dateFin = LocalDate.parse(this.ihm.saisirDate());
         
         this.ihm.notifier("Veuillez saisir la nouvelle dateT1");
-        dateT1 = this.ihm.saisirDate();
+        dateT1 = LocalDate.parse(this.ihm.saisirDate());
         
         this.ihm.notifier("Veuillez saisir la nouvelle dateT2");
-        dateT2 = this.ihm.saisirDate();
+        dateT2 = LocalDate.parse(this.ihm.saisirDate());
         
         this.ihm.notifier("Veuillez saisir la nouvelle dateT3");
-        dateT3 = this.ihm.saisirDate();
+        dateT3 = LocalDate.parse(this.ihm.saisirDate());
         
         this.ihm.notifier("Veuillez saisir la nouvelle dateT4");
-        dateT4 = this.ihm.saisirDate();
+        dateT4 = LocalDate.parse(this.ihm.saisirDate());
         
         switch(conference.setDates(dateDebut, dateFin, dateT1, dateT2, dateT3, dateT4))
         {
@@ -654,9 +659,9 @@ public class Controleur {
     public void donnerDroitsAdmin(Conference conference) {
     	HashMap<String, Utilisateur> utilisateurs = genconf.getUtilisateurs();
     	ihm.afficherUtilisateurs(utilisateurs);
-    	String[3] infosUtilisateur = ihm.saisirUtilisateur();
-    	Utilisateur u = genconf.getUtilisateur(infosUtilisateur[0], infosUtilisateur[1], infosUtilisateur[2]);
-    	if (!u) {
+    	String infosUtilisateur[] = ihm.saisirUtilisateur();
+    	Utilisateur u = genconf.getUtilisateur(infosUtilisateur[2]);
+    	if ( u == null) {
     		u = creerCompteGenConf();
     	}
     	boolean r1 = conference.addAdminConf(u, infosUtilisateur[2]);
@@ -670,7 +675,7 @@ public class Controleur {
     
     public void modifiercommunication(Conference conference, Communication communication) {
     	while (communication == null) {
-    		HashMap<String, Communication> communications = conference.getCommunications();
+    		HashMap<Integer, Communication> communications = conference.getCommunications();
     		int saisir = ihm.saisirNumeroCommunication(communications);
     		communication = conference.getCommunication(saisir);
     	}
@@ -717,7 +722,7 @@ public class Controleur {
     	while (session == null) {
     		HashMap<String, Session> sessions = conference.getSessions();
     		String intituleSession = ihm.selectionnerSession(sessions);
-    		Session session = conference.getSesession(intituleSession);
+    		session = conference.getSession(intituleSession);
     	}
     	int choix = 1;
     	while (choix != 0) { // choix == 0 == quitter
@@ -751,10 +756,60 @@ public class Controleur {
     			addCommunicationASession(null, session, conference);
     			break;
     		case 9:
-    			removeCommunicationASession(null, conference, session);
+    			removeCommunicationASession(null, session);
     			break;
+                case 10:
+                        modifierTrackSession(conference, session);
+                        break;
     		}
     	}
+    }
+    
+    private void modifierTrackSession(Conference conf, Session session)
+    {
+        int option;
+        HashMap<String, Track> tracksSession, tracksConference;
+        String libelle;
+        Track track;
+                
+        do
+        {
+           tracksSession = session.getTracks();
+           
+           option = this.ihm.saisirAjouterOuSupprimerTrack(tracksSession);
+           
+           if(option == 1)
+           {
+               tracksConference = conf.getTracks();
+               libelle = this.ihm.saisirLibelleTrack(tracksConference);
+               track = conf.getTrack(libelle);
+               if(track == null)
+               {
+                   track = creerTrack(conf);
+               }
+               if(session.addTrack(track))
+               {
+                   this.ihm.notifier("Le track a correctement été ajouté à la session");
+               }
+               else
+               {
+                   this.ihm.notifier("Une erreur s'est produite lors de l'ajout du track à la session");
+               }
+           }
+           else
+           {
+               libelle = this.ihm.saisirLibelleTrack();
+               if(session.removeTrack(session.getTrack(libelle)))
+               {
+                   this.ihm.notifier("Le track a correctement été supprimé de la session");
+               }
+               else
+               {
+                   this.ihm.notifier("Une erreur s'est produite lors de la suppression du track dans la session");
+               }
+           }
+           
+        }while(option != 0);
     }
     
     public void modifierTypeCommunication(Conference conference) {
@@ -783,7 +838,7 @@ public class Controleur {
     				break;
     			case 2:
     				boolean videoObligatoire = ihm.saisirSiVideoObligatoire();
-    				boolean r = e.setVideoObligatoire(videoObligatoire);
+    				r = e.setVideoObligatoire(videoObligatoire);
     				if (r) {
     					ihm.notifier("L'attribut video obligatoire a correctement été modifié");
     				} else {
@@ -791,8 +846,8 @@ public class Controleur {
     				}
     				break;
     			case 3:
-    				boolean pdfObligatoire = ihm.saisirSiPDFbligatoire();
-    				boolean r = e.setPDFObligatoire(pdfObligatoire);
+    				boolean pdfObligatoire = ihm.saisirSiPDFObligatoire();
+    				r = e.setpdfObligatoire(pdfObligatoire);
     				if (r) {
     					ihm.notifier("L'attribut PDF obligatoire a correctement été modifié");
     				} else {
@@ -813,17 +868,17 @@ public class Controleur {
     }
     
     public void previsualiserConference(Conference conference) {
-    	int choix = 1;
-    	while (choix != 0) {
+    	boolean choix = true;
+    	while (choix != false) {
     		ihm.afficherNomConference(conference);
     		HashMap<String, Session> sessions = conference.getSessions();
     		ihm.afficherLibelleSessions(sessions);
-    		boolean choix = ihm.demandeSiPrevisualisationSession();
+    		choix = ihm.demanderSiPrevisualisationSession();
     		if (choix) {
     			String intitule = ihm.demanderNomSession();
     			Session sessionAPrevisualiser = conference.getSession(intitule);
-    			if (sessionAPrevisualiser) {
-    				previsualiserSession(session);
+    			if (sessionAPrevisualiser != null) {
+    				previsualiserSession(sessionAPrevisualiser, conference);
     			} else {
     				ihm.notifier("Cette session n'existe pas");
     			}
@@ -834,13 +889,11 @@ public class Controleur {
     public void previsualiserSession(Session session, Conference conference) {
     	int choix = 1;
     	while (choix != 0) {
-    		ihm.afficherInfosSession(this);
-    		HashMap<String, Communication> communications = session.getCommunications();
+    		ihm.afficherInfosSession(session);
+    		HashMap<Integer, Communication> communications = session.getCommunications();
     		
-    		Iterator<Communication> it = communications.iterator();
-    		while (it.hasNext()) {
-    			Communication c = it.next();
-    			ihm.afficherTitreCommunication(c);
+                for(HashMap.Entry<Integer, Communication> c : communications.entryset())
+    			ihm.afficherTitreCommunication(c.getValue());
     		}
     	}
     	choix = ihm.saisirOptionPrevisualiserSession();
@@ -850,31 +903,30 @@ public class Controleur {
     	case 1:
     		int numero = ihm.saisirNumeroCommunication();
     		Communication communication = session.getCommunication(numero);
-    		if (communication) {
-    			previsualiserCommunication(communication);
+    		if (communication != null) {
+    			previsualiserCommunication(communication, conferences);
     		} else {
     			ihm.notifier("Cette communication n'existe pas");
     		}
     		break;
     	case 2:
-    		modifierSession(conference, session)
+    		modifierSession(conference, session);
     		break;
     	}
     }
     
     public void removeCommunication(Conference conference) {
-    	HashMap<int, Communication> communications = conference.getCommunications();
+    	HashMap<Integer, Communication> communications = conference.getCommunications();
     	int numero = ihm.saisirNumeroCommunication(communications);
     	Communication communication = conference.getCommunication(numero);
-    	if (communication) {
+    	if (communication != null) {
     		Session session = communication.getSession();
     		boolean r = session.removeCommunication(communication);
     		if (r) {
     			HashMap<String, Utilisateur> orateurs = communication.getOrateurs();
-    			Iterator<Utilisateur> it = orateurs.iterator();
-    			while (it.hasNext()) {
-    				Utilisateur u = it.next();
-    				if (u.removeCommunicationEnTantQueOrateur(communication) == false) {
+    			
+                        for(HashMap.Entry<String, Utilisateur> u : orateurs.entrySet())
+    				if (u.getValue().removeCommunicationEnTantQueOrateur(communication) == false) {
     					ihm.notifier("L'orateur n'a pas pu être retiré de la communication");
     				}
     			}
@@ -903,8 +955,8 @@ public class Controleur {
     		case 0:
     			break;
     		case 1:	// ajouter
-    			String[3] infosUtilisateur = ihm.saisirUtilisateur();
-    			Utilisateur utilisateur = genconf.getUtilisateur(infosUtilisateur[0], infosUtilisateur[1], infosUtilisateur[2]);
+    			String infosUtilisateur[] = ihm.saisirUtilisateur();
+    			Utilisateur utilisateur = genconf.getUtilisateur(infosUtilisateur[2]);
     			if (utilisateur == null) {
     				utilisateur = creerCompteGenConf();
     			}
@@ -917,11 +969,11 @@ public class Controleur {
     			}
     			break;
     		case 2:	// supprimer
-    			String[3] infosUtilisateur = ihm.saisirUtilisateur();
-    			Utilisateur utilisateur = genconf.getUtilisateur(infosUtilisateur[0], infosUtilisateur[1], infosUtilisateur[2]);
+    			String infosUtilisateur[] = ihm.saisirUtilisateur();
+    			Utilisateur utilisateur = genconf.getUtilisateur(infosUtilisateur[2]);
     			
-    			boolean r = false;
-    			if (utilisateur) {
+    			r = false;
+    			if (utilisateur != null) {
     				r = session.removeAnimateur(utilisateur);
     			}
     			if (r) {
@@ -940,11 +992,11 @@ public class Controleur {
     	do {
 	    	nouvelIntitule = ihm.demanderNomSession();
 	    	existe = conference.getSession(nouvelIntitule);
-	    	if (existe) {
+	    	if (existe != null) {
 	    		ihm.notifier("La session existe déjà");
 	    	}
-    	} while (existe);
-    	boolean r = session.setIntituleSession(nouvelIntitule);
+    	} while (existe != null);
+    	boolean r = session.setIntitule(nouvelIntitule);
     	if (r) {
     		ihm.notifier("L'intitulé a correctement été modifié");
     	} else {
@@ -963,7 +1015,7 @@ public class Controleur {
     }
     
     private void modifierDateSession(Session session) {
-    	String nouvelleDate = ihm.saisirDate();
+    	LocalDate nouvelleDate = LocalDate.parse(ihm.saisirDate());
     	int r = session.setDate(nouvelleDate);
     	if (r == 0) {
     		ihm.notifier("La date a correctement été modifiée");
@@ -974,10 +1026,10 @@ public class Controleur {
 
     private void modifierHorairesSession(Session session) {
     	ihm.notifier("Entrez la nouvelle heure de début");
-    	String nouvelleHeureDebut = ihm.saisirHeure();
+    	LocalTime nouvelleHeureDebut = LocalTime.parse(ihm.saisirHeure());
     	
     	ihm.notifier("Entrez la nouvelle heure de fin");
-    	String nouvelleHeureFin = ihm.saisirHeure();
+    	LocalTime nouvelleHeureFin = LocalTime.parse(ihm.saisirHeure());
     	
     	int r = session.setHoraires(nouvelleHeureDebut, nouvelleHeureFin);
     	if (r == 0) {
@@ -1259,21 +1311,21 @@ public class Controleur {
     /**************************************************************************************/
     /**************************************************************************************/
     
-    public void creerTrack(Conference conf)
+    public Track creerTrack(Conference conf)
     {
         String libelle;
         Couleur couleur;
         Track existe;
         HashMap<String, Track> tracks = conf.getTracks();
         
-        libelle = this.ihm.saisirTracks();
+        libelle = this.ihm.saisirTracks(tracks);
         couleur = Couleur.valueByCode(this.ihm.saisirCouleurTrack());
         
         existe = conf.getTrack(libelle);
         
         if(existe == null)
         {
-            existe = new Track(conf, libelle, couleur);
+            existe = new Track(libelle, couleur);
             conf.addTrack(existe);
         }
         else
@@ -1281,6 +1333,7 @@ public class Controleur {
             this.ihm.notifier("Ce track existe déjà !");
         }
         
+        return existe;
     }
     
     public void removeTrack(Conference conf)
@@ -1290,7 +1343,7 @@ public class Controleur {
         HashMap<String, Track> tracks = conf.getTracks();
         boolean r;
         
-        libelle = this.ihm.saisirTrack(tracks);
+        libelle = this.ihm.saisirTracks(tracks);
         
         Track track = conf.getTrack(libelle);
         
@@ -1298,14 +1351,14 @@ public class Controleur {
         {
             sessions = track.getSessions();
             
-            for(Session s : sessions && r)
+            for(Session s : sessions)
             {
-                r = s.removeTrack();
+                s.removeTrack();
             }
             
             if(r)
             {
-                if(conferenceSelectionnee.removeTrack())
+                if(conf.removeTrack())
                 {
                     this.ihm.notifier("Le track a correctement été modifié");
                 }
@@ -1331,8 +1384,8 @@ public class Controleur {
     
     public void removeTypeCommunication(Conference conference)
     {
-        HashMap<String, TypeCommunication> types = conference.getTypesCommunication();
-        TypeCommunication typeASupprrimer;
+        HashMap<String, TypeCommunication> types = conference.getTypesCommunications();
+        TypeCommunication typeASupprimer;
         String libelle;
         
         this.ihm.afficherCaracteristiquesTypesCommunication(types);
@@ -1344,7 +1397,7 @@ public class Controleur {
             
         }while(typeASupprimer != null);
         
-        if(supprimerTypeCommunication(typeASupprimer))
+        if(conference.supprimerTypeCommunication(typeASupprimer))
         {
             this.ihm.notifier("Le type a correctement été supprimé");
         }
