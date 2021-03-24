@@ -12,7 +12,7 @@ public class Main {
     public static final int EXIT_ERR_SAVE = 3;
 
     public static void main(String[] args) {
-        GenConf genconf = null;
+        GenConf genconf = new GenConf();
 
         try {
             genconf = Persisteur.lireEtat();
@@ -24,9 +24,7 @@ public class Main {
         }
 
         Controleur controleur = new Controleur(genconf);
-        // `Controleur.demarrer` garde le contrôle de l'exécution tant que
-        // l'utilisa·teur/trice n'a pas saisi la commande QUITTER.
-        controleur.demarrer();
+        controleur.demarrerApplication();
 
         try {
             Persisteur.sauverEtat(genconf);
