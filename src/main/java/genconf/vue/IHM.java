@@ -865,8 +865,8 @@ public class IHM {
         return choix;
     }
 
-    public Set<String[]> saisirAuteursCommunication() {
-        Set<String[]> auteurs= new HashSet<>();
+    public HashSet<String[]> saisirAuteursCommunication() {
+    	HashSet<String[]> auteurs= new HashSet<>();
         boolean continuer=true;
         while (continuer) {
             System.out.println("Entrez le nom, prenom, mail");
@@ -1198,6 +1198,31 @@ public class IHM {
         }
         return choix;
     }
+    
+    public int saisirSupprimerOuAjouterUtilisateur(HashSet<String[]> auteurs) {
+        System.out.println("Existants : ");
+        for(String[] auteur : auteurs)
+        {
+        	System.out.print(auteur[0] + ", ");
+	        System.out.print(auteur[1] + ", ");
+	        System.out.println(auteur[2]);
+        }
+        System.out.println("Voulez vous ajouter ou supprimer un auteur?");
+        System.out.println("1. Ajouter");
+        System.out.println("2. Supprimer");
+        System.out.println("0. Quitter");
+        System.out.println("Votre choix : ");
+        Scanner scanner = new Scanner(System.in);
+        int choix = scanner.nextInt();
+        while (choix < 1 || choix > 3) {
+            System.out.println("1. Ajouter");
+            System.out.println("2. Supprimer");
+            System.out.println("0. Quitter");
+            System.out.println("Votre choix : ");
+            choix = scanner.nextInt();
+        }
+        return choix;
+    }
 
     public int saisirSupprimerOuAjouterUtilisateur(Set<String> utilisateurs) {
         System.out.println("Existants : ");
@@ -1295,6 +1320,13 @@ public class IHM {
         Scanner scanner = new Scanner(System.in);
         String intitule = scanner.nextLine();
         return intitule;
+    }
+    
+    public String saisirTitreCommunication()
+    {
+    	System.out.println("Veuillez saisir le titre de la communication : ");
+    	Scanner sc = new Scanner(System.in);
+    	return sc.nextLine();
     }
     
 

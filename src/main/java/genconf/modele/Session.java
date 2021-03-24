@@ -160,7 +160,7 @@ public class Session {
        }
     }
     
-    public boolean setVideo(String nouveauLienVideo)
+    public boolean setLienVideo(String nouveauLienVideo)
     {
         this.lienVersVideo = nouveauLienVideo;
         

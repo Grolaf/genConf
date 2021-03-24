@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.Map;
 import genconf.modele.*;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -31,7 +32,7 @@ public class Communication {
     private LocalTime heureDebut;
     private LocalTime heureFin;
 
-    private Set<String[]> auteurs;
+    private HashSet<String[]> auteurs;
     private Session session;
     private Utilisateur correspondant;
     private HashMap<String, Utilisateur> orateurs;
@@ -52,7 +53,7 @@ public class Communication {
      * @param dateFin  the date fin
      * @return public
      */
-        public Communication(Utilisateur correspondant, String titre, Set<String[]> auteurs, String lienPDF, String lienVideo, LocalDate date,LocalTime heureDebut, LocalTime heureFin, HashMap<String, Utilisateur> orateurs, TypeCommunication type, Conference conference) 
+        public Communication(Utilisateur correspondant, String titre, HashSet<String[]> auteurs, String lienPDF, String lienVideo, LocalDate date,LocalTime heureDebut, LocalTime heureFin, HashMap<String, Utilisateur> orateurs, TypeCommunication type, Conference conference) 
         { 
             LocalDate dateDebutConf, dateFinConf;
             boolean ras = true;
@@ -86,6 +87,7 @@ public class Communication {
             
             this.conference = conference;
             
+            this.auteurs = auteurs;
             this.orateurs = new HashMap<>();
             
             for(HashMap.Entry<String, Utilisateur> orateur: orateurs.entrySet())    
@@ -114,7 +116,7 @@ public class Communication {
      *
      * @return the auteurs
      */
-        public Set<String[]>  getAuteurs(){ 
+        public HashSet<String[]>  getAuteurs(){ 
 
             return  this.auteurs;
         }
@@ -412,17 +414,21 @@ public class Communication {
      *
      * @param auteur  the auteur
      */
-        public boolean removeAuteur(String auteur){ 
+        public boolean removeAuteur(String[] auteur){ 
 
-            auteurs.remove(auteur);
+        	for(String[] a : this.auteurs)
+        	{
+        		if(a[2] == auteur[2])
+        		{
+        			this.auteurs.remove(a);
+        		}
+        	}
             return true;
 
         }
         
         public boolean addOrateur(Utilisateur orateur)
         {
-            boolean ras;
-         
             this.orateurs.put(orateur.getEmail(), orateur);
             return orateur.addCommunicationEnTantQueOrateur(this);
 
