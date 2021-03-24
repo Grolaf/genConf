@@ -1,7 +1,8 @@
-package genconf.modele;
+package modele;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,22 +37,30 @@ public class Conference implements Serializable {
     private HashMap<String, Session> session;
 
     public boolean addAdminConf(Utilisateur utilisateur, String email) {
-    	administrateurs.put(email, utilisateur);
+    	if (administrateurs.get(email) == null) {
+    		administrateurs.put(email, utilisateur);
+    	}
     	return true;
     }
     
     public boolean addCommunication(Communication communication) {
+    	LocalDate dateComm = communication.getDate();
+    	if (dateComm.equals())
     	this.communication.put(communication.getNumero(), communication);
     	return true;
     }
     
     public boolean addInscrit(Utilisateur inscrit) {
+    	inscrit.addConferenceInscrit(this);
     	this.inscrit.put(inscrit.getEmail(), inscrit);
     	return true;
     }
     
     public boolean addSession(Session session) {
-    	this.session.put(session.getIntituleSession(), session);
+    	Session s = getSession(session.getIntituleSession());
+    	if (s == null) {
+        	this.session.put(session.getIntituleSession(), session);
+    	}
     	return true;
     }
     
@@ -62,6 +71,7 @@ public class Conference implements Serializable {
     
     public boolean addTypeCommunication(TypeCommunication type) {
     	this.typeCommunication.put(type.getLibelle(), type);
+    	return true;
     }
     
     Conference(String nomConf, LocalDate dateDebut, LocalDate dateFin) {
@@ -90,6 +100,10 @@ public class Conference implements Serializable {
     
     public LocalDate getDateFin() {
     	return this.dateFin;
+    }
+    
+    public String getNomConf() {
+    	return this.nomConf;
     }
     
     public Session getSession(String intituleSession) {
@@ -135,8 +149,25 @@ public class Conference implements Serializable {
     }
     
     public int removeSession(String intituleSession) {
-    	this.session.remove(intituleSession);
-    	return 0; 
+    	int valeurDeRetour = 0;
+    	Session session = getSession(intituleSession);
+    	HashMap<Integer, Communication> communications = getCommunications();
+    	if (communications == null) {
+    		HashMap<String, Utilisateur> animateurs = session.getAnimateurs();
+    		for(Utilisateur a : animateurs.values()) {
+    			if (a.removeSessionEnTantQueAnimateur(session)) {
+    				valeurDeRetour++;
+    			}
+    		}
+    		HashMap<String, Track> tracks = session.getTracks();
+    		for(Track t : tracks.values()) {
+    			if (t.removeSession(session)) {
+    				valeurDeRetour++;
+    			}
+    		}
+        	this.session.remove(intituleSession);
+    	}
+    	return valeurDeRetour; 
     }
     
     public boolean removeTrack(Track track) {
@@ -144,13 +175,23 @@ public class Conference implements Serializable {
     }
     
     public int setDateDebut(String nouvelleDate) {
-    	this.dateDebut = LocalDate.parse(nouvelleDate);
-    	return 0;
+    	LocalDate date = LocalDate.parse(nouvelleDate);
+    	if (date.isAfter(dateT4) && date.isBefore(dateFin)) {
+    		this.dateDebut = date;
+    		return 0;
+    	} else {
+    		return 1;
+    	}
     }
     
     public boolean setDateFin(String nouvelleDate) {
-    	this.dateFin = LocalDate.parse(nouvelleDate);
-    	return true;
+    	LocalDate date = LocalDate.parse(nouvelleDate);
+    	if (date.isAfter(dateDebut)) {
+    		this.dateFin = date;
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
     
     public int setDates(String dateT1, String dateT2, String dateT3, String dateT4, String dateDebut, String dateFin) {
@@ -163,24 +204,44 @@ public class Conference implements Serializable {
     	return 0;
     }
     
-    public boolean setDateT1(String nouvelleDateT1) {
-    	this.dateT1 = LocalDate.parse(nouvelleDateT1);
-    	return true;
+    public int setDateT1(String nouvelleDateT1) {
+    	LocalDate date = LocalDate.parse(nouvelleDateT1);
+    	if (date.isBefore(dateT2)) {
+    		this.dateT1 = date;
+    		return 0;
+    	} else {
+    		return 1;
+    	}
     }
     
     public int setDateT2(String nouvelleDateT2) {
-    	this.dateT2 = LocalDate.parse(nouvelleDateT2);
-    	return 0;
+    	LocalDate date = LocalDate.parse(nouvelleDateT2);
+    	if (date.isAfter(dateT1) && date.isBefore(dateT3)) {
+    		this.dateT2 = date;
+    		return 0;
+    	} else {
+    		return 1;
+    	}
     }
     
     public int setDateT3(String nouvelleDateT3) {
-    	this.dateT3 = LocalDate.parse(nouvelleDateT3);
-    	return 0;
+    	LocalDate date = LocalDate.parse(nouvelleDateT3);
+    	if (date.isAfter(dateT2) && date.isBefore(dateT4)) {
+    		this.dateT3 = date;
+    		return 0;
+    	} else {
+    		return 1;
+    	}
     }
     
     public int setDateT4(String nouvelleDateT4) {
-    	this.dateT4 = LocalDate.parse(nouvelleDateT4);
-    	return 0;
+    	LocalDate date = LocalDate.parse(nouvelleDateT4);
+    	if (date.isAfter(dateT3) && date.isBefore(dateDebut)) {
+    		this.dateT4 = date;
+    		return 0;
+    	} else {
+    		return 1;
+    	}
     }
     
     public boolean setLieu(String nouveauLieu) {
@@ -194,6 +255,12 @@ public class Conference implements Serializable {
     }
     
     public boolean setNom(String nouveauNom) {
+    	HashMap<String, Conference> conferences = genconf.getConferences();
+    	for (Conference conference : conferences.values()) {
+    		if (conference.getNomConf() == nouveauNom) {
+    			
+    		}
+    	}
     	this.nomConf = nouveauNom;
     	return true;
     }
@@ -209,6 +276,11 @@ public class Conference implements Serializable {
     }
 
     public boolean supprimerTypeCommunication(TypeCommunication typeCommunication) {
+    	for(Communication c : this.communication.values()) {
+    		if (c.getTypeCommunication().getLibelle() == typeCommunication.getLibelle()) {
+    			c.removeTypeCommunication();
+    		}
+    	}
     	this.typeCommunication.remove(typeCommunication.getLibelle());
     	return true;
     }
