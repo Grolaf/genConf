@@ -22,7 +22,7 @@ public class Session {
     private HashMap<String, Track> tracks;
     private Conference conference;
 
-    Session(String intitule, String type, LocalDate date, LocalTime heureDebut, LocalTime heureFin, String videoAssociee, String salle, Conference conference, Communcation communication) {
+    Session(String intitule, String type, LocalDate date, LocalTime heureDebut, LocalTime heureFin, String videoAssociee, String salle, Conference conference, Communication communication) {
         
         if(setIntitule(intitule) && setDate(date) == 0 && !setSalle(salle) && heureDebut.isBefore(heureFin))
         {
@@ -91,12 +91,18 @@ public class Session {
             return 1;
         }
         
-        for(Communication comm : this.communciations && valide)
+        for(Communication comm : this.communications.values())
         {
             heureDebutCommunication = comm.getHorairesDebut();
             heureFinCommunication = comm.getHorairesFin();
             
             valide = nouvelleHeureDebut.isBefore(heureDebutCommunication) && nouvelleHeureFin.isAfter(heureFinCommunication);
+            if (!valide) {
+            	if(nouvelleHeureDebut.isAfter(heureDebutCommunication))
+                {
+                    return 2;
+                }
+            }
         }
         
         if(valide)
@@ -104,10 +110,6 @@ public class Session {
             this.heureDebut = nouvelleHeureDebut;
             this.heureFin = nouvelleHeureFin;
             return 0;
-        }
-        else if(nouvelleHeureDebut.isAfter(heureDebutCommunication))
-        {
-            return 2;
         }
         else
         {
@@ -120,7 +122,7 @@ public class Session {
         LocalDate dateDebutConf = this.conference.getDateDebut();
         LocalDate dateFinConf = this.conference.getDateFin();
         
-        if(this.communication.size() != 0 && nouvelleDate != this.date)
+        if(this.communications.size() != 0 && nouvelleDate != this.date)
         {
             return 1;
         }
@@ -141,17 +143,15 @@ public class Session {
     
     public boolean setIntitule(String nouvelIntitule)
     {
-       Session existe =  this.conference.getSession(nouvelIntitule);
+       Session existe = this.conference.getSession(nouvelIntitule);
        
-       if(existe == null)
-       {
-           return false;
-       }
-       else
-       {
-           this.intituleSession = nouvelIntitule;
-           
+       if(existe == null) {
+    	   this.conference.removeSession(getIntitule());
+    	   this.intituleSession = nouvelIntitule;
+    	   this.conference.addSession(this);
            return true;
+       } else {
+           return false;
        }
     }
     
@@ -164,7 +164,7 @@ public class Session {
     
     public boolean setSalle(String nouvelleSalle)
     {
-        if(this.conference.isSalleDisponible(nouvelleSalle))
+        if(this.conference.isSalleDisponible(nouvelleSalle, this))
         {
             this.salle = nouvelleSalle;
             
@@ -207,7 +207,7 @@ public class Session {
     
 
     public boolean removeCommunication(Communication communication) {
-       this.communications.remove(communication);
+       this.communications.remove(communication.getNumero());
        
        return true;
     }
