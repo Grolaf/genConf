@@ -22,7 +22,7 @@ public class Session {
     private HashMap<String, Track> tracks;
     private Conference conference;
 
-    Session(String intitule, String type, LocalDate date, LocalTime heureDebut, LocalTime heureFin, String videoAssociee, String salle, Conference conference, Communication communication) {
+    public Session(String intitule, String type, LocalDate date, LocalTime heureDebut, LocalTime heureFin, String videoAssociee, String salle, Conference conference) {
         
         if(setIntitule(intitule) && setDate(date) == 0 && !setSalle(salle) && heureDebut.isBefore(heureFin))
         {
@@ -39,7 +39,7 @@ public class Session {
    /***********************************************************/
    /**     Getters     **/
     
-    public String getIntitule()
+    public String getIntituleSession()
     {
         return this.intituleSession;
     }
@@ -75,6 +75,11 @@ public class Session {
 
     public HashMap<String, Track> getTracks() {
         return this.tracks;
+    }
+    
+    public Track getTrack(String libelle)
+    {
+        return this.tracks.get(libelle);
     }
 
     
@@ -146,7 +151,7 @@ public class Session {
        Session existe = this.conference.getSession(nouvelIntitule);
        
        if(existe == null) {
-    	   this.conference.removeSession(getIntitule());
+    	   this.conference.removeSession(getIntituleSession());
     	   this.intituleSession = nouvelIntitule;
     	   this.conference.addSession(this);
            return true;
@@ -155,7 +160,7 @@ public class Session {
        }
     }
     
-    public boolean setVideo(String nouveauLienVideo)
+    public boolean setLienVideo(String nouveauLienVideo)
     {
         this.lienVersVideo = nouveauLienVideo;
         
@@ -187,13 +192,13 @@ public class Session {
     
     public boolean addAnimateur(Utilisateur animateur) {
         this.animateurs.put(animateur.getEmail(), animateur);
-        animateur.addSessionEnTantQueAnimateur(this);
+        animateur.setSessionEnTantQueAnimateur(this);
         
         return true;
     }
     
     public boolean removeAnimateur(Utilisateur animateur) {
-        animateur.removeSessionEnTantQueAnimateur(this);
+        animateur.setSessionEnTantQueAnimateur(null);
         this.animateurs.remove(animateur);
         
         return true;
@@ -210,6 +215,18 @@ public class Session {
        this.communications.remove(communication.getNumero());
        
        return true;
+    }
+    
+    public boolean addTrack(Track track)
+    {
+        this.tracks.put(track.getLibelle(), track);
+        
+        return true;
+    }
+    public boolean removeTrack(Track track)
+    {
+        this.tracks.remove(track.getLibelle());
+        return true;
     }
 
     /***********************************************************/

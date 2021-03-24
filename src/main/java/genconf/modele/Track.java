@@ -35,6 +35,11 @@ public class Track {
     {
         return this.sessions;
     }
+    
+    public String getLibelle()
+    {
+        return this.libelle;
+    }
    
     /***********************************************************/
     /**     Setters     **/

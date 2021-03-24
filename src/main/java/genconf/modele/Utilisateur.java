@@ -29,6 +29,11 @@ public class Utilisateur implements Serializable {
         this.communicationsCorrespondant = new HashMap<>();
         this.session = null;
     }
+    
+    public String getEmail()
+    {
+        return this.email;
+    }
 
     public boolean addCommunicationEnTantQueCorrespondant(Communication communication) {
     	this.communicationsCorrespondant.put(communication.getNumero(), communication);

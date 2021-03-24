@@ -72,7 +72,7 @@ public class Conference implements Serializable {
     	return true;
     }
     
-    Conference(String nomConf, LocalDate dateDebut, LocalDate dateFin) {
+    public Conference(String nomConf, LocalDate dateDebut, LocalDate dateFin) {
     	this.nomConf = nomConf;
     	this.dateDebut = dateDebut;
     	this.dateFin = dateFin;
@@ -124,7 +124,7 @@ public class Conference implements Serializable {
     	return this.typeCommunication.get(libelle);
     }
     
-    public HashMap<String, TypeCommunication> getTypeCommunications() {
+    public HashMap<String, TypeCommunication> getTypesCommunications() {
     	return this.typeCommunication;
     }
     
@@ -153,7 +153,7 @@ public class Conference implements Serializable {
     	if (communications == null) {
     		HashMap<String, Utilisateur> animateurs = session.getAnimateurs();
     		for(Utilisateur a : animateurs.values()) {
-    			if (a.removeSessionEnTantQueAnimateur(session)) {
+    			if (a.setSessionEnTantQueAnimateur(null)) {
     				valeurDeRetour++;
     			}
     		}
@@ -170,29 +170,28 @@ public class Conference implements Serializable {
     
     public boolean removeTrack(Track track) {
     	this.tracks.remove(track.getLibelle());
+        return true;
     }
     
-    public int setDateDebut(String nouvelleDate) {
-    	LocalDate date = LocalDate.parse(nouvelleDate);
-    	if (date.isAfter(dateT4) && date.isBefore(dateFin)) {
-    		this.dateDebut = date;
+    public int setDateDebut(LocalDate nouvelleDate) {
+    	if (nouvelleDate.isAfter(dateT4) && nouvelleDate.isBefore(dateFin)) {
+    		this.dateDebut = nouvelleDate;
     		return 0;
     	} else {
     		return 1;
     	}
     }
     
-    public boolean setDateFin(String nouvelleDate) {
-    	LocalDate date = LocalDate.parse(nouvelleDate);
-    	if (date.isAfter(dateDebut)) {
-    		this.dateFin = date;
+    public boolean setDateFin(LocalDate nouvelleDate) {
+    	if (nouvelleDate.isAfter(dateDebut)) {
+    		this.dateFin = nouvelleDate;
     		return true;
     	} else {
     		return false;
     	}
     }
     
-    public int setDates(String dateT1, String dateT2, String dateT3, String dateT4, String dateDebut, String dateFin) {
+    public int setDates(LocalDate dateT1, LocalDate dateT2, LocalDate dateT3, LocalDate dateT4, LocalDate dateDebut, LocalDate dateFin) {
     	setDateT1(dateT1);
     	setDateT2(dateT2);
     	setDateT3(dateT3);
@@ -202,40 +201,36 @@ public class Conference implements Serializable {
     	return 0;
     }
     
-    public int setDateT1(String nouvelleDateT1) {
-    	LocalDate date = LocalDate.parse(nouvelleDateT1);
-    	if (date.isBefore(dateT2)) {
-    		this.dateT1 = date;
+    public int setDateT1(LocalDate nouvelleDateT1) {
+    	if (nouvelleDateT1.isBefore(dateT2)) {
+    		this.dateT1 = nouvelleDateT1;
     		return 0;
     	} else {
     		return 1;
     	}
     }
     
-    public int setDateT2(String nouvelleDateT2) {
-    	LocalDate date = LocalDate.parse(nouvelleDateT2);
-    	if (date.isAfter(dateT1) && date.isBefore(dateT3)) {
-    		this.dateT2 = date;
+    public int setDateT2(LocalDate nouvelleDateT2) {
+    	if (nouvelleDateT2.isAfter(dateT1) && nouvelleDateT2.isBefore(dateT3)) {
+    		this.dateT2 = nouvelleDateT2;
     		return 0;
     	} else {
     		return 1;
     	}
     }
     
-    public int setDateT3(String nouvelleDateT3) {
-    	LocalDate date = LocalDate.parse(nouvelleDateT3);
-    	if (date.isAfter(dateT2) && date.isBefore(dateT4)) {
-    		this.dateT3 = date;
+    public int setDateT3(LocalDate nouvelleDateT3) {
+    	if (nouvelleDateT3.isAfter(dateT2) && nouvelleDateT3.isBefore(dateT4)) {
+    		this.dateT3 = nouvelleDateT3;
     		return 0;
     	} else {
     		return 1;
     	}
     }
     
-    public int setDateT4(String nouvelleDateT4) {
-    	LocalDate date = LocalDate.parse(nouvelleDateT4);
-    	if (date.isAfter(dateT3) && date.isBefore(dateDebut)) {
-    		this.dateT4 = date;
+    public int setDateT4(LocalDate nouvelleDateT4) {
+    	if (nouvelleDateT4.isAfter(dateT3) && nouvelleDateT4.isBefore(dateDebut)) {
+    		this.dateT4 = nouvelleDateT4;
     		return 0;
     	} else {
     		return 1;
