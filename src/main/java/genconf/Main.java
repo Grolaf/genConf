@@ -13,6 +13,8 @@ public class Main {
 
     public static void main(String[] args) {
         GenConf genconf = new GenConf();
+        System.out.println("###################################################################################################################\n");
+        System.out.println("#########################################    Bienvenue dans GenConf !    ###########################################");
 
         try {
             genconf = Persisteur.lireEtat();
