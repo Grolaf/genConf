@@ -207,6 +207,10 @@ public class Communication {
         
          // ---------------------------Setters :
 
+        
+        public TypeCommunication getTypeCommunication() {
+        	return this.type;
+        }
 
     /** 
      *
