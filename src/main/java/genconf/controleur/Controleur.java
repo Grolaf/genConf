@@ -151,7 +151,7 @@ public class Controleur {
                             removeCommunication(conferenceSelectionnee);
                             break;
                         default :
-                            this.ihm.notifier("Mauvaise selection");
+                            this.ihm.notifier("Mauvaise selection.");
                             break;
                     }
                     
