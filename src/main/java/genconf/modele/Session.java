@@ -143,17 +143,15 @@ public class Session {
     
     public boolean setIntitule(String nouvelIntitule)
     {
-       Session existe =  this.conference.getSession(nouvelIntitule);
+       Session existe = this.conference.getSession(nouvelIntitule);
        
-       if(existe == null)
-       {
-           return false;
-       }
-       else
-       {
-           this.intituleSession = nouvelIntitule;
-           
+       if(existe == null) {
+    	   this.conference.removeSession(getIntitule());
+    	   this.intituleSession = nouvelIntitule;
+    	   this.conference.addSession(this);
            return true;
+       } else {
+           return false;
        }
     }
     
