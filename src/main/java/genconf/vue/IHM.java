@@ -570,8 +570,8 @@ public class IHM {
 
     public int afficherMenuInfosConference() {
         System.out.println("Menu Informations Conférence");
-        System.out.println("1. Gérer Session");
-        System.out.println("2. Gérer Communications");
+        System.out.println("1. Modifier métadonnées conférence");
+        System.out.println("2. Consulter Infos Générales Conférence");
         System.out.println("0. Quitter");
         System.out.println("Votre choix : ");
         Scanner scanner = new Scanner(System.in);
@@ -579,8 +579,8 @@ public class IHM {
         while (choix < 0 || choix > 2) {
             System.out.println("Choix inconnu veuillez choisir parmi ces options :");
             System.out.println("Menu Informations Conférence");
-            System.out.println("1. Gérer Session");
-            System.out.println("2. Gérer Communications");
+            System.out.println("1. Modifier métadonnées conférence");
+            System.out.println("2. Consulter Infos Générales Conférence");
             System.out.println("0. Quitter");
             choix = scanner.nextInt();
         }
@@ -922,14 +922,14 @@ public class IHM {
     }
 
     public String saisirDate() {
-        System.out.println("Veuillez saisir la date : (dd/MM/YYYY) ");
+        System.out.println("Veuillez saisir la date : (YYYY-MM-DD) ");
         Scanner scanner = new Scanner(System.in);
         String date = scanner.nextLine();
         return date;
     }
 
     public String saisirHeure() {
-        System.out.println("Saissiez l'heure : (hh/mm/ss) ");
+        System.out.println("Saissiez l'heure : (hh:mm:ss) ");
         Scanner scanner = new Scanner(System.in);
         String heure=scanner.nextLine();
         return heure;
@@ -944,9 +944,9 @@ public class IHM {
         str[1] = scanner.nextLine();
         System.out.println("Saisir la Date : (YYYY-MM-DD)");
         str[2] = scanner.nextLine();
-        System.out.println("Saisir l'heure de début  : (hh/mm/ss)");
+        System.out.println("Saisir l'heure de début  : (hh:mm:ss)");
         str[3] = scanner.nextLine();
-        System.out.println("Saisir l'heure de fin : (hh/mm/ss)");
+        System.out.println("Saisir l'heure de fin : (hh:mm:ss)");
         str[4] = scanner.nextLine();
         if (typeCommunication.getLienVideoObligatoire()) {
             System.out.println("Saisir le lien de la vidéo : ");
