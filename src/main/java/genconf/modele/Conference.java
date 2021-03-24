@@ -1,4 +1,4 @@
-package modele;
+package genconf.modele;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -44,8 +44,6 @@ public class Conference implements Serializable {
     }
     
     public boolean addCommunication(Communication communication) {
-    	LocalDate dateComm = communication.getDate();
-    	if (dateComm.equals())
     	this.communication.put(communication.getNumero(), communication);
     	return true;
     }
@@ -255,14 +253,15 @@ public class Conference implements Serializable {
     }
     
     public boolean setNom(String nouveauNom) {
-    	HashMap<String, Conference> conferences = genconf.getConferences();
-    	for (Conference conference : conferences.values()) {
-    		if (conference.getNomConf() == nouveauNom) {
-    			
-    		}
+    	Conference conferenceExiste = genconf.getConference(nouveauNom);
+    	if (conferenceExiste == null) {
+    		genconf.removeConference(getNomConf());
+    		this.nomConf = nouveauNom;
+    		genconf.addConference(this);
+    		return true;
+    	} else {
+    		return false;
     	}
-    	this.nomConf = nouveauNom;
-    	return true;
     }
     
     public boolean setTexteAccueil(String nouveauTexteAccueil) {

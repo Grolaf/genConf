@@ -44,7 +44,7 @@ public class GenConf implements Serializable {
     }
 
     public boolean addConference(Conference conf) {
-        conference.put(conf.getNom(), conf);
+        conference.put(conf.getNomConf(), conf);
         return true;
     }
 
@@ -64,4 +64,7 @@ public class GenConf implements Serializable {
         return utilisateurs;
     }
 
+    public boolean removeConference(String nom) {
+    	return conference.remove(nom) != null ? true : false;
+    }
 }
