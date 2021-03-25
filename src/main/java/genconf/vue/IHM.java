@@ -800,7 +800,6 @@ public class IHM {
     	HashSet<String[]> auteurs = new HashSet<>();
         boolean continuer = true;
         while (continuer) {
-            System.out.println("Entrez le nom, prenom, mail : ");
             auteurs.add(saisirUtilisateur());
             Scanner scanner = new Scanner(System.in);
             int choix;
