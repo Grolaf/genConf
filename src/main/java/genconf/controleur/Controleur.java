@@ -24,9 +24,10 @@ public class Controleur {
 
     public void addCommunicationASession(Communication communication, Session session, Conference conference) {
     	while (communication == null) {
-    		HashMap<Integer, Communication> communications = session.getCommunications();
+    		this.ihm.notifier("Liste des communications existantes : ");
+    		HashMap<Integer, Communication> communications = conference.getCommunications();
     		int numero = ihm.saisirNumeroCommunication(communications);
-    		communication = session.getCommunication(numero);
+    		communication = conference.getCommunication(numero);
     	}
         Session sessionRattachee = communication.getSession();
         boolean choix = false;
@@ -34,7 +35,7 @@ public class Controleur {
         	choix = ihm.demanderARemplacerSessionDeCommunication();
         }
         boolean r = false;
-        if (choix == true) {
+        if (choix == true || sessionRattachee == null) {
         	r = communication.setSession(session);
         }
         if (r) {
@@ -83,10 +84,10 @@ public class Controleur {
     			orateurs.put(auteur[2], auteurU);
     		}
     	}
-        LocalDate date = LocalDate.parse(infosCommunication[3]);
-        LocalTime heureDebut = LocalTime.parse(infosCommunication[4]);
-        LocalTime heureFin = LocalTime.parse(infosCommunication[5]);
-    	Communication communication = new Communication(correspondant, infosCommunication[0], auteurs, infosCommunication[1], infosCommunication[2], date, heureDebut, heureFin, orateurs, type, conference);
+        LocalDate date = LocalDate.parse(infosCommunication[1]);
+        LocalTime heureDebut = LocalTime.parse(infosCommunication[2]);
+        LocalTime heureFin = LocalTime.parse(infosCommunication[3]);
+    	Communication communication = new Communication(correspondant, infosCommunication[0], auteurs, infosCommunication[4], infosCommunication[5], date, heureDebut, heureFin, orateurs, type, conference);
     	
     	if (conference.addCommunication(communication)) {
     		ihm.notifier("La communication a correctement été créée");
@@ -231,10 +232,10 @@ public class Controleur {
                     switch(choixSwitch)
                     {
                         case 1:
-                            creerCompteGenConf();
+                        	donnerDroitsAdmin(conferenceSelectionnee);
                             break;
                         case 2:
-                            donnerDroitsAdmin(conferenceSelectionnee);
+                            creerCompteGenConf();
                             break;
                         case 3:
                             donnerDroitsInscrits(conferenceSelectionnee);
@@ -248,6 +249,9 @@ public class Controleur {
                 case PREVISUALISER_CONFERENCE:
                     previsualiserConference(conferenceSelectionnee);
                     break;
+                    
+                case QUITTER:
+                	break;
                  
                 default :
                     this.ihm.notifier("Mauvaise selection");

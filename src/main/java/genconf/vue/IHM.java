@@ -699,7 +699,7 @@ public class IHM {
         Scanner scanner = new Scanner(System.in);
         int choix;
         do {
-            System.out.println("Voulez vous modifier la communication ?");
+            System.out.println("Voulez vous previsualiser une session ?");
             System.out.println("1. Oui");
             System.out.println("2. Non");
             System.out.println("0. Quitter");
@@ -878,7 +878,7 @@ public class IHM {
         	System.out.print("Saissiez l'heure (hh:mm:ss) : ");
 	        heure = scanner.nextLine();
 	        try {
-	        	LocalDate.parse(heure);
+	        	LocalTime.parse(heure);
 	        	heureValide = true;
 	        } catch (DateTimeParseException d) {
 	        	System.out.println("Le format de l'heure n'est pas correct");
@@ -892,20 +892,13 @@ public class IHM {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Saisir le titre : ");
         str[0] = scanner.nextLine();
-
-        System.out.print("Saisir la Date (YYYY-MM-DD) : ");
-        str[1] = scanner.nextLine();
-        System.out.print("Saisir l'heure de début (hh:mm:ss) : ");
-        str[2] = scanner.nextLine();
-        System.out.print("Saisir l'heure de fin (hh:mm:ss) : ");
-        str[3] = scanner.nextLine();
       
         boolean dateValide = false;
         do {
 	        System.out.print("Saisir la date (YYYY-MM-DD) : ");
 	        str[1] = scanner.nextLine();
 	        try {
-	        	LocalDate.parse(str[2]);
+	        	LocalDate.parse(str[1]);
 	        	dateValide = true;
 	        } catch (DateTimeParseException d) {
 	        	System.out.println("Le format de la date n'est pas correct");
@@ -916,7 +909,7 @@ public class IHM {
         	System.out.print("Saissiez l'heure de début (hh:mm:ss) : ");
 	        str[2] = scanner.nextLine();
 	        try {
-	        	LocalDate.parse(str[3]);
+	        	LocalTime.parse(str[2]);
 	        	heureDebutValide = true;
 	        } catch (DateTimeParseException d) {
 	        	System.out.println("Le format de l'heure n'est pas correct");
@@ -927,7 +920,7 @@ public class IHM {
         	System.out.print("Saissiez l'heure de fin (hh:mm:ss) : ");
 	        str[3] = scanner.nextLine();
 	        try {
-	        	LocalDate.parse(str[4]);
+	        	LocalTime.parse(str[3]);
 	        	heureFinValide = true;
 	        } catch (DateTimeParseException d) {
 	        	System.out.println("Le format de l'heure n'est pas correct");
@@ -938,9 +931,17 @@ public class IHM {
             System.out.print("Saisir le lien de la vidéo : ");
             str[4] = scanner.nextLine();
         }
+        else
+        {
+        	str[4] = "";
+        }
         if (typeCommunication.getLienPDFObligatoire()) {
             System.out.print("Saisir le lien PDF : ");
             str[5] = scanner.nextLine();
+        }
+        else
+        {
+        	str[5] = "";
         }
         return str;
     }
@@ -1052,7 +1053,7 @@ public class IHM {
         	System.out.print("Saissiez l'heure de début (hh:mm:ss) : ");
 	        str[3] = scanner.nextLine();
 	        try {
-	        	LocalDate.parse(str[3]);
+	        	LocalTime.parse(str[3]);
 	        	heureDebutValide = true;
 	        } catch (DateTimeParseException d) {
 	        	System.out.println("Le format de l'heure n'est pas correct");
@@ -1063,7 +1064,7 @@ public class IHM {
         	System.out.print("Saissiez l'heure de fin (hh:mm:ss) : ");
 	        str[4] = scanner.nextLine();
 	        try {
-	        	LocalDate.parse(str[4]);
+	        	LocalTime.parse(str[4]);
 	        	heureFinValide = true;
 	        } catch (DateTimeParseException d) {
 	        	System.out.println("Le format de l'heure n'est pas correct");
@@ -1087,7 +1088,7 @@ public class IHM {
         for (Map.Entry<Integer, Communication> Str : communications.entrySet()) {
             System.out.println(Str.getValue().getNumero() + " - " + Str.getValue().getTitre());
         }
-        System.out.print(("Saisir le numéro de Communication à modifier : "));
+        System.out.print(("Saisir le numéro de Communication : "));
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
         return choix;
