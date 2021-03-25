@@ -176,7 +176,7 @@ public class Conference implements Serializable {
     }
     
     public int setDateDebut(LocalDate nouvelleDate) {
-    	if (nouvelleDate.isAfter(dateT4) && nouvelleDate.isBefore(dateFin)) {
+    	if (nouvelleDate.isAfter(dateT4) && nouvelleDate.isBefore(this.dateFin)) {
     		this.dateDebut = nouvelleDate;
     		return 0;
     	} else {
@@ -185,7 +185,7 @@ public class Conference implements Serializable {
     }
     
     public boolean setDateFin(LocalDate nouvelleDate) {
-    	if (nouvelleDate.isAfter(dateDebut)) {
+    	if (nouvelleDate.isAfter(this.dateDebut)) {
     		this.dateFin = nouvelleDate;
     		return true;
     	} else {
@@ -204,7 +204,7 @@ public class Conference implements Serializable {
     }
     
     public int setDateT1(LocalDate nouvelleDateT1) {
-    	if (nouvelleDateT1.isBefore(dateT2)) {
+    	if (this.dateT2 == null ||  nouvelleDateT1.isBefore(this.dateT2)) {
     		this.dateT1 = nouvelleDateT1;
     		return 0;
     	} else {
@@ -213,7 +213,7 @@ public class Conference implements Serializable {
     }
     
     public int setDateT2(LocalDate nouvelleDateT2) {
-    	if (nouvelleDateT2.isAfter(dateT1) && nouvelleDateT2.isBefore(dateT3)) {
+    	if ((this.dateT1 == null || nouvelleDateT2.isAfter(this.dateT1)) && (this.dateT3 == null || nouvelleDateT2.isBefore(this.dateT3))) {
     		this.dateT2 = nouvelleDateT2;
     		return 0;
     	} else {
@@ -222,7 +222,7 @@ public class Conference implements Serializable {
     }
     
     public int setDateT3(LocalDate nouvelleDateT3) {
-    	if (nouvelleDateT3.isAfter(dateT2) && nouvelleDateT3.isBefore(dateT4)) {
+    	if ((this.dateT2 == null || nouvelleDateT3.isAfter(this.dateT2)) && (this.dateT4 == null || nouvelleDateT3.isBefore(this.dateT4))) {
     		this.dateT3 = nouvelleDateT3;
     		return 0;
     	} else {
@@ -231,7 +231,7 @@ public class Conference implements Serializable {
     }
     
     public int setDateT4(LocalDate nouvelleDateT4) {
-    	if (nouvelleDateT4.isAfter(dateT3) && nouvelleDateT4.isBefore(dateDebut)) {
+    	if ((this.dateT3 == null || nouvelleDateT4.isAfter(this.dateT2)) && nouvelleDateT4.isBefore(this.dateDebut)) {
     		this.dateT4 = nouvelleDateT4;
     		return 0;
     	} else {
