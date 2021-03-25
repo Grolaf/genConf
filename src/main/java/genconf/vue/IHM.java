@@ -697,7 +697,7 @@ public class IHM {
     }
 
     public String demanderNomSession() {
-        System.out.println("Nom session à supprimer");
+        System.out.println("Nom session : ");
         Scanner scanner = new Scanner(System.in);
         String str = scanner.nextLine();
         return str;
@@ -1058,9 +1058,9 @@ public class IHM {
         str[1] = scanner.nextLine();
         System.out.println("Saisir la date : (YYYY-MM-DD)");
         str[2] = scanner.nextLine();
-        System.out.println("Saisir l'heure de début' : (hh/mm/ss)");
+        System.out.println("Saisir l'heure de début' : (hh:mm:ss)");
         str[3] = scanner.nextLine();
-        System.out.println("Saisir l'heure de fin' : (hh/mm/ss)");
+        System.out.println("Saisir l'heure de fin' : (hh:mm:ss)");
         str[4] = scanner.nextLine();
         System.out.println("Saisir le lien de la vidéo : ");
         str[5] = scanner.nextLine();

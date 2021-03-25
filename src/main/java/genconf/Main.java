@@ -26,7 +26,7 @@ public class Main {
         }
 
         Controleur controleur = new Controleur(genconf);
-        controleur.demarrerApplication();
+        controleur.demarrerApplication();	
 
         try {
             Persisteur.sauverEtat(genconf);

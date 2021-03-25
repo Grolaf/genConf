@@ -101,16 +101,19 @@ public class Controleur {
         Conference conferenceSelectionnee;
         
         HashMap<String, Conference> conferences = this.genconf.getConferences();
-        choix = this.ihm.saisirCreationConference(conferences);
+        do
+        {
+        	choix = this.ihm.saisirCreationConference(conferences);
         
-        if(choix) // on souhaite créer une conf
-        {
-            conferenceSelectionnee = creerConference();
-        }
-        else
-        {
-            conferenceSelectionnee = selectionnerConference();
-        }
+	        if(choix) // on souhaite créer une conf
+	        {
+	            conferenceSelectionnee = creerConference();
+	        }
+	        else
+	        {
+	            conferenceSelectionnee = selectionnerConference();
+	        }
+        }while(conferenceSelectionnee == null);
       
         
         while(cmd != Commande.QUITTER)
@@ -897,7 +900,7 @@ public class Controleur {
     		
                 for(HashMap.Entry<Integer, Communication> c : communications.entrySet())
     			ihm.afficherTitreCommunication(c.getValue());
-    	}
+    	
     	
     	choix = ihm.saisirOptionPrevisualiserSession();
     	switch (choix) {
@@ -916,6 +919,7 @@ public class Controleur {
 	    		modifierSession(conference, session);
 	    		break;
 	    	}
+    	}
     }
     
     public void removeCommunication(Conference conference) {

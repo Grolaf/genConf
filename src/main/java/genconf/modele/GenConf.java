@@ -36,6 +36,13 @@ public class GenConf implements Serializable {
     private HashMap<String, Utilisateur> utilisateurs;
     private HashMap<String, Utilisateur> adminGenConf;
     private HashMap<String, Conference> conference;
+    
+    public GenConf()
+    {
+    	this.utilisateurs = new HashMap<>();
+    	this.adminGenConf = new HashMap<>();
+    	this.conference = new HashMap<>();
+    }
 
     public boolean addCompteConf(Utilisateur u) {
         utilisateurs.put(u.getEmail(), u);
