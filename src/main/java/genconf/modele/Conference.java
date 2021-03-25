@@ -289,46 +289,38 @@ public class Conference implements Serializable {
     }
 
     public String toString() {
-    	String infosConference =  this.nomConf + this.dateDebut.toString() + this.dateFin.toString();
+    	String infosConference =  this.nomConf + " du  " + this.dateDebut.toString() + " au " + this.dateFin.toString() +"\n";
+    	infosConference += "\tLogo : " +  this.logo + "\n";
+    	infosConference += "\tTexteAccueil : " +  this.texteAccueil + "\n";
     	
-    	String themes[]  = new String[this.theme.size()];
-    	int j = 0;
     	for(String t : this.theme)
     	{
-    		themes[j] = t;
-    		j++;
+    		infosConference += "\t\t" + t + "\n";
     	}
     	
-    	for (int i = 0 ; i < this.theme.size() ; i++) {
-    		infosConference += themes[i];
-    	}
     	
-    	String lieux[]  = new String[this.lieu.size()];
-    	j = 0;
-    	for(String t : this.lieu)
+    	infosConference += "\tLieux : \n";
+    	for(String l : this.lieu)
     	{
-    		lieux[j] = t;
-    		j++;
+    		infosConference += "\t\t" + l + "\n";
     	}
     	
     	if(this.dateT1 != null)
     	{
-    		infosConference += this.dateT1.toString();
+    		infosConference += "\tDateT1 : " + this.dateT1.toString() + "\n";
     	}
     	if(this.dateT2 != null)
     	{
-    		infosConference += this.dateT2.toString();
+    		infosConference += "\tDateT2 : " +this.dateT2.toString()+ "\n";
     	}
     	if(this.dateT3 != null)
     	{
-    		infosConference += this.dateT3.toString();
+    		infosConference += "\tDateT3 : " +this.dateT3.toString()+ "\n";
     	}
     	if(this.dateT4 != null)
     	{
-    		infosConference += this.dateT4.toString();
+    		infosConference += "\tDateT4 : " +this.dateT4.toString()+ "\n";
     	}
-    	
-    	infosConference += this.logo + this.texteAccueil;
     	return infosConference;
     }
 
