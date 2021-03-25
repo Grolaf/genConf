@@ -927,16 +927,36 @@ public class IHM {
     }
 
     public String saisirDate() {
-        System.out.print("Veuillez saisir la date (YYYY-MM-DD) : ");
-        Scanner scanner = new Scanner(System.in);
-        String date = scanner.nextLine();
+    	Scanner scanner = new Scanner(System.in);
+    	String date;
+    	boolean dateValide = false;
+        do {
+	        System.out.print("Saisir la date (YYYY-MM-DD) : ");
+	        date = scanner.nextLine();
+	        try {
+	        	LocalDate.parse(date);
+	        	dateValide = true;
+	        } catch (DateTimeParseException d) {
+	        	System.out.println("Le format de la date n'est pas correct");
+	        }
+        } while (dateValide == false);
         return date;
     }
 
     public String saisirHeure() {
-        System.out.print("Saissiez l'heure (hh:mm:ss) : ");
-        Scanner scanner = new Scanner(System.in);
-        String heure=scanner.nextLine();
+    	Scanner scanner = new Scanner(System.in);
+    	String heure;
+    	boolean heureValide = false;
+        do {
+        	System.out.print("Saissiez l'heure (hh:mm:ss) : ");
+	        heure = scanner.nextLine();
+	        try {
+	        	LocalDate.parse(heure);
+	        	heureValide = true;
+	        } catch (DateTimeParseException d) {
+	        	System.out.println("Le format de l'heure n'est pas correct");
+	        }
+        } while (heureValide == false);
         return heure;
     }
 
@@ -947,12 +967,39 @@ public class IHM {
         str[0] = scanner.nextLine();
         System.out.print("Saisir les auteurs : ");
         str[1] = scanner.nextLine();
-        System.out.print("Saisir la Date (YYYY-MM-DD) : ");
-        str[2] = scanner.nextLine();
-        System.out.print("Saisir l'heure de début (hh:mm:ss) : ");
-        str[3] = scanner.nextLine();
-        System.out.print("Saisir l'heure de fin (hh:mm:ss) : ");
-        str[4] = scanner.nextLine();
+        boolean dateValide = false;
+        do {
+	        System.out.print("Saisir la date (YYYY-MM-DD) : ");
+	        str[2] = scanner.nextLine();
+	        try {
+	        	LocalDate.parse(str[2]);
+	        	dateValide = true;
+	        } catch (DateTimeParseException d) {
+	        	System.out.println("Le format de la date n'est pas correct");
+	        }
+        } while (dateValide == false);
+    	boolean heureDebutValide = false;
+        do {
+        	System.out.print("Saissiez l'heure de début (hh:mm:ss) : ");
+	        str[3] = scanner.nextLine();
+	        try {
+	        	LocalDate.parse(str[3]);
+	        	heureDebutValide = true;
+	        } catch (DateTimeParseException d) {
+	        	System.out.println("Le format de l'heure n'est pas correct");
+	        }
+        } while (heureDebutValide == false);
+    	boolean heureFinValide = false;
+        do {
+        	System.out.print("Saissiez l'heure de fin (hh:mm:ss) : ");
+	        str[4] = scanner.nextLine();
+	        try {
+	        	LocalDate.parse(str[4]);
+	        	heureFinValide = true;
+	        } catch (DateTimeParseException d) {
+	        	System.out.println("Le format de l'heure n'est pas correct");
+	        }
+        } while (heureFinValide == false);
         if (typeCommunication.getLienVideoObligatoire()) {
             System.out.print("Saisir le lien de la vidéo : ");
             str[5] = scanner.nextLine();
@@ -1071,10 +1118,28 @@ public class IHM {
 	        	System.out.println("Le format de la date n'est pas correct");
 	        }
         } while (dateValide == false);
-        System.out.print("Saisir l'heure de début (hh:mm:ss) : ");
-        str[3] = scanner.nextLine();
-        System.out.print("Saisir l'heure de fin (hh:mm:ss) : ");
-        str[4] = scanner.nextLine();
+        boolean heureDebutValide = false;
+        do {
+        	System.out.print("Saissiez l'heure de début (hh:mm:ss) : ");
+	        str[3] = scanner.nextLine();
+	        try {
+	        	LocalDate.parse(str[3]);
+	        	heureDebutValide = true;
+	        } catch (DateTimeParseException d) {
+	        	System.out.println("Le format de l'heure n'est pas correct");
+	        }
+        } while (heureDebutValide == false);
+    	boolean heureFinValide = false;
+        do {
+        	System.out.print("Saissiez l'heure de fin (hh:mm:ss) : ");
+	        str[4] = scanner.nextLine();
+	        try {
+	        	LocalDate.parse(str[4]);
+	        	heureFinValide = true;
+	        } catch (DateTimeParseException d) {
+	        	System.out.println("Le format de l'heure n'est pas correct");
+	        }
+        } while (heureFinValide == false);
         System.out.print("Saisir le lien de la vidéo : ");
         str[5] = scanner.nextLine();
         System.out.print("Saisir la salle : ");
