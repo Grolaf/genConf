@@ -1078,8 +1078,7 @@ public class IHM {
 
     public int saisirNumeroCommunication(Map<Integer, Communication> communications) {
         for (Map.Entry<Integer, Communication> Str : communications.entrySet()) {
-            System.out.println(Str.getValue().getNumero());
-            System.out.println(Str.getValue().getTitre());
+            System.out.println(Str.getValue().getNumero() + " - " + Str.getValue().getTitre());
         }
         System.out.print(("Saisir le numéro de Communication à modifier : "));
         Scanner scanner = new Scanner(System.in);
