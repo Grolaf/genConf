@@ -878,7 +878,7 @@ public class IHM {
         	System.out.print("Saissiez l'heure (hh:mm:ss) : ");
 	        heure = scanner.nextLine();
 	        try {
-	        	LocalDate.parse(heure);
+	        	LocalTime.parse(heure);
 	        	heureValide = true;
 	        } catch (DateTimeParseException d) {
 	        	System.out.println("Le format de l'heure n'est pas correct");
@@ -892,13 +892,6 @@ public class IHM {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Saisir le titre : ");
         str[0] = scanner.nextLine();
-
-        System.out.print("Saisir la Date (YYYY-MM-DD) : ");
-        str[1] = scanner.nextLine();
-        System.out.print("Saisir l'heure de début (hh:mm:ss) : ");
-        str[2] = scanner.nextLine();
-        System.out.print("Saisir l'heure de fin (hh:mm:ss) : ");
-        str[3] = scanner.nextLine();
       
         boolean dateValide = false;
         do {
@@ -916,7 +909,7 @@ public class IHM {
         	System.out.print("Saissiez l'heure de début (hh:mm:ss) : ");
 	        str[2] = scanner.nextLine();
 	        try {
-	        	LocalDate.parse(str[3]);
+	        	LocalTime.parse(str[2]);
 	        	heureDebutValide = true;
 	        } catch (DateTimeParseException d) {
 	        	System.out.println("Le format de l'heure n'est pas correct");
@@ -927,7 +920,7 @@ public class IHM {
         	System.out.print("Saissiez l'heure de fin (hh:mm:ss) : ");
 	        str[3] = scanner.nextLine();
 	        try {
-	        	LocalDate.parse(str[4]);
+	        	LocalTime.parse(str[3]);
 	        	heureFinValide = true;
 	        } catch (DateTimeParseException d) {
 	        	System.out.println("Le format de l'heure n'est pas correct");
@@ -1060,7 +1053,7 @@ public class IHM {
         	System.out.print("Saissiez l'heure de début (hh:mm:ss) : ");
 	        str[3] = scanner.nextLine();
 	        try {
-	        	LocalDate.parse(str[3]);
+	        	LocalTime.parse(str[3]);
 	        	heureDebutValide = true;
 	        } catch (DateTimeParseException d) {
 	        	System.out.println("Le format de l'heure n'est pas correct");
@@ -1071,7 +1064,7 @@ public class IHM {
         	System.out.print("Saissiez l'heure de fin (hh:mm:ss) : ");
 	        str[4] = scanner.nextLine();
 	        try {
-	        	LocalDate.parse(str[4]);
+	        	LocalTime.parse(str[4]);
 	        	heureFinValide = true;
 	        } catch (DateTimeParseException d) {
 	        	System.out.println("Le format de l'heure n'est pas correct");
