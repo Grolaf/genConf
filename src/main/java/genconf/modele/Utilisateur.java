@@ -71,7 +71,7 @@ public class Utilisateur implements Serializable {
     }
     
     public String toString() {
-    	return this.email + this.nom + this.prenom;
+    	return this.email +  ", " + this.nom + ", "+  this.prenom;
     }
     
     

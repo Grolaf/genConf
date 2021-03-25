@@ -1312,7 +1312,7 @@ public class Controleur {
         switch(conf.removeSession(intituleSession))
         {
             case 0 : 
-                this.ihm.notifier("La session a correctement été modifiée");
+                this.ihm.notifier("La session a correctement été supprimee");
                 break;
             case 1 : 
                 this.ihm.notifier("Des communications sont liées à la session, supprimez d'abord les communications");
@@ -1443,7 +1443,7 @@ public class Controleur {
             libelle = this.ihm.saisirNomTypeCommunication();
             typeASupprimer = types.get(libelle);
             
-        }while(typeASupprimer != null);
+        }while(typeASupprimer == null && types.size() != 0);
         
         if(conference.supprimerTypeCommunication(typeASupprimer))
         {

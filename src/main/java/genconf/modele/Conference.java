@@ -272,13 +272,20 @@ public class Conference implements Serializable {
     }
 
     public boolean supprimerTypeCommunication(TypeCommunication typeCommunication) {
-    	for(Communication c : this.communication.values()) {
-    		if (c.getTypeCommunication().getLibelle() == typeCommunication.getLibelle()) {
-    			c.removeTypeCommunication();
-    		}
+    	if(typeCommunication != null)
+    	{
+	    	for(Communication c : this.communication.values()) {
+	    		if (c.getTypeCommunication().getLibelle() == typeCommunication.getLibelle()) {
+	    			c.removeTypeCommunication();
+	    		}
+	    	}
+	    	this.typeCommunication.remove(typeCommunication.getLibelle());
+	    	return true;
     	}
-    	this.typeCommunication.remove(typeCommunication.getLibelle());
-    	return true;
+    	else
+    	{
+    		return false;
+    	}
     }
 
     public String toString() {
