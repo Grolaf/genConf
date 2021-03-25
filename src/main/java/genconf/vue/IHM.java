@@ -1060,8 +1060,17 @@ public class IHM {
         str[0] = scanner.nextLine();
         System.out.print("Saisir le type de Session : ");
         str[1] = scanner.nextLine();
-        System.out.print("Saisir la date (YYYY-MM-DD) : ");
-        str[2] = scanner.nextLine();
+        boolean dateValide = false;
+        do {
+	        System.out.print("Saisir la date (YYYY-MM-DD) : ");
+	        str[2] = scanner.nextLine();
+	        try {
+	        	LocalDate.parse(str[2]);
+	        	dateValide = true;
+	        } catch (DateTimeParseException d) {
+	        	System.out.println("Le format de la date n'est pas correct");
+	        }
+        } while (dateValide == false);
         System.out.print("Saisir l'heure de début (hh:mm:ss) : ");
         str[3] = scanner.nextLine();
         System.out.print("Saisir l'heure de fin (hh:mm:ss) : ");
