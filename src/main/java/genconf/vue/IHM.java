@@ -961,16 +961,22 @@ public class IHM {
     }
 
     public String[] saisirInfosCommunication(TypeCommunication typeCommunication) {
-        String str[]=new String[7];
+        String str[]=new String[6];
         Scanner scanner = new Scanner(System.in);
         System.out.print("Saisir le titre : ");
         str[0] = scanner.nextLine();
-        System.out.print("Saisir les auteurs : ");
+
+        System.out.print("Saisir la Date (YYYY-MM-DD) : ");
         str[1] = scanner.nextLine();
+        System.out.print("Saisir l'heure de début (hh:mm:ss) : ");
+        str[2] = scanner.nextLine();
+        System.out.print("Saisir l'heure de fin (hh:mm:ss) : ");
+        str[3] = scanner.nextLine();
+      
         boolean dateValide = false;
         do {
 	        System.out.print("Saisir la date (YYYY-MM-DD) : ");
-	        str[2] = scanner.nextLine();
+	        str[1] = scanner.nextLine();
 	        try {
 	        	LocalDate.parse(str[2]);
 	        	dateValide = true;
@@ -981,7 +987,7 @@ public class IHM {
     	boolean heureDebutValide = false;
         do {
         	System.out.print("Saissiez l'heure de début (hh:mm:ss) : ");
-	        str[3] = scanner.nextLine();
+	        str[2] = scanner.nextLine();
 	        try {
 	        	LocalDate.parse(str[3]);
 	        	heureDebutValide = true;
@@ -992,7 +998,7 @@ public class IHM {
     	boolean heureFinValide = false;
         do {
         	System.out.print("Saissiez l'heure de fin (hh:mm:ss) : ");
-	        str[4] = scanner.nextLine();
+	        str[3] = scanner.nextLine();
 	        try {
 	        	LocalDate.parse(str[4]);
 	        	heureFinValide = true;
@@ -1000,13 +1006,14 @@ public class IHM {
 	        	System.out.println("Le format de l'heure n'est pas correct");
 	        }
         } while (heureFinValide == false);
+      
         if (typeCommunication.getLienVideoObligatoire()) {
             System.out.print("Saisir le lien de la vidéo : ");
-            str[5] = scanner.nextLine();
+            str[4] = scanner.nextLine();
         }
         if (typeCommunication.getLienPDFObligatoire()) {
             System.out.print("Saisir le lien PDF : ");
-            str[6] = scanner.nextLine();
+            str[5] = scanner.nextLine();
         }
         return str;
     }
