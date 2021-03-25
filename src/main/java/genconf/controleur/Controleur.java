@@ -54,6 +54,11 @@ public class Controleur {
     	
     	String libelle = ihm.saisirNomTypeCommunication();
     	TypeCommunication type = conference.getTypeCommunication(libelle);
+    	if(type == null)
+    	{
+    		this.ihm.notifier("Ce type n'existe pas, veuillez le créer : ");
+    		type = creerTypeCommunication(conference);
+    	}
     	
     	String infosCommunication[] = ihm.saisirInfosCommunication(type);
     	
@@ -61,6 +66,7 @@ public class Controleur {
     	String infosCorrespondant[] = ihm.saisirUtilisateur();
     	Utilisateur correspondant = genconf.getUtilisateur(infosCorrespondant[2]);
     	if (correspondant == null) {
+    		this.ihm.notifier("Ce compte n'existe pas, veuillez le créer");
     		correspondant = creerCompteGenConf();
     	}
     	
@@ -314,7 +320,7 @@ public class Controleur {
     	return nouvelleSession;
     }
 
-    public void creerTypeCommunication(Conference conference) {
+    public TypeCommunication creerTypeCommunication(Conference conference) {
     	HashMap<String, TypeCommunication> typesCommunication = conference.getTypesCommunications();
     	ihm.afficherCaracteristiquesTypesCommunication(typesCommunication);
     	String libelle = ihm.saisirNomTypeCommunication();
@@ -344,6 +350,8 @@ public class Controleur {
     			ihm.notifier("Le type de communication n'a pu être ajouté à la conférence");
     		}
     	}
+    	
+    	return type;
     }
 
     public Conference creerConference()
