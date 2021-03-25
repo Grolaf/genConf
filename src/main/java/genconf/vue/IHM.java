@@ -544,7 +544,7 @@ public class IHM {
         System.out.println("2. Gérer Communications");
         System.out.println("3. Gérer Types Communication");
         System.out.println("4. Gérer informations Conférence");
-        System.out.println("5. Créer Track");
+        System.out.println("5. Gérer Track");
         System.out.println("6. Gérer Compte");
         System.out.println("7. Prévisualiser Conférence");
         System.out.println("0. Quitter");
@@ -558,7 +558,7 @@ public class IHM {
             System.out.println("2. Gérer Communications");
             System.out.println("3. Gérer Types Communication");
             System.out.println("4. Gérer informations Conférence");
-            System.out.println("5. Créer Track");
+            System.out.println("5. Gérer Track");
             System.out.println("6. Gérer Compte");
             System.out.println("7. Prévisualiser Conférence");
             System.out.println("0. Quitter");
@@ -1026,7 +1026,7 @@ public class IHM {
     public String saisirNomConference(Map<String, Conference> conferences) {
         System.out.println("Liste des conférences existantes : ");
         for (Map.Entry<String, Conference> Str : conferences.entrySet()) {
-            System.out.println(Str.getValue().getNomConf());
+            System.out.println(Str.getValue().getNomConf() + " : du " + Str.getValue().getDateDebut() + " au " + Str.getValue().getDateFin());
         }
         return saisirNomConference();
     }
