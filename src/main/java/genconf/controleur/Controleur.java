@@ -296,7 +296,7 @@ public class Controleur {
     public Session creerSession(Conference conference) {
     	HashMap<String, Session> sessions = conference.getSessions();
     	ihm.afficherInfosSessions(sessions);
-    	String infosNouvelleSession[] = ihm.saisirNouvellesSession(conference);
+    	String infosNouvelleSession[] = ihm.saisirNouvelleSession(conference);
         
         LocalDate date = LocalDate.parse(infosNouvelleSession[2]);
         LocalTime heureDebut = LocalTime.parse(infosNouvelleSession[3]);

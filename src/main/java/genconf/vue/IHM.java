@@ -1053,7 +1053,7 @@ public class IHM {
         return nom;
     }
 
-    public String[] saisirNouvellesSession(Conference conf) {
+    public String[] saisirNouvelleSession(Conference conf) {
         String str[]=new String[7];
         Scanner scanner = new Scanner(System.in);
         System.out.print("Saisir nom de la Session : ");
