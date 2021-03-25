@@ -82,6 +82,8 @@ public class Conference implements Serializable {
     	this.communication = new HashMap<>();
     	this.tracks = new HashMap<>();
     	this.session = new HashMap<>();
+    	this.theme = new HashSet<>();
+    	this.lieu = new HashSet<>();
     }
     
     public Communication getCommunication(int numeroComm) {
@@ -282,17 +284,43 @@ public class Conference implements Serializable {
     public String toString() {
     	String infosConference =  this.nomConf + this.dateDebut.toString() + this.dateFin.toString();
     	
-    	String[] themes = (String[]) this.theme.toArray();
+    	String themes[]  = new String[this.theme.size()];
+    	int j = 0;
+    	for(String t : this.theme)
+    	{
+    		themes[j] = t;
+    		j++;
+    	}
+    	
     	for (int i = 0 ; i < this.theme.size() ; i++) {
     		infosConference += themes[i];
     	}
     	
-    	String[] lieux = (String[]) this.lieu.toArray();
-    	for (int i = 0 ; i < this.lieu.size() ; i++) {
-    		infosConference += lieux[i];
+    	String lieux[]  = new String[this.lieu.size()];
+    	j = 0;
+    	for(String t : this.lieu)
+    	{
+    		lieux[j] = t;
+    		j++;
     	}
     	
-    	infosConference += this.dateT1.toString() + this.dateT2.toString() + this.dateT3.toString() + this.dateT4.toString();
+    	if(this.dateT1 != null)
+    	{
+    		infosConference += this.dateT1.toString();
+    	}
+    	if(this.dateT2 != null)
+    	{
+    		infosConference += this.dateT2.toString();
+    	}
+    	if(this.dateT3 != null)
+    	{
+    		infosConference += this.dateT3.toString();
+    	}
+    	if(this.dateT4 != null)
+    	{
+    		infosConference += this.dateT4.toString();
+    	}
+    	
     	infosConference += this.logo + this.texteAccueil;
     	return infosConference;
     }

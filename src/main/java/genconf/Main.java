@@ -13,6 +13,8 @@ public class Main {
 
     public static void main(String[] args) {
         GenConf genconf = new GenConf();
+        System.out.println("###################################################################################################################\n");
+        System.out.println("#########################################    Bienvenue dans GenConf !    ###########################################");
 
         try {
             genconf = Persisteur.lireEtat();
@@ -24,7 +26,7 @@ public class Main {
         }
 
         Controleur controleur = new Controleur(genconf);
-        controleur.demarrerApplication();
+        controleur.demarrerApplication();	
 
         try {
             Persisteur.sauverEtat(genconf);

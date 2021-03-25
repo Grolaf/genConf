@@ -24,16 +24,21 @@ public class Session {
 
     public Session(String intitule, String type, LocalDate date, LocalTime heureDebut, LocalTime heureFin, String videoAssociee, String salle, Conference conference) {
         
-        if(setIntitule(intitule) && setDate(date) == 0 && !setSalle(salle) && heureDebut.isBefore(heureFin))
+    	this.conference = conference;
+    	this.communications = new HashMap<>();
+    	this.animateurs = new HashMap<>();
+    	this.tracks = new HashMap<>();
+    	
+    	this.lienVersVideo = videoAssociee;
+    	this.type = type;
+    	
+        if(setIntitule(intitule) && setDate(date) == 0 && setSalle(salle) && heureDebut.isBefore(heureFin))
         {
-            this.heureDebut = heureDebut;
-            this.heureFin = heureFin;
-            this.conference = conference;           
+             System.out.println("Veuillez modifier les données de la session : elles sont invalides !");
         }
-        else
-        {
-            throw new Error("Impossible de créer la session (paramètres incorrects)");
-        }
+        this.heureDebut = heureDebut;
+        this.heureFin = heureFin;
+        this.conference = conference;          
     } 
 
    /***********************************************************/
@@ -131,11 +136,11 @@ public class Session {
         {
             return 1;
         }
-        else if(this.date.isBefore(dateDebutConf))
+        else if(this.date != null && this.date.isBefore(dateDebutConf))
         {
             return 2;
         }
-        else if (this.date.isAfter(dateFinConf))
+        else if (this.date != null && this.date.isAfter(dateFinConf))
         {
             return 3;
         }
@@ -199,7 +204,7 @@ public class Session {
     
     public boolean removeAnimateur(Utilisateur animateur) {
         animateur.setSessionEnTantQueAnimateur(null);
-        this.animateurs.remove(animateur);
+        this.animateurs.remove(animateur.getEmail());
         
         return true;
     }
