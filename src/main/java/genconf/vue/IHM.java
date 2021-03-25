@@ -699,7 +699,7 @@ public class IHM {
         Scanner scanner = new Scanner(System.in);
         int choix;
         do {
-            System.out.println("Voulez vous modifier la communication ?");
+            System.out.println("Voulez vous previsualiser une session ?");
             System.out.println("1. Oui");
             System.out.println("2. Non");
             System.out.println("0. Quitter");
@@ -898,7 +898,7 @@ public class IHM {
 	        System.out.print("Saisir la date (YYYY-MM-DD) : ");
 	        str[1] = scanner.nextLine();
 	        try {
-	        	LocalDate.parse(str[2]);
+	        	LocalDate.parse(str[1]);
 	        	dateValide = true;
 	        } catch (DateTimeParseException d) {
 	        	System.out.println("Le format de la date n'est pas correct");
@@ -1088,7 +1088,7 @@ public class IHM {
         for (Map.Entry<Integer, Communication> Str : communications.entrySet()) {
             System.out.println(Str.getValue().getNumero() + " - " + Str.getValue().getTitre());
         }
-        System.out.print(("Saisir le numéro de Communication à modifier : "));
+        System.out.print(("Saisir le numéro de Communication : "));
         Scanner scanner = new Scanner(System.in);
         int choix = scanner.nextInt();
         return choix;

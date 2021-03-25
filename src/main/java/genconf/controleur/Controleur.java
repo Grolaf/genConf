@@ -24,9 +24,10 @@ public class Controleur {
 
     public void addCommunicationASession(Communication communication, Session session, Conference conference) {
     	while (communication == null) {
-    		HashMap<Integer, Communication> communications = session.getCommunications();
+    		this.ihm.notifier("Liste des communications existantes : ");
+    		HashMap<Integer, Communication> communications = conference.getCommunications();
     		int numero = ihm.saisirNumeroCommunication(communications);
-    		communication = session.getCommunication(numero);
+    		communication = conference.getCommunication(numero);
     	}
         Session sessionRattachee = communication.getSession();
         boolean choix = false;
@@ -34,7 +35,7 @@ public class Controleur {
         	choix = ihm.demanderARemplacerSessionDeCommunication();
         }
         boolean r = false;
-        if (choix == true) {
+        if (choix == true || sessionRattachee == null) {
         	r = communication.setSession(session);
         }
         if (r) {
@@ -248,6 +249,9 @@ public class Controleur {
                 case PREVISUALISER_CONFERENCE:
                     previsualiserConference(conferenceSelectionnee);
                     break;
+                    
+                case QUITTER:
+                	break;
                  
                 default :
                     this.ihm.notifier("Mauvaise selection");

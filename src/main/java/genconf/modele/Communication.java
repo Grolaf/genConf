@@ -474,6 +474,33 @@ public class Communication {
             return true;
 
         }
+        
+        public String toString()
+        {
+        	String str = "Communication : " + this.numero + " - " + this.titre + "\n" +
+	        			"\tDate : " + this.date + "\n" + 
+	        			"\tHeureDebut : " + this.heureDebut + "\n" +
+	        			"\tHeureFin : " + this.heureFin + "\n" + 
+	        			"\tType : " + this.type.getLibelle() + "\n";
+        	if(this.type.getLienPDFObligatoire()) 
+        	{
+        		str += "\tLienPDF : " + this.lienVersPDF + "\n";
+        	}
+        	if(this.type.getLienVideoObligatoire()) 
+        	{
+        		str += "\tLienVideo : " + this.lienVersVideo + "\n";
+        	}
+        	
+        	str += "\tCorrespondant : " + this.correspondant.toString() + "\n";
+        	str += "\tOrateurs : \n";
+        	for(HashMap.Entry<String, Utilisateur> o : this.orateurs.entrySet())
+        	{
+        		str +="\t\t" + o.getValue().toString();
+        	}
+
+        	return str;
+        }
+
 
 
 
