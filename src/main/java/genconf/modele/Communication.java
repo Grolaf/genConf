@@ -288,7 +288,7 @@ public class Communication {
 
             LocalDate dateSession = date;
             
-            if(this.session == null)
+            if(this.session != null)
             {
                 dateSession = this.session.getDate();
             }

@@ -83,10 +83,10 @@ public class Controleur {
     			orateurs.put(auteur[2], auteurU);
     		}
     	}
-        LocalDate date = LocalDate.parse(infosCommunication[3]);
-        LocalTime heureDebut = LocalTime.parse(infosCommunication[4]);
-        LocalTime heureFin = LocalTime.parse(infosCommunication[5]);
-    	Communication communication = new Communication(correspondant, infosCommunication[0], auteurs, infosCommunication[1], infosCommunication[2], date, heureDebut, heureFin, orateurs, type, conference);
+        LocalDate date = LocalDate.parse(infosCommunication[1]);
+        LocalTime heureDebut = LocalTime.parse(infosCommunication[2]);
+        LocalTime heureFin = LocalTime.parse(infosCommunication[3]);
+    	Communication communication = new Communication(correspondant, infosCommunication[0], auteurs, infosCommunication[4], infosCommunication[5], date, heureDebut, heureFin, orateurs, type, conference);
     	
     	if (conference.addCommunication(communication)) {
     		ihm.notifier("La communication a correctement été créée");
@@ -231,10 +231,10 @@ public class Controleur {
                     switch(choixSwitch)
                     {
                         case 1:
-                            creerCompteGenConf();
+                        	donnerDroitsAdmin(conferenceSelectionnee);
                             break;
                         case 2:
-                            donnerDroitsAdmin(conferenceSelectionnee);
+                            creerCompteGenConf();
                             break;
                         case 3:
                             donnerDroitsInscrits(conferenceSelectionnee);

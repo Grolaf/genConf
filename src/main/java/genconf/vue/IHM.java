@@ -955,9 +955,17 @@ public class IHM {
             System.out.print("Saisir le lien de la vidéo : ");
             str[4] = scanner.nextLine();
         }
+        else
+        {
+        	str[4] = "";
+        }
         if (typeCommunication.getLienPDFObligatoire()) {
             System.out.print("Saisir le lien PDF : ");
             str[5] = scanner.nextLine();
+        }
+        else
+        {
+        	str[5] = "";
         }
         return str;
     }
